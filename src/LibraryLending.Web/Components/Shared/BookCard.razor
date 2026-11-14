@@ -1,0 +1,9 @@
+<article class="book-card" data-testid="book-card">
+    <a class="book-cover cover-@(Book.Id % 6)" href="/books/@Book.Id" aria-label="@Book.Title">
+        @if (!string.IsNullOrWhiteSpace(Book.CoverUrl)) { <img src="@Book.CoverUrl" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.hidden=true" /> }
+        <div class="cover-type"><span class="cover-category">@Book.Category</span><strong>@Book.Title</strong><span class="cover-line"></span><small>@Book.Authors</small></div>
+        <span class="cover-spine" aria-hidden="true"></span>
+    </a>
+    <div class="book-card-body"><span class="eyebrow">@Book.Category</span><h3><a href="/books/@Book.Id">@Book.Title</a></h3><p class="book-author">@Book.Authors</p><div class="book-card-footer"><StatusBadge Status="@(Book.AvailableCopies > 0 ? "Available" : "Borrowed")" Label="@(Book.AvailableCopies > 0 ? $"{Book.AvailableCopies} available" : "Join queue")" /><span>@Book.Year</span></div></div>
+</article>
+@code { [Parameter, EditorRequired] public BookDto Book { get; set; } = default!; }

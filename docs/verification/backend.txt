@@ -1,0 +1,47 @@
+BookBridge backend reliability verification
+
+Source: C:/Users/Adina/Documents/Codex/2026-11-14/rea/work/LibraryLending
+SDK: .NET SDK 8.0.428, Windows x64
+
+Final results
+- Unit tests: 74 passed, 0 failed, 0 skipped (19 new regression cases).
+- Integration tests: 64 passed, 0 failed, 0 skipped (15 new backend regression cases plus 9 production readiness cases from the parent agent).
+- Builds completed without compiler errors or warnings.
+- Isolated --artifacts-path output avoided changing DLLs used by peer browser/performance sessions.
+
+Implemented fixes
+- Normalize nullable book/member/barcode fields and reject malformed or oversized input as validation Results.
+- Deadline processing now exposes persistence failures to the background worker instead of silently dropping a failed Result.
+- SQLite busy/locked errors wrapped in DbUpdateException now receive the same bounded retry and user-facing failure handling as direct SQLite errors.
+- Persisted circulation results stay successful if post-commit live notification delivery throws, cancels or outlives the request; delivery uses an independent bounded token.
+- A singleton asynchronous LibraryWriteCoordinator queues in-process circulation writers before opening SQLite transactions. SQLite transactions, constraints and concurrency tokens remain the cross-process safeguard. The gate is released before live notifications.
+- Member reservation filtering and FIFO positions are computed in SQL, including stable CreatedAtUtc/Id tie-breaking.
+- Book editing session graph uses split queries for its multiple collections.
+
+Regression coverage added
+- Rollback after an explicitly saved mutation on business failure and cancellation.
+- Whole transaction retry for direct and wrapped busy errors, successful retry without duplicate mutation, and final retry exhaustion.
+- Constraint/concurrency failures returned clearly without durable partial changes.
+- Durable notifications and circulation changes when push fails or cancels after commit.
+- Queued writer cancellation, writer release after exception, and non-blocking slow notification delivery.
+- Member-scoped FIFO positions with equal creation timestamps.
+- Malformed book, member and barcode validation; background deadline failure observability.
+
+Commands (run from source root)
+../dotnet8/dotnet.exe test tests/LibraryLending.Tests.Unit/LibraryLending.Tests.Unit.csproj --artifacts-path ../gap-evidence/backend/build --logger "trx;LogFileName=unit.trx" --results-directory ../gap-evidence/backend/results --collect "XPlat Code Coverage" -p:UseAppHost=false
+../dotnet8/dotnet.exe test tests/LibraryLending.Tests.Integration/LibraryLending.Tests.Integration.csproj --artifacts-path ../gap-evidence/backend/build --logger "trx;LogFileName=integration.trx" --results-directory ../gap-evidence/backend/results-final2 --collect "XPlat Code Coverage" -p:UseAppHost=false
+
+Final evidence files (relative to work/gap-evidence/backend)
+results/unit.trx
+results/6dac10ac-481a-4a3e-b34d-359cf081e750/coverage.cobertura.xml
+results-final2/integration.trx
+results-final2/49e19ea5-9925-4eb0-86c5-9fb528100523/coverage.cobertura.xml
+
+Do not merge the earlier pre-gate integration coverage from results/61a1ddf9-19a7-4c3c-bafa-cb8a490d0202.
+Performance measurements and Linux verification are performed by the separate performance agent.
+
+Final verification refresh
+- The existing backup regression now opens and retains a source database connection before checkout, verifies journal_mode=wal, and asserts an existing WAL file with data frames before snapshot. Snapshot/restore loan and reservation assertions are unchanged.
+- Targeted Windows WAL test: 1 passed, 0 failed (results-wal/wal-backup.trx).
+- Full integration suite rerun after the final frontend source freeze: 64 passed, 0 failed, 0 skipped; duration 76 seconds. Final coverage is in results-final2 and supersedes results-final to align Web source line maps.
+- No production source changes were made for this verification refresh. Linux targeted verification is coordinated with the performance agent.

@@ -1,0 +1,59 @@
+@page "/members"
+@attribute [Authorize(Roles = "Librarian")]
+@inherits LibraryPageBase
+@using Microsoft.Extensions.DependencyInjection
+@inject IServiceScopeFactory ScopeFactory
+@inject IJSRuntime JS
+<PageTitle>Members · BookBridge</PageTitle>
+<div class="page-heading"><div><span class="eyebrow">THE PEOPLE BEHIND THE PAGES</span><h1>Library members.</h1><p>Manage memberships and help readers find their next story.</p></div><button class="button primary" @onclick="NewMember">+ Add member</button></div>
+@if (credentials is not null)
+{
+    <section class="panel credentials-panel" role="status"><div class="section-heading"><h2>Member sign-in account created</h2><button class="icon-button" aria-label="Dismiss account credentials" @onclick="() => credentials = null">×</button></div><p>Share these credentials privately with the member. The temporary password is only shown here; ask them to change it after signing in.</p><div class="form-grid"><div class="field"><label for="account-email">Account email</label><input id="account-email" readonly value="@credentials.Email" /></div><div class="field"><label for="account-password">Temporary password</label><input id="account-password" readonly value="@credentials.TemporaryPassword" autocomplete="off" /></div></div><div class="button-row"><button class="button secondary" @onclick="CopyCredentials">Copy credentials</button><button class="button primary" @onclick="() => credentials = null">Done</button></div></section>
+}
+@if (showEditor)
+{
+    <section class="panel editor-panel"><div class="section-heading"><h2>@(editId.HasValue ? "Edit member" : "Add member")</h2><button class="icon-button" aria-label="Close member editor" @onclick="() => showEditor = false">×</button></div><EditForm Model="model" OnValidSubmit="Save" FormName="member-editor"><DataAnnotationsValidator /><ValidationSummary /><div class="form-grid"><div class="field"><label for="member-name">Full name</label><InputText id="member-name" @bind-Value="model.Name" /></div><div class="field"><label for="member-email">Email</label><InputText id="member-email" type="email" @bind-Value="model.Email" /></div><div class="field"><label for="member-phone">Phone</label><InputText id="member-phone" type="tel" @bind-Value="model.Phone" /></div><div class="field"><label for="member-status">Membership status</label><InputSelect id="member-status" @bind-Value="model.Status">@foreach (var value in Enum.GetValues<MembershipStatus>()) { <option value="@value">@value</option> }</InputSelect></div><div class="field"><label for="member-limit">Borrowing limit</label><InputNumber id="member-limit" @bind-Value="model.BorrowingLimit" /></div></div><div class="button-row"><button class="button secondary" type="button" @onclick="() => showEditor = false">Cancel</button><button class="button primary" type="submit" disabled="@Busy">@(Busy ? "Saving…" : "Save member")</button></div></EditForm></section>
+}
+<div class="search-toolbar"><div class="search-input"><label class="visually-hidden" for="member-search">Search members</label><span aria-hidden="true">⌕</span><input id="member-search" type="search" @bind="search" @bind:event="oninput" placeholder="Search names or email addresses…" /></div><span class="muted">@VisibleMembers.Count members</span></div>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else
+{
+    <section class="panel table-panel"><DataTable TItem="MemberDto" Items="VisibleMembers" Label="Library members"><Header><th>Member</th><th>Contact</th><th>Status</th><th>Active loans</th><th><span class="visually-hidden">Actions</span></th></Header><RowTemplate Context="member"><td><div class="member-cell"><span class="member-avatar" aria-hidden="true">@Initials(member.Name)</span><div><strong>@member.Name</strong><small>Member #@member.Id.ToString("D4")</small></div></div></td><td>@member.Email<small>@member.Phone</small></td><td><StatusBadge Status="@member.Status.ToString()" /></td><td><strong>@member.ActiveLoans</strong><span class="muted"> / @member.BorrowingLimit</span></td><td><div class="table-actions"><button class="button secondary small" aria-label="Edit @member.Name" @onclick="() => Edit(member)">Edit</button>@if (!member.HasAccount) { <button class="button secondary small" disabled="@Busy" @onclick="() => Provision(member)">Create sign-in account</button> } else { <span class="subtle-tag">Sign-in enabled</span> }</div></td></RowTemplate></DataTable></section>
+}
+@code {
+    private IReadOnlyList<MemberDto> members = [];
+    private string search = "";
+    private bool showEditor;
+    private int? editId;
+    private MemberForm model = new();
+    private AccountCredentials? credentials;
+    private List<MemberDto> VisibleMembers => members.Where(m => string.IsNullOrWhiteSpace(search) || m.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || m.Email.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+    protected override async Task LoadAsync() => members = await Library.GetMembersAsync(User);
+    private void NewMember() { editId = null; model = new(); showEditor = true; }
+    private void Edit(MemberDto member) { editId = member.Id; model = new() { Name = member.Name, Email = member.Email, Phone = member.Phone, Status = member.Status, BorrowingLimit = member.BorrowingLimit }; showEditor = true; }
+    private async Task Save() { if (await RunCommand(() => Library.SaveMemberAsync(User, editId, new MemberInput(model.Name, model.Email, model.Phone, model.Status, model.BorrowingLimit)), "Member details saved.")) showEditor = false; }
+    private async Task Provision(MemberDto member)
+    {
+        if (Busy) return;
+        Busy = true;
+        try { await using var scope = ScopeFactory.CreateAsyncScope(); var result = await scope.ServiceProvider.GetRequiredService<IMemberAccountService>().ProvisionAsync(User, member.Id); if (!result.IsSuccess) { State.ShowToast(result.Error, true); return; } credentials = result.Value; State.Invalidate(); await ReloadAsync(); }
+        catch { State.ShowToast("The account could not be created. Please try again.", true); }
+        finally { Busy = false; }
+    }
+    private async Task CopyCredentials()
+    {
+        if (credentials is null) return;
+        try { await JS.InvokeVoidAsync("navigator.clipboard.writeText", $"Email: {credentials.Email}\nTemporary password: {credentials.TemporaryPassword}"); State.ShowToast("Credentials copied. Share them privately with the member."); }
+        catch { State.ShowToast("Clipboard access is unavailable. Select and copy the credentials above.", true); }
+    }
+    private static string Initials(string name) => string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(s => s[0]));
+    private sealed class MemberForm
+    {
+        [Required, StringLength(150)] public string Name { get; set; } = "";
+        [Required, EmailAddress, StringLength(254)] public string Email { get; set; } = "";
+        [StringLength(40)] public string Phone { get; set; } = "";
+        public MembershipStatus Status { get; set; } = MembershipStatus.Active;
+        [Range(1, 50)] public int BorrowingLimit { get; set; } = 5;
+    }
+}

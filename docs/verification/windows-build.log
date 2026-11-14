@@ -1,0 +1,15 @@
+  LibraryLending.Domain -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Domain\bin\Release\net8.0\LibraryLending.Domain.dll
+  LibraryLending.Tests.EndToEnd -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.EndToEnd\bin\Release\net8.0\LibraryLending.Tests.EndToEnd.dll
+  LibraryLending.Application -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Application\bin\Release\net8.0\LibraryLending.Application.dll
+  LibraryLending.Tests.Unit -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Unit\bin\Release\net8.0\LibraryLending.Tests.Unit.dll
+  LibraryLending.Infrastructure -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Infrastructure\bin\Release\net8.0\LibraryLending.Infrastructure.dll
+  LibraryLending.Tests.Performance -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Performance\bin\Release\net8.0\LibraryLending.Tests.Performance.dll
+  LibraryLending.DatabaseTool -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tools\LibraryLending.DatabaseTool\bin\Release\net8.0\LibraryLending.DatabaseTool.dll
+  LibraryLending.Web -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Web\bin\Release\net8.0\LibraryLending.Web.dll
+  LibraryLending.Tests.Integration -> C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Integration\bin\Release\net8.0\LibraryLending.Tests.Integration.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:17.88

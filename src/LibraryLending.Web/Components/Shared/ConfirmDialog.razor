@@ -1,0 +1,26 @@
+@inject IJSRuntime JS
+@if (Open)
+{
+    <div class="dialog-backdrop"><section class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" @onkeydown="KeyDown" tabindex="-1" @ref="dialog"><span class="eyebrow">PLEASE CONFIRM</span><h2 id="confirm-title">@Title</h2><p>@Message</p><div class="button-row"><button class="button secondary" disabled="@Busy" @onclick="() => OnCancel.InvokeAsync()">Cancel</button><button class="button @(Danger ? "danger" : "primary")" disabled="@Busy" @onclick="() => OnConfirm.InvokeAsync()">@(Busy ? "Working…" : ConfirmText)</button></div></section></div>
+}
+@code {
+    [Parameter] public bool Open { get; set; }
+    [Parameter] public string Title { get; set; } = "Confirm action";
+    [Parameter] public string Message { get; set; } = "";
+    [Parameter] public string ConfirmText { get; set; } = "Confirm";
+    [Parameter] public bool Danger { get; set; }
+    [Parameter] public bool Busy { get; set; }
+    [Parameter] public EventCallback OnConfirm { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    private ElementReference dialog;
+    private bool wasOpen;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Open == wasOpen) return;
+        // Record the transition before yielding so a live refresh cannot capture dialog focus as its own return target.
+        wasOpen = Open;
+        if (Open) await JS.InvokeVoidAsync("library.focusDialog", dialog);
+        else await JS.InvokeVoidAsync("library.restoreDialogFocus");
+    }
+    private Task KeyDown(KeyboardEventArgs args) => args.Key == "Escape" && !Busy ? OnCancel.InvokeAsync() : Task.CompletedTask;
+}

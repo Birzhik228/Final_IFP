@@ -1,0 +1,15 @@
+<form class="search-toolbar" @onsubmit="Submit" @onsubmit:preventDefault>
+    <div class="search-input"><label class="visually-hidden" for="book-search">Search books</label><span aria-hidden="true">⌕</span><input id="book-search" type="search" @bind="search" placeholder="Search title, author, or ISBN…" /></div>
+    <div><label class="visually-hidden" for="category-filter">Category</label><select id="category-filter" @bind="category"><option value="">All categories</option>@foreach (var item in Categories) { <option value="@item">@item</option> }</select></div>
+    <label class="checkbox-label"><input type="checkbox" @bind="available" />Available only</label>
+    <button type="submit" class="button primary">Search</button>
+</form>
+@code {
+    [Parameter] public IReadOnlyList<string> Categories { get; set; } = [];
+    [Parameter] public BookQuery Query { get; set; } = new();
+    [Parameter] public EventCallback<BookQuery> OnSearch { get; set; }
+    private string search = "", category = "";
+    private bool available;
+    protected override void OnParametersSet() { search = Query.Search; category = Query.Category; available = Query.AvailableOnly; }
+    private Task Submit() => OnSearch.InvokeAsync(new BookQuery(search, category, available));
+}

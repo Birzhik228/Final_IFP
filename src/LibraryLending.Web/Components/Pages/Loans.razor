@@ -1,0 +1,21 @@
+@page "/loans"
+@attribute [Authorize]
+@inherits LibraryPageBase
+<PageTitle>Loans & returns · BookBridge</PageTitle>
+<div class="page-heading"><div><span class="eyebrow">KEEP THE STORIES MOVING</span><h1>@(User.IsLibrarian ? "Loans & returns." : "Your borrowed books.")</h1><p>@(User.IsLibrarian ? "Track every checkout and welcome each book back." : "Keep an eye on due dates and make room for your next read.")</p></div><a class="button primary" href="/books">Find a book →</a></div>
+<form class="search-toolbar" @onsubmit="Search" @onsubmit:preventDefault><div class="search-input"><label class="visually-hidden" for="loan-search">Search loans</label><span aria-hidden="true">⌕</span><input id="loan-search" type="search" @bind="search" placeholder="Search by book or member…" /></div><label class="visually-hidden" for="loan-status">Loan status</label><select id="loan-status" @bind="status"><option value="active">Active loans</option><option value="returned">Returned loans</option><option value="all">All loans</option></select><button type="submit" class="button primary">Search</button></form>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else { <section class="panel table-panel"><LoanTable Loans="VisibleLoans.Skip((page - 1) * 10).Take(10).ToList()" ShowMembers="User.IsLibrarian" CanReturn="User.IsLibrarian" OnReturn="ChooseReturn" /><Pagination Page="page" TotalPages="Math.Max(1, (int)Math.Ceiling(VisibleLoans.Count / 10.0))" TotalCount="VisibleLoans.Count" PageChanged="p => page = p" /></section> }
+<ConfirmDialog Open="@(returnLoan is not null)" Title="Return this book?" Message="@(returnLoan is null ? "" : $"Return {returnLoan.BookTitle} from {returnLoan.MemberName}. Any overdue fine will be finalised, and the next reservation will be assigned automatically.")" ConfirmText="Confirm return" Busy="Busy" OnConfirm="Return" OnCancel="() => returnLoan = null" />
+@code {
+    private IReadOnlyList<LoanDto> loans = [];
+    private string search = "", status = "active";
+    private int page = 1;
+    private LoanDto? returnLoan;
+    private List<LoanDto> VisibleLoans => loans.Where(l => status == "all" || (status == "active" ? l.ReturnedAtUtc is null : l.ReturnedAtUtc is not null)).ToList();
+    protected override async Task LoadAsync() { loans = await Library.GetLoansAsync(User, search: search); page = Math.Min(page, Math.Max(1, (int)Math.Ceiling(VisibleLoans.Count / 10.0))); }
+    private async Task Search() { page = 1; await ReloadAsync(); }
+    private void ChooseReturn(LoanDto loan) => returnLoan = loan;
+    private async Task Return() { if (returnLoan is not null && await RunCommand(() => Library.ReturnAsync(User, returnLoan.Id), "Book returned. Reservations and fines have been updated.")) returnLoan = null; }
+}

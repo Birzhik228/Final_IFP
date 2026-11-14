@@ -1,0 +1,14 @@
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)">
+                <NotAuthorized>
+                    <section class="empty-state"><h1>Sign in to your library</h1><p>Your account gives you access to loans, reservations, and notifications.</p><a class="button primary" href="/account/login">Sign in</a></section>
+                </NotAuthorized>
+                <Authorizing><p class="loading-state" role="status">Opening your library…</p></Authorizing>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+        </Found>
+        <NotFound><LayoutView Layout="typeof(MainLayout)"><section class="empty-state"><h1>Page not found</h1><p>This page is not in our catalogue.</p><a class="button primary" href="/books">Browse books</a></section></LayoutView></NotFound>
+    </Router>
+</CascadingAuthenticationState>

@@ -1,0 +1,13 @@
+  LibraryLending.Domain -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Domain/bin/Debug/net8.0/LibraryLending.Domain.dll
+  LibraryLending.Application -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Application/bin/Debug/net8.0/LibraryLending.Application.dll
+  LibraryLending.Infrastructure -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Infrastructure/bin/Debug/net8.0/LibraryLending.Infrastructure.dll
+  LibraryLending.Web -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Web/bin/Debug/net8.0/LibraryLending.Web.dll
+  LibraryLending.Tests.Integration -> /var/tmp/bookbridge-gap-20261114/source/tests/LibraryLending.Tests.Integration/bin/Debug/net8.0/LibraryLending.Tests.Integration.dll
+Test run for /var/tmp/bookbridge-gap-20261114/source/tests/LibraryLending.Tests.Integration/bin/Debug/net8.0/LibraryLending.Tests.Integration.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+Results File: /mnt/c/Users/Adina/Documents/Codex/2026-11-14/rea/work/gap-evidence/linux/readiness-final/linux-readiness-final.trx
+
+Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: < 1 ms - LibraryLending.Tests.Integration.dll (net8.0)

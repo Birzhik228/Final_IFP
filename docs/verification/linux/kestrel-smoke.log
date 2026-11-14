@@ -1,0 +1,2 @@
+Linux Kestrel health, database readiness, and BookBridge login: PASS
+Evidence: /var/tmp/bookbridge-gap-20261114/source/artifacts/platform/linux/server.ELR99C

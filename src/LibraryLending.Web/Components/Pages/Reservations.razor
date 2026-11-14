@@ -1,0 +1,23 @@
+@page "/reservations"
+@attribute [Authorize]
+@inherits LibraryPageBase
+<PageTitle>Reservations · BookBridge</PageTitle>
+<div class="page-heading"><div><span class="eyebrow">GOOD THINGS ARE WORTH THE WAIT</span><h1>Reservations.</h1><p>First in line, first to read. Every returned copy moves the queue forward.</p></div><a class="button secondary" href="/books">Browse books →</a></div>
+<div class="tabs" role="group" aria-label="Reservation view"><button class="@(showHistory ? "" : "selected")" @onclick="() => showHistory = false">Active reservations</button><button class="@(showHistory ? "selected" : "")" @onclick="() => showHistory = true">History</button></div>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else
+{
+    <section class="panel table-panel"><div class="table-scroll" tabindex="0" role="region" aria-label="Reservation queue"><table class="data-table"><caption class="visually-hidden">Reservation queue</caption><thead><tr><th>Book</th>@if (User.IsLibrarian) { <th>Member</th> }<th>Status</th><th>Queue / pickup</th><th><span class="visually-hidden">Actions</span></th></tr></thead><tbody>@foreach (var reservation in VisibleReservations) { <tr data-testid="reservation-row"><td><a href="/books/@reservation.BookId"><strong>@reservation.BookTitle</strong></a><small>Requested @reservation.CreatedAtUtc.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</small></td>@if (User.IsLibrarian) { <td>@reservation.MemberName</td> }<td><StatusBadge Status="@reservation.Status.ToString()" /></td><td>@if (reservation.Status == ReservationStatus.Waiting) { <span>Position @reservation.QueuePosition</span> } else if (reservation.Status == ReservationStatus.Ready) { <strong>@reservation.PickupDeadlineUtc?.ToString("dd MMM, HH:mm", System.Globalization.CultureInfo.InvariantCulture) UTC</strong><small>Copy @reservation.Barcode</small> } else { <span class="muted">Closed</span> }</td><td><div class="table-actions">@if (reservation.Status == ReservationStatus.Ready && User.IsLibrarian) { <button class="button primary small" disabled="@Busy" @onclick="() => Pickup(reservation)">Confirm pickup</button> }@if (reservation.Status is ReservationStatus.Ready or ReservationStatus.Waiting) { <button class="text-button danger-text" disabled="@Busy" @onclick="() => cancelReservation = reservation">Cancel reservation</button> }</div></td></tr> }</tbody></table>@if (!VisibleReservations.Any()) { <div class="table-empty">@(showHistory ? "No reservation history yet." : "There are no active reservations in this view.")</div> }</div></section>
+    <p class="page-note">Ready copies are held for 72 hours. At pickup, the member must have no overdue loans and must be below their borrowing limit.</p>
+}
+<ConfirmDialog Open="@(cancelReservation is not null)" Title="Cancel this reservation?" Message="Your position will be released. If a copy is waiting, it will pass to the next member." ConfirmText="Confirm cancellation" Danger="true" Busy="Busy" OnConfirm="Cancel" OnCancel="() => cancelReservation = null" />
+@code {
+    private IReadOnlyList<ReservationDto> reservations = [];
+    private bool showHistory;
+    private ReservationDto? cancelReservation;
+    private IEnumerable<ReservationDto> VisibleReservations => reservations.Where(r => showHistory ? r.Status is not (ReservationStatus.Ready or ReservationStatus.Waiting) : r.Status is ReservationStatus.Ready or ReservationStatus.Waiting);
+    protected override async Task LoadAsync() => reservations = await Library.GetReservationsAsync(User);
+    private Task<bool> Pickup(ReservationDto reservation) => RunCommand(() => Library.PickupAsync(User, reservation.Id), "Pickup confirmed. A new loan has been created.");
+    private async Task Cancel() { if (cancelReservation is not null && await RunCommand(() => Library.CancelReservationAsync(User, cancelReservation.Id), "Reservation cancelled.")) cancelReservation = null; }
+}

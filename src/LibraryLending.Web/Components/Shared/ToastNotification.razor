@@ -1,0 +1,8 @@
+@if (!string.IsNullOrWhiteSpace(State?.Toast)) { <div class="toast-notification @(State.ToastIsError ? "error" : "success")" role="@(State.ToastIsError ? "alert" : "status")"><span aria-hidden="true">@(State.ToastIsError ? "!" : "✓")</span><p>@State.Toast</p><button class="icon-button" aria-label="Dismiss notification" @onclick="State.DismissToast">×</button></div> }
+@code {
+    [CascadingParameter] public AppState State { get; set; } = default!;
+    protected override void OnInitialized() => State.Changed += Changed;
+    private void Changed() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => State.Changed -= Changed;
+}
+@implements IDisposable

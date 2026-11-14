@@ -1,0 +1,5 @@
+Completed concurrency 1: 1171 read operations, 1476 borrow/return pairs.
+Completed concurrency 10: 2536 read operations, 1550 borrow/return pairs.
+Completed concurrency 25: 1674 read operations, 1508 borrow/return pairs.
+Report: C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\gap-evidence\performance\results.json
+Consistency: PASS; operation errors: 0

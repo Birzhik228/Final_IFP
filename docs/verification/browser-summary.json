@@ -1,0 +1,183 @@
+{
+  "capturedAtUtc": "2026-11-14T15:17:03.0492484Z",
+  "status": "passed",
+  "testEnvironment": {
+    "host": "Windows x64",
+    "target": "http://localhost:5183",
+    "configuration": "Development",
+    "database": "Isolated gap-ui.db; development demo seed",
+    "backgroundJobs": false,
+    "playwrightVersion": "1.56.0",
+    "viewportSizes": [
+      "1440x1000 desktop",
+      "390x844 phone",
+      "768x1024 tablet",
+      "844x390 landscape"
+    ]
+  },
+  "browserResults": [
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "total": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "started": "2026-11-14T20:11:11.9746504+05:00",
+      "finished": "2026-11-14T20:12:24.9318816+05:00",
+      "trx": "chromium/chromium.trx",
+      "axeScans": 38
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "total": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "started": "2026-11-14T20:12:28.3107437+05:00",
+      "finished": "2026-11-14T20:14:38.2729979+05:00",
+      "trx": "firefox/firefox.trx",
+      "axeScans": 38
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "total": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "started": "2026-11-14T20:14:40.2520333+05:00",
+      "finished": "2026-11-14T20:15:59.2225383+05:00",
+      "trx": "webkit/webkit.trx",
+      "axeScans": 38
+    }
+  ],
+  "totalTests": 42,
+  "passedTests": 42,
+  "accessibility": {
+    "engine": "axe-core",
+    "version": "4.10.3",
+    "ruleTags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa"
+    ],
+    "scans": 114,
+    "violations": 0,
+    "passingRuleResults": 2604,
+    "incompleteRuleResults": 120,
+    "incompleteRuleIds": [
+      "color-contrast",
+      "link-in-text-block"
+    ],
+    "roles": [
+      "Librarian",
+      "Member"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "routes": [
+      "login",
+      "/",
+      "/books",
+      "/books/1",
+      "/loans",
+      "/members",
+      "/reservations",
+      "/overdue",
+      "/notifications",
+      "/account/password"
+    ],
+    "additionalStates": [
+      "Unread reservation notification",
+      "Notification marked as read"
+    ],
+    "reports": "accessibility/*.json"
+  },
+  "keyboardChecks": [
+    "Confirmation dialog initial focus, Tab/Shift+Tab trap, Escape dismissal, return to trigger",
+    "Closed mobile navigation is hidden; Enter opens and focuses first link; Escape closes and restores toggle",
+    "Mobile navigation works on interactive app and static /account/password",
+    "Tablet/landscape pages avoid document overflow and navigation remains keyboard reachable"
+  ],
+  "fixes": [
+    "Contrast-safe muted and amber palette; cover colors and hover text; preserve read-notification text contrast",
+    "Mobile drawer visibility, explicit ARIA state, native keyboard/focus handlers on static and interactive routes; scrollable sidebar; focusable skip-link target",
+    "Unread status uses accessible text instead of an invalid label on a generic span",
+    "Positioned table scroll container prevents visually hidden headers from widening tablet documents",
+    "Confirmation dialog records open state before async JS interop; repeated focus calls preserve original trigger"
+  ],
+  "screenshots": [
+    "screenshots/chromium/catalogue-desktop-dark.png",
+    "screenshots/chromium/catalogue-desktop-light.png",
+    "screenshots/chromium/catalogue-phone-dark.png",
+    "screenshots/chromium/catalogue-phone-light.png",
+    "screenshots/chromium/dashboard-desktop-dark.png",
+    "screenshots/chromium/dashboard-desktop-light.png",
+    "screenshots/firefox/catalogue-desktop-dark.png",
+    "screenshots/firefox/catalogue-desktop-light.png",
+    "screenshots/firefox/catalogue-phone-dark.png",
+    "screenshots/firefox/catalogue-phone-light.png",
+    "screenshots/firefox/dashboard-desktop-dark.png",
+    "screenshots/firefox/dashboard-desktop-light.png",
+    "screenshots/webkit/catalogue-desktop-dark.png",
+    "screenshots/webkit/catalogue-desktop-light.png",
+    "screenshots/webkit/catalogue-phone-dark.png",
+    "screenshots/webkit/catalogue-phone-light.png",
+    "screenshots/webkit/dashboard-desktop-dark.png",
+    "screenshots/webkit/dashboard-desktop-light.png"
+  ],
+  "serverCoverage": "server.cobertura.xml",
+  "reproduction": "tests/LibraryLending.Tests.EndToEnd/Run-BrowserMatrix.ps1 -BaseUrl <isolated Development host> -ResultsDirectory <directory> -InstallBrowsers",
+  "limitations": [
+    "Automated results do not establish full WCAG conformance or replace screen-reader/manual review.",
+    "Axe incomplete records are preserved, mainly non-text glyph contrast and overlap-based link contrast review.",
+    "Browser engine and simulated viewport tests were run headlessly on Windows, not physical mobile devices or branded Safari/Chrome applications.",
+    "Screenshots show BookBridge branding with isolated test data, including workflow-created records."
+  ],
+  "sourceHashes": [
+    {
+      "path": "src/LibraryLending.Web/Components/Layout/MainLayout.razor",
+      "sha256": "06694AE88A137FC19BBEE4440C1E64B7B9C4532960393C57A266C1546A3C7096"
+    },
+    {
+      "path": "src/LibraryLending.Web/Components/Shared/ConfirmDialog.razor",
+      "sha256": "181182568B5FD46644D56BC9CED36C051504D1E0F94A80767B556760A59ABC62"
+    },
+    {
+      "path": "src/LibraryLending.Web/Components/Pages/Notifications.razor",
+      "sha256": "5EA66E0E1BE821C8330DFF5C98BD04FBFEE50CA153DAC9176FA95DACDDC2E9F9"
+    },
+    {
+      "path": "src/LibraryLending.Web/wwwroot/app.css",
+      "sha256": "8684AA85DB923B08BCAB2D4A96C63545A0FA03B19FF8393F5F27BB7F28F54DED"
+    },
+    {
+      "path": "src/LibraryLending.Web/wwwroot/app.js",
+      "sha256": "A81E2084643E357097C34BC8764D51032082CDF6D808C7A1BD7B4BB2E3CCB989"
+    },
+    {
+      "path": "tests/LibraryLending.Tests.EndToEnd/AccessibilityFlows.cs",
+      "sha256": "A5A2AB97E05BB9177B47D46AB79C9A74A714A56440F7BA6AABB37500B5B319EB"
+    },
+    {
+      "path": "tests/LibraryLending.Tests.EndToEnd/CirculationFlows.cs",
+      "sha256": "54E0FBDD897FBFDB474FF826C1046EAFA436D8F625F47ED83E2473F316AB50E3"
+    },
+    {
+      "path": "tests/LibraryLending.Tests.EndToEnd/LibraryLending.Tests.EndToEnd.csproj",
+      "sha256": "30B4825A15A0DD38824669C03765F07845B6DE0EC58188DF6BA7B80DFD59FE98"
+    },
+    {
+      "path": "tests/LibraryLending.Tests.EndToEnd/Run-BrowserMatrix.ps1",
+      "sha256": "2B9A982F9151E12D6E3AEFD94CD9CBD656380C7FF9913D68126CB05E65C30B2F"
+    },
+    {
+      "path": "tests/LibraryLending.Tests.EndToEnd/Assets/axe.min.js",
+      "sha256": "880970C081707360E64F34CEA25FF91892F5BC95675B0776925B9709DD8A68BB"
+    }
+  ]
+}

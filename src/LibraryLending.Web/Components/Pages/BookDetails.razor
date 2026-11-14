@@ -1,0 +1,43 @@
+@page "/books/{Id:int}"
+@attribute [Authorize]
+@inherits LibraryPageBase
+<PageTitle>@(details?.Book.Title ?? "Book details") · BookBridge</PageTitle>
+<a class="back-link" href="/books">← Back to the collection</a>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else if (details is null) { <section class="empty-state"><h1>Book not found</h1><p>This title may have been removed from the catalogue.</p></section> }
+else
+{
+    <div class="book-detail-hero"><div class="detail-cover"><BookCard Book="details.Book" /></div><div class="detail-intro"><span class="eyebrow">@details.Book.Category · @details.Book.Year</span><h1>@details.Book.Title</h1><p class="detail-author">by @details.Book.Authors</p><div class="detail-badges"><StatusBadge Status="@(details.Book.AvailableCopies > 0 ? "Available" : "Borrowed")" Label="@(details.Book.AvailableCopies > 0 ? $"{details.Book.AvailableCopies} copies available" : "All copies unavailable")" /><span class="subtle-tag">@details.Book.QueueLength waiting</span></div><p class="book-description">@(string.IsNullOrWhiteSpace(details.Book.Description) ? "Visit your library to discover more about this title." : details.Book.Description)</p><dl class="book-metadata"><dt>ISBN</dt><dd>@details.Book.Isbn</dd><dt>Physical copies</dt><dd>@details.Book.TotalCopies</dd></dl>@if (User.IsLibrarian) { <button class="button secondary" @onclick="() => showEditor = !showEditor">Edit book</button> }</div></div>
+    @if (showEditor) { <BookEditor Book="details.Book" Busy="Busy" OnSave="SaveBook" OnCancel="() => showEditor = false" /> }
+    <section class="panel"><div class="section-heading"><div><span class="eyebrow">CIRCULATION</span><h2>@(User.IsLibrarian ? "Borrow or reserve" : "Availability & reservations")</h2></div><span class="muted">14-day loans · 3-day pickup window</span></div>
+        @if (User.IsLibrarian) { <div class="borrow-controls"><MemberPicker Members="members" @bind-Value="selectedMember" /><p class="muted">Select the member before borrowing a copy or joining the queue.</p></div> }
+        @if (details.Book.AvailableCopies == 0 && (User.IsLibrarian || User.MemberId.HasValue))
+        {
+            <div class="reservation-callout"><div><strong>Save your place in line.</strong><p>We’ll notify you when a returned copy is ready for pickup.</p></div><button class="button primary" disabled="@(Busy || TargetMember <= 0)" @onclick="Reserve">Join reservation queue</button></div>
+        }
+        <DataTable TItem="CopyDto" Items="details.Copies" Label="Physical copies"><Header><th>Barcode</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></Header><RowTemplate Context="copy"><td><strong>@copy.Barcode</strong></td><td><StatusBadge Status="@copy.Status.ToString()" /></td><td><div class="table-actions">@if (User.IsLibrarian && copy.Status == CopyStatus.Available) { <button class="button primary small" aria-label="Borrow copy @copy.Barcode" disabled="@(Busy || selectedMember <= 0)" @onclick="() => Borrow(copy.Id)">Borrow</button> }@if (User.IsLibrarian && copy.Status != CopyStatus.Lost) { <button class="text-button danger-text" disabled="@Busy" @onclick="() => lostCopy = copy">Mark lost</button> }</div></td></RowTemplate></DataTable>
+        @if (User.IsLibrarian)
+        {
+            <form class="inline-form" @onsubmit="AddCopy" @onsubmit:preventDefault><div class="field"><label for="new-barcode">New copy barcode</label><input id="new-barcode" @bind="barcode" required maxlength="80" placeholder="e.g. LIB-0031-01" /></div><button class="button secondary" type="submit" disabled="@Busy">Add copy</button></form>
+        }
+    </section>
+}
+<ConfirmDialog Open="@(lostCopy is not null)" Title="Mark this copy as lost?" Message="The copy will become unavailable. Existing lending history will be preserved." ConfirmText="Mark lost" Danger="true" Busy="Busy" OnConfirm="MarkLost" OnCancel="() => lostCopy = null" />
+@code {
+    [Parameter] public int Id { get; set; }
+    private BookDetailDto? details;
+    private IReadOnlyList<MemberDto> members = [];
+    private int selectedMember, loadedId;
+    private int TargetMember => User.IsLibrarian ? selectedMember : User.MemberId ?? 0;
+    private bool showEditor;
+    private string barcode = "";
+    private CopyDto? lostCopy;
+    protected override async Task LoadAsync() { details = await Library.GetBookAsync(Id); if (User.IsLibrarian) members = await Library.GetMembersAsync(User); loadedId = Id; }
+    protected override async Task OnParametersSetAsync() { if (!Loading && loadedId != Id) await ReloadAsync(); }
+    private Task<bool> Borrow(int copyId) => RunCommand(() => Library.BorrowAsync(User, copyId, selectedMember), "Copy borrowed. The loan is now active.");
+    private Task<bool> Reserve() => RunCommand(() => Library.ReserveAsync(User, Id, TargetMember), "Reservation added. Your place in the queue is saved.");
+    private async Task AddCopy() { if (await RunCommand(() => Library.AddCopyAsync(User, Id, barcode), "Copy added.")) barcode = ""; }
+    private async Task SaveBook(BookInput input) { if (await RunCommand(() => Library.SaveBookAsync(User, Id, input), "Book details updated.")) showEditor = false; }
+    private async Task MarkLost() { if (lostCopy is not null && await RunCommand(() => Library.MarkLostAsync(User, lostCopy.Id), "Copy marked as lost.")) lostCopy = null; }
+}

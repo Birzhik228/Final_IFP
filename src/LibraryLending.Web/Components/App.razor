@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="application-name" content="BookBridge" />
+    <meta name="description" content="BookBridge — Library Lending &amp; Reservations. Browse books, manage loans, and reserve your next read." />
+    <base href="/" />
+    <link rel="stylesheet" href="vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <script>document.documentElement.dataset.theme=localStorage.getItem('library-theme')||'light';</script>
+    <HeadOutlet @rendermode="PageRenderMode" />
+</head>
+<body>
+    <Routes @rendermode="PageRenderMode" />
+    <script src="vendor/signalr.min.js"></script>
+    <script src="app.js"></script>
+    <script src="_framework/blazor.web.js"></script>
+</body>
+</html>
+@code {
+    [CascadingParameter] private Microsoft.AspNetCore.Http.HttpContext HttpContext { get; set; } = default!;
+    private IComponentRenderMode? PageRenderMode => HttpContext.Request.Path.StartsWithSegments("/account") ? null : InteractiveServer;
+}

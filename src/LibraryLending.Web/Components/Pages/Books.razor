@@ -1,0 +1,31 @@
+@page "/books"
+@attribute [Authorize]
+@inherits LibraryPageBase
+<PageTitle>Book catalogue · BookBridge</PageTitle>
+<div class="page-heading"><div><span class="eyebrow">DISCOVER SOMETHING GOOD</span><h1>The collection.</h1><p>Find a familiar favourite or a completely new perspective.</p></div>@if (User.IsLibrarian) { <button class="button primary" @onclick="() => showEditor = !showEditor">+ Add book</button> }</div>
+@if (showEditor) { <BookEditor OnSave="SaveBook" OnCancel="() => showEditor = false" Busy="Busy" /> }
+<BookSearchBar Categories="categories" Query="query" OnSearch="Search" />
+@if (Loading) { <LoadingPanel Message="Finding your next read…" /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else
+{
+    <div class="results-heading"><span><strong>@books.TotalCount</strong> titles in this view</span><span class="muted">A world of ideas, one shelf at a time.</span></div>
+    @if (books.Items.Count == 0) { <section class="empty-state"><h2>No books found</h2><p>Try another title, author, or category.</p><button class="button secondary" @onclick="() => Search(new BookQuery())">Clear filters</button></section> }
+    <div class="book-grid">@foreach (var book in books.Items) { <BookCard Book="book" @key="book.Id" /> }</div>
+    <Pagination Page="books.Page" TotalPages="books.TotalPages" TotalCount="books.TotalCount" PageChanged="ChangePage" />
+}
+@code {
+    private BookQuery query = new();
+    private PageResult<BookDto> books = new([], 0, 1, 9);
+    private IReadOnlyList<string> categories = [];
+    private bool showEditor;
+    protected override async Task LoadAsync()
+    {
+        categories = await Library.GetCategoriesAsync();
+        var key = $"books:{query}";
+        if (!State.TryGet<PageResult<BookDto>>(key, out var cached)) { books = await Library.SearchBooksAsync(query); State.Cache(key, books); } else books = cached!;
+    }
+    private async Task Search(BookQuery value) { query = value; Loading = true; await ReloadAsync(); }
+    private async Task ChangePage(int page) { query = query with { Page = page }; await ReloadAsync(); }
+    private async Task SaveBook(BookInput input) { if (await RunCommand(() => Library.SaveBookAsync(User, null, input), "Book added to the collection.")) showEditor = false; }
+}

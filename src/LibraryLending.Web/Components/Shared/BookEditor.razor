@@ -1,0 +1,22 @@
+<section class="panel editor-panel"><div class="section-heading"><h2>@(Book is null ? "Add a book" : "Edit book")</h2><button class="icon-button" aria-label="Close book editor" @onclick="() => OnCancel.InvokeAsync()">×</button></div><EditForm Model="model" OnValidSubmit="Save" FormName="book-editor"><DataAnnotationsValidator /><ValidationSummary /><div class="form-grid"><div class="field"><label for="book-title">Title</label><InputText id="book-title" @bind-Value="model.Title" /></div><div class="field"><label for="book-authors">Author(s)</label><InputText id="book-authors" @bind-Value="model.Authors" /><small>Separate multiple authors with semicolons.</small></div><div class="field"><label for="book-isbn">ISBN</label><InputText id="book-isbn" @bind-Value="model.Isbn" /></div><div class="field"><label for="book-category">Category</label><InputText id="book-category" @bind-Value="model.Category" /></div><div class="field"><label for="book-year">Publication year</label><InputNumber id="book-year" @bind-Value="model.Year" /></div>@if (Book is null) { <div class="field"><label for="book-copies">Number of copies</label><InputNumber id="book-copies" @bind-Value="model.Copies" /></div> }<div class="field span-two"><label for="book-description">Description</label><InputTextArea id="book-description" @bind-Value="model.Description" rows="3" /></div><div class="field span-two"><label for="book-cover">Cover URL</label><InputText id="book-cover" @bind-Value="model.CoverUrl" placeholder="https://… (optional)" /></div></div><div class="button-row"><button type="button" class="button secondary" @onclick="() => OnCancel.InvokeAsync()">Cancel</button><button type="submit" class="button primary" disabled="@Busy">@(Busy ? "Saving…" : "Save book")</button></div></EditForm></section>
+@code {
+    [Parameter] public BookDto? Book { get; set; }
+    [Parameter] public bool Busy { get; set; }
+    [Parameter] public EventCallback<BookInput> OnSave { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    private BookForm model = new();
+    protected override void OnInitialized() { if (Book is not null) model = new() { Title = Book.Title, Authors = Book.Authors, Isbn = Book.Isbn, Category = Book.Category, Year = Book.Year, Description = Book.Description, CoverUrl = Book.CoverUrl }; }
+    private Task Save() => OnSave.InvokeAsync(new BookInput(model.Title, model.Authors, model.Isbn, model.Category, model.Year, model.Description, model.CoverUrl ?? "", model.Copies));
+    private sealed class BookForm
+    {
+        [Required, StringLength(200)] public string Title { get; set; } = "";
+        [Required, StringLength(300)] public string Authors { get; set; } = "";
+        [Required, StringLength(20, MinimumLength = 10)] public string Isbn { get; set; } = "";
+        [Required, StringLength(80)] public string Category { get; set; } = "";
+        [Range(1, 2100)] public int Year { get; set; } = DateTime.UtcNow.Year;
+        [StringLength(4000)] public string Description { get; set; } = "";
+        private string? coverUrl;
+        [Url] public string? CoverUrl { get => coverUrl; set => coverUrl = string.IsNullOrWhiteSpace(value) ? null : value; }
+        [Range(1, 50)] public int Copies { get; set; } = 1;
+    }
+}

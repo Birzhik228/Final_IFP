@@ -1,0 +1,14 @@
+@page "/notifications"
+@attribute [Authorize]
+@inherits LibraryPageBase
+<PageTitle>Notifications · BookBridge</PageTitle>
+<div class="page-heading"><div><span class="eyebrow">YOU’RE IN THE LOOP</span><h1>Your notifications.</h1><p>Pickup updates, due-date reminders, and a little help staying on track.</p></div><button class="button secondary" disabled="@(Busy || notifications.All(n => n.IsRead))" @onclick="MarkRead">Mark all as read</button></div>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else if (notifications.Count == 0) { <section class="empty-state"><div class="empty-icon" aria-hidden="true">◇</div><h2>All caught up.</h2><p>We’ll let you know when a reserved book is ready or a due date is approaching.</p><a class="button primary" href="/books">Explore the collection</a></section> }
+else { <section class="panel notification-list">@foreach (var notification in notifications) { <article class="notification-item @(notification.IsRead ? "read" : "unread")"><span class="notification-symbol" aria-hidden="true">@(notification.Kind.Contains("ready", StringComparison.OrdinalIgnoreCase) ? "✓" : notification.Kind.Contains("overdue", StringComparison.OrdinalIgnoreCase) ? "!" : "◇")</span><div><span class="eyebrow">@notification.Kind.Replace("-", " ")</span><p>@notification.Message</p><time datetime="@notification.CreatedAtUtc.ToString("O")">@notification.CreatedAtUtc.ToString("dd MMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture) UTC</time></div>@if (!notification.IsRead) { <span class="unread-dot"><span class="visually-hidden">Unread</span></span> }</article> }</section> }
+@code {
+    private IReadOnlyList<NotificationDto> notifications = [];
+    protected override async Task LoadAsync() { notifications = await Library.GetNotificationsAsync(User); State.SetNotifications(notifications); }
+    private async Task MarkRead() { Busy = true; try { await Library.MarkNotificationsReadAsync(User); await ReloadAsync(); State.ShowToast("Notifications marked as read."); } catch { State.ShowToast("We couldn’t update notifications. Please try again.", true); } finally { Busy = false; } }
+}

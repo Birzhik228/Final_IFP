@@ -1,0 +1,36 @@
+sequenceDiagram
+    actor Librarian
+    participant UI as Blazor loans page
+    participant App as Lending use case
+    participant Rules as Pure lending rules
+    participant DB as SQLite transaction
+    participant Hub as NotificationsHub
+    participant Member as Member browser
+    Librarian->>UI: Confirm return
+    UI->>App: ReturnAsync(authenticated actor, loanId)
+    App->>App: Check Librarian role
+    App->>DB: Begin write transaction
+    App->>DB: Load open loan, copy, waiting reservations
+    alt Already returned or invalid record
+        App->>DB: Roll back
+        App-->>UI: Expected failure result
+    else Valid return
+        App->>Rules: Calculate final fine using saved rate
+        Rules-->>App: Fine in minor units
+        App->>DB: Close loan and release copy
+        App->>Rules: Select oldest waiting active member
+        Rules-->>App: Next reservation or none
+        alt Reservation exists
+            App->>DB: Set reservation Ready with 72-hour deadline
+            App->>DB: Set copy Reserved; save notification
+        else No waiting member
+            App->>DB: Set copy Available
+        end
+        App->>DB: Save and commit
+        App-->>UI: Success
+        opt Notification saved
+            App->>Hub: Notify recipient after commit
+            Hub-->>Member: LibraryChanged
+            Member->>App: Reload own notifications
+        end
+    end

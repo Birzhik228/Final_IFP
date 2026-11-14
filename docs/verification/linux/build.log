@@ -1,0 +1,15 @@
+  LibraryLending.Domain -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Domain/bin/Debug/net8.0/LibraryLending.Domain.dll
+  LibraryLending.Application -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Application/bin/Debug/net8.0/LibraryLending.Application.dll
+  LibraryLending.Tests.Unit -> /var/tmp/bookbridge-gap-20261114/source/tests/LibraryLending.Tests.Unit/bin/Debug/net8.0/LibraryLending.Tests.Unit.dll
+  LibraryLending.Infrastructure -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Infrastructure/bin/Debug/net8.0/LibraryLending.Infrastructure.dll
+  LibraryLending.Tests.Performance -> /var/tmp/bookbridge-gap-20261114/source/tests/LibraryLending.Tests.Performance/bin/Debug/net8.0/LibraryLending.Tests.Performance.dll
+  LibraryLending.DatabaseTool -> /var/tmp/bookbridge-gap-20261114/source/tools/LibraryLending.DatabaseTool/bin/Debug/net8.0/LibraryLending.DatabaseTool.dll
+  LibraryLending.Tests.EndToEnd -> /var/tmp/bookbridge-gap-20261114/source/tests/LibraryLending.Tests.EndToEnd/bin/Debug/net8.0/LibraryLending.Tests.EndToEnd.dll
+  LibraryLending.Web -> /var/tmp/bookbridge-gap-20261114/source/src/LibraryLending.Web/bin/Debug/net8.0/LibraryLending.Web.dll
+  LibraryLending.Tests.Integration -> /var/tmp/bookbridge-gap-20261114/source/tests/LibraryLending.Tests.Integration/bin/Debug/net8.0/LibraryLending.Tests.Integration.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:51.34

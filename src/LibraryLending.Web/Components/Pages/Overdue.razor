@@ -1,0 +1,24 @@
+@page "/overdue"
+@attribute [Authorize(Roles = "Librarian")]
+@inherits LibraryPageBase
+@inject LibraryOptions Options
+<PageTitle>Overdue loans · BookBridge</PageTitle>
+<div class="page-heading"><div><span class="eyebrow">A LITTLE FOLLOW-UP GOES A LONG WAY</span><h1>Overdue loans.</h1><p>Find outstanding books, review fines, and help the collection return home.</p></div><a class="button secondary" href="@ExportUrl" download>↓ Export CSV</a></div>
+<div class="stats-grid overdue-stats"><article class="stat-card warning"><span class="stat-label">Overdue loans in this view</span><strong>@loans.Count</strong><small>Open loans past their due date</small></article><article class="stat-card"><span class="stat-label">Accrued fines</span><strong>@((loans.Sum(l => l.FineMinor) / 100m).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)) <span class="stat-unit">@Options.CurrencyLabel</span></strong><small>Final amount is calculated on return</small></article></div>
+<form class="search-toolbar" @onsubmit="Search" @onsubmit:preventDefault><div class="search-input"><label class="visually-hidden" for="overdue-search">Search overdue loans</label><span aria-hidden="true">⌕</span><input id="overdue-search" type="search" @bind="search" placeholder="Search book title or member…" /></div><label class="visually-hidden" for="overdue-sort">Sort overdue loans</label><select id="overdue-sort" @bind="sort"><option value="due">Oldest due date</option><option value="fine">Highest fine</option><option value="member">Member name</option><option value="book">Book title</option></select><button type="submit" class="button primary">Apply filters</button></form>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else { <section class="panel table-panel"><LoanTable Loans="loans.Skip((page - 1) * 10).Take(10).ToList()" ShowMembers="true" CanReturn="true" OnReturn="ChooseReturn" /><Pagination Page="page" TotalPages="Math.Max(1, (int)Math.Ceiling(loans.Count / 10.0))" TotalCount="loans.Count" PageChanged="p => page = p" /></section> }
+<p class="page-note">Fines accrue from the day after the due date using the library’s configured calendar timezone. Each loan keeps the fine rate agreed at checkout.</p>
+<ConfirmDialog Open="@(returnLoan is not null)" Title="Return this overdue book?" Message="The fine will be finalised and the copy will be offered to the next member in the queue." ConfirmText="Confirm return" Busy="Busy" OnConfirm="Return" OnCancel="() => returnLoan = null" />
+@code {
+    private IReadOnlyList<LoanDto> loans = [];
+    private string search = "", sort = "due";
+    private int page = 1;
+    private LoanDto? returnLoan;
+    private string ExportUrl => $"/exports/overdue.csv?search={Uri.EscapeDataString(search)}&sort={Uri.EscapeDataString(sort)}";
+    protected override async Task LoadAsync() { loans = await Library.GetLoansAsync(User, true, search, sort); page = Math.Min(page, Math.Max(1, (int)Math.Ceiling(loans.Count / 10.0))); }
+    private async Task Search() { page = 1; await ReloadAsync(); }
+    private void ChooseReturn(LoanDto loan) => returnLoan = loan;
+    private async Task Return() { if (returnLoan is not null && await RunCommand(() => Library.ReturnAsync(User, returnLoan.Id), "Book returned and fine finalised.")) returnLoan = null; }
+}

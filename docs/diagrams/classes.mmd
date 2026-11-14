@@ -1,0 +1,75 @@
+classDiagram
+    class Book {
+        int Id
+        string Title
+        string Isbn
+        int Year
+        string Description
+        string CoverUrl
+    }
+    class BookCopy {
+        int Id
+        string Barcode
+        CopyStatus Status
+        string Version
+    }
+    class Author {
+        int Id
+        string Name
+    }
+    class Category {
+        int Id
+        string Name
+    }
+    class Member {
+        int Id
+        string IdentityUserId
+        string Name
+        MembershipStatus Status
+        int BorrowingLimit
+    }
+    class Loan {
+        int Id
+        DateTime BorrowedAtUtc
+        DateOnly DueDate
+        DateTime ReturnedAtUtc
+        long DailyFineMinor
+        long FinalFineMinor
+    }
+    class Reservation {
+        int Id
+        ReservationStatus Status
+        DateTime CreatedAtUtc
+        DateTime PickupDeadlineUtc
+    }
+    class Notification {
+        int Id
+        string UserId
+        string Kind
+        string Message
+        string DedupeKey
+    }
+    class LendingRules {
+        +DaysOverdue(due, today) int
+        +FineMinor(due, end, rate) long
+        +CanBorrow(status, limit, active, overdue) Result
+        +NextInQueue(reservations) Reservation
+    }
+    class ILibraryService {
+        <<interface>>
+        +BorrowAsync(actor, copyId, memberId)
+        +ReturnAsync(actor, loanId)
+        +ReserveAsync(actor, bookId, memberId)
+        +PickupAsync(actor, reservationId)
+        +ProcessDeadlinesAsync()
+    }
+    Book "1" --> "0..*" BookCopy : copies
+    Book "0..*" --> "1" Category : categorized as
+    Book "0..*" -- "0..*" Author : BookAuthor
+    BookCopy "1" <-- "0..*" Loan : history
+    Member "1" <-- "0..*" Loan : borrows
+    Book "1" <-- "0..*" Reservation : queue
+    Member "1" <-- "0..*" Reservation : requests
+    Reservation "0..*" --> "0..1" BookCopy : assignment history
+    ILibraryService ..> LendingRules : uses
+    ILibraryService ..> Notification : creates

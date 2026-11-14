@@ -1,0 +1,32 @@
+**/bin/
+**/obj/
+**/TestResults/
+**/App_Data/
+**/*.db*
+artifacts/
+.vs/
+playwright-report/
+test-results/
+!docs/verification/test-results/
+!docs/verification/test-results/**
+# Older local reports superseded by the platform/browser-specific reports
+/docs/verification/test-results/unit.trx
+/docs/verification/test-results/integration.trx
+/docs/verification/test-results/browser-tests.trx
+.tools/
+
+# Local deployment secrets and certificates
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.*.local.json
+**/appsettings.Production.json
+**/secrets.json
+**/secrets/
+**/keys/
+**/data-protection-keys/
+**/*.pfx
+**/*.p12
+**/*.pem
+**/*.key

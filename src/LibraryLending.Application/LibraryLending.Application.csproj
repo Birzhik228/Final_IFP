@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../LibraryLending.Domain/LibraryLending.Domain.csproj" /></ItemGroup></Project>

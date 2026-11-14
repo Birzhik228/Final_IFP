@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.png binary
+docs/verification/** -whitespace linguist-generated=true
+tests/LibraryLending.Tests.EndToEnd/Assets/axe.min.js -whitespace linguist-vendored=true
+src/LibraryLending.Web/wwwroot/lib/** -whitespace linguist-vendored=true

@@ -1,0 +1,2059 @@
+[
+  {
+    "$id": "1",
+    "route": "login",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:35.153Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 20
+  },
+  {
+    "$id": "1",
+    "route": "/",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:36.685Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              ".active \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "22",
+            "any": [
+              {
+                "$id": "23",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "24",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan class=\u0022stat-icon\u0022 aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "article:nth-child(1) \u003E .stat-icon[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "25",
+            "any": [
+              {
+                "$id": "26",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "27",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan class=\u0022stat-icon\u0022 aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "article:nth-child(4) \u003E .stat-icon[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 25
+  },
+  {
+    "$id": "1",
+    "route": "/books",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:37.626Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav[onclick=\u0022library.closeNavigation(false)\u0022] \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              ".active \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "22",
+            "any": [
+              {
+                "$id": "23",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "24",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2315\u003C/span\u003E",
+            "target": [
+              ".search-input \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 23
+  },
+  {
+    "$id": "1",
+    "route": "/books/1",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:38.334Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              ".active \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 27
+  },
+  {
+    "$id": "1",
+    "route": "/loans",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:38.997Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav[onclick=\u0022library.closeNavigation(false)\u0022] \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "22",
+            "any": [
+              {
+                "$id": "23",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "24",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2315\u003C/span\u003E",
+            "target": [
+              ".search-input \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 25
+  },
+  {
+    "$id": "1",
+    "route": "/members",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:40.205Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "22",
+            "any": [
+              {
+                "$id": "23",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "24",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2315\u003C/span\u003E",
+            "target": [
+              ".search-input \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 24
+  },
+  {
+    "$id": "1",
+    "route": "/reservations",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:40.893Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              ".active \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      },
+      {
+        "$id": "22",
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2a",
+          "wcag141",
+          "TTv5",
+          "TT13.a",
+          "EN-301-549",
+          "EN-9.1.4.1"
+        ],
+        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+        "help": "Links must be distinguishable without relying on color",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/link-in-text-block?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "23",
+            "any": [
+              {
+                "$id": "24",
+                "id": "link-in-text-block",
+                "data": {
+                  "$id": "25",
+                  "messageKey": "bgOverlap"
+                },
+                "relatedNodes": [
+                  {
+                    "$id": "26",
+                    "html": "\u003Ctd\u003E\u003Ca href=\u0022/books/1\u0022\u003E\u003Cstrong\u003EClean Code\u003C/strong\u003E\u003C/a\u003E\u003Csmall\u003ERequested 13 Nov 2026\u003C/small\u003E\u003C/td\u003E",
+                    "target": [
+                      "tr[data-testid=\u0022reservation-row\u0022]:nth-child(5) \u003E td:nth-child(1)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element\u0027s contrast ratio could not be determined because of element overlap"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Ca href=\u0022/books/1\u0022\u003E\u003Cstrong\u003EClean Code\u003C/strong\u003E\u003C/a\u003E",
+            "target": [
+              "tr[data-testid=\u0022reservation-row\u0022]:nth-child(5) \u003E td:nth-child(1) \u003E a[href$=\u0022books/1\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element\u0027s contrast ratio could not be determined because of element overlap"
+          },
+          {
+            "$id": "27",
+            "any": [
+              {
+                "$id": "28",
+                "id": "link-in-text-block",
+                "data": {
+                  "$id": "29",
+                  "messageKey": "bgOverlap"
+                },
+                "relatedNodes": [
+                  {
+                    "$id": "30",
+                    "html": "\u003Ctd\u003E\u003Ca href=\u0022/books/1\u0022\u003E\u003Cstrong\u003EClean Code\u003C/strong\u003E\u003C/a\u003E\u003Csmall\u003ERequested 12 Nov 2026\u003C/small\u003E\u003C/td\u003E",
+                    "target": [
+                      "tr[data-testid=\u0022reservation-row\u0022]:nth-child(6) \u003E td:nth-child(1)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element\u0027s contrast ratio could not be determined because of element overlap"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Ca href=\u0022/books/1\u0022\u003E\u003Cstrong\u003EClean Code\u003C/strong\u003E\u003C/a\u003E",
+            "target": [
+              "tr[data-testid=\u0022reservation-row\u0022]:nth-child(6) \u003E td:nth-child(1) \u003E a[href$=\u0022books/1\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element\u0027s contrast ratio could not be determined because of element overlap"
+          }
+        ]
+      }
+    ],
+    "passes": 22
+  },
+  {
+    "$id": "1",
+    "route": "/overdue",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:41.486Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav[onclick=\u0022library.closeNavigation(false)\u0022] \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "22",
+            "any": [
+              {
+                "$id": "23",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "24",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2315\u003C/span\u003E",
+            "target": [
+              ".search-input \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 25
+  },
+  {
+    "$id": "1",
+    "route": "/notifications",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:41.926Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              ".active \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "22",
+            "any": [
+              {
+                "$id": "23",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "24",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cdiv class=\u0022empty-icon\u0022 aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/div\u003E",
+            "target": [
+              ".empty-icon"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 21
+  },
+  {
+    "$id": "1",
+    "route": "/account/password",
+    "browser": "chromium",
+    "browserVersion": "141.0.7390.37",
+    "theme": "dark",
+    "timestamp": "2026-11-14T15:11:42.261Z",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "viewport": {
+      "$id": "2",
+      "width": 1440,
+      "height": 1000
+    },
+    "axeVersion": "4.10.3",
+    "violations": [],
+    "incomplete": [
+      {
+        "$id": "3",
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "$id": "4",
+            "any": [
+              {
+                "$id": "5",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "6",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25EB\u003C/span\u003E",
+            "target": [
+              "nav \u003E a[href=\u0022/\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "7",
+            "any": [
+              {
+                "$id": "8",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "9",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25A4\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022books\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "10",
+            "any": [
+              {
+                "$id": "11",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "12",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25F7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022reservations\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "13",
+            "any": [
+              {
+                "$id": "14",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "15",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u2667\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022members\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "16",
+            "any": [
+              {
+                "$id": "17",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "18",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cspan aria-hidden=\u0022true\u0022\u003E\u25C7\u003C/span\u003E",
+            "target": [
+              "a[href$=\u0022notifications\u0022] \u003E span[aria-hidden=\u0022true\u0022]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          },
+          {
+            "$id": "19",
+            "any": [
+              {
+                "$id": "20",
+                "id": "color-contrast",
+                "data": {
+                  "$id": "21",
+                  "messageKey": "nonBmp"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element content contains only non-text characters"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "\u003Cbutton class=\u0022icon-button theme-toggle\u0022 aria-label=\u0022Toggle light or dark theme\u0022 onclick=\u0022library.toggleTheme()\u0022\u003E\u25D0\u003C/button\u003E",
+            "target": [
+              ".theme-toggle"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
+          }
+        ]
+      }
+    ],
+    "passes": 23
+  }
+]

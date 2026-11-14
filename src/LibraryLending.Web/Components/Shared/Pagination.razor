@@ -1,0 +1,7 @@
+<nav class="pagination-bar" aria-label="Pagination"><span class="muted">Page @Page of @TotalPages · @TotalCount records</span><div><button class="button secondary small" disabled="@(Page <= 1)" @onclick="() => PageChanged.InvokeAsync(Page - 1)">← Previous</button><button class="button secondary small" disabled="@(Page >= TotalPages)" @onclick="() => PageChanged.InvokeAsync(Page + 1)">Next →</button></div></nav>
+@code {
+    [Parameter] public int Page { get; set; } = 1;
+    [Parameter] public int TotalPages { get; set; } = 1;
+    [Parameter] public int TotalCount { get; set; }
+    [Parameter] public EventCallback<int> PageChanged { get; set; }
+}

@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DF20F501-4369-4010-89AB-075C7738C548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Domain", "src\LibraryLending.Domain\LibraryLending.Domain.csproj", "{008C6D60-FD58-4E11-9F8D-0BB1E62AAC33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Application", "src\LibraryLending.Application\LibraryLending.Application.csproj", "{B7DA49AA-151D-4BE1-BE11-62EE84504602}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Infrastructure", "src\LibraryLending.Infrastructure\LibraryLending.Infrastructure.csproj", "{195F8E87-0CD5-42F1-91F4-61F6610F5259}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Web", "src\LibraryLending.Web\LibraryLending.Web.csproj", "{1E6C1D90-DD6F-4AE9-AA71-018CC71145D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6CEFFFB0-FDC7-49F2-99FE-4569881DD644}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Tests.Unit", "tests\LibraryLending.Tests.Unit\LibraryLending.Tests.Unit.csproj", "{BE82B32C-8641-4775-9D14-0299FCBA8DE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Tests.Integration", "tests\LibraryLending.Tests.Integration\LibraryLending.Tests.Integration.csproj", "{F759C24F-53AD-43D7-999A-1B69E3A68F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Tests.EndToEnd", "tests\LibraryLending.Tests.EndToEnd\LibraryLending.Tests.EndToEnd.csproj", "{FED3140B-80EA-4DC9-89AD-C27B9A9CA380}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{CA178102-4626-4B73-819B-7D83AAFFCD3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.DatabaseTool", "tools\LibraryLending.DatabaseTool\LibraryLending.DatabaseTool.csproj", "{9475F1DA-6050-46ED-801A-77AA94F2927F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryLending.Tests.Performance", "tests\LibraryLending.Tests.Performance\LibraryLending.Tests.Performance.csproj", "{3AC0ADBC-FB57-45A6-AA39-17D0E0AD6347}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{008C6D60-FD58-4E11-9F8D-0BB1E62AAC33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008C6D60-FD58-4E11-9F8D-0BB1E62AAC33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008C6D60-FD58-4E11-9F8D-0BB1E62AAC33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008C6D60-FD58-4E11-9F8D-0BB1E62AAC33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7DA49AA-151D-4BE1-BE11-62EE84504602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7DA49AA-151D-4BE1-BE11-62EE84504602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7DA49AA-151D-4BE1-BE11-62EE84504602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7DA49AA-151D-4BE1-BE11-62EE84504602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195F8E87-0CD5-42F1-91F4-61F6610F5259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195F8E87-0CD5-42F1-91F4-61F6610F5259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195F8E87-0CD5-42F1-91F4-61F6610F5259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195F8E87-0CD5-42F1-91F4-61F6610F5259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6C1D90-DD6F-4AE9-AA71-018CC71145D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6C1D90-DD6F-4AE9-AA71-018CC71145D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6C1D90-DD6F-4AE9-AA71-018CC71145D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6C1D90-DD6F-4AE9-AA71-018CC71145D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE82B32C-8641-4775-9D14-0299FCBA8DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE82B32C-8641-4775-9D14-0299FCBA8DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE82B32C-8641-4775-9D14-0299FCBA8DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE82B32C-8641-4775-9D14-0299FCBA8DE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F759C24F-53AD-43D7-999A-1B69E3A68F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F759C24F-53AD-43D7-999A-1B69E3A68F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F759C24F-53AD-43D7-999A-1B69E3A68F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F759C24F-53AD-43D7-999A-1B69E3A68F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FED3140B-80EA-4DC9-89AD-C27B9A9CA380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED3140B-80EA-4DC9-89AD-C27B9A9CA380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED3140B-80EA-4DC9-89AD-C27B9A9CA380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED3140B-80EA-4DC9-89AD-C27B9A9CA380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9475F1DA-6050-46ED-801A-77AA94F2927F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9475F1DA-6050-46ED-801A-77AA94F2927F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9475F1DA-6050-46ED-801A-77AA94F2927F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9475F1DA-6050-46ED-801A-77AA94F2927F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AC0ADBC-FB57-45A6-AA39-17D0E0AD6347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AC0ADBC-FB57-45A6-AA39-17D0E0AD6347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AC0ADBC-FB57-45A6-AA39-17D0E0AD6347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AC0ADBC-FB57-45A6-AA39-17D0E0AD6347}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{008C6D60-FD58-4E11-9F8D-0BB1E62AAC33} = {DF20F501-4369-4010-89AB-075C7738C548}
+		{B7DA49AA-151D-4BE1-BE11-62EE84504602} = {DF20F501-4369-4010-89AB-075C7738C548}
+		{195F8E87-0CD5-42F1-91F4-61F6610F5259} = {DF20F501-4369-4010-89AB-075C7738C548}
+		{1E6C1D90-DD6F-4AE9-AA71-018CC71145D5} = {DF20F501-4369-4010-89AB-075C7738C548}
+		{BE82B32C-8641-4775-9D14-0299FCBA8DE4} = {6CEFFFB0-FDC7-49F2-99FE-4569881DD644}
+		{F759C24F-53AD-43D7-999A-1B69E3A68F87} = {6CEFFFB0-FDC7-49F2-99FE-4569881DD644}
+		{FED3140B-80EA-4DC9-89AD-C27B9A9CA380} = {6CEFFFB0-FDC7-49F2-99FE-4569881DD644}
+		{9475F1DA-6050-46ED-801A-77AA94F2927F} = {CA178102-4626-4B73-819B-7D83AAFFCD3D}
+		{3AC0ADBC-FB57-45A6-AA39-17D0E0AD6347} = {6CEFFFB0-FDC7-49F2-99FE-4569881DD644}
+	EndGlobalSection
+EndGlobal

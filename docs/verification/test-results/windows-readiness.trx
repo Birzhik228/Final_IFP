@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="c9a3c06b-7533-4238-bafd-b0a47456c5ff" name="Birzhan@DESKTOP-C8MLKOM 2026-11-14 20:16:11" runUser="DESKTOP-C8MLKOM\Birzhan" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-14T20:16:11.1802742+05:00" queuing="2026-11-14T20:16:11.1802748+05:00" start="2026-11-14T20:15:44.3554006+05:00" finish="2026-11-14T20:16:11.8186151+05:00" />
+  <TestSettings name="default" id="c55d1a7f-2113-42c7-8de1-6a77ac312fa7">
+    <Deployment runDeploymentRoot="Birzhan_DESKTOP-C8MLKOM_2026-11-14_20_16_11" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="45a13882-74a2-4696-84a9-bd50787c01f7" testId="31d842bb-9fa4-c25d-c132-d516c1b03110" testName="LibraryLending.Tests.Integration.ProductionReadinessTests.Readiness_checks_the_database_instead_of_only_the_web_process" computerName="DESKTOP-C8MLKOM" duration="00:00:04.8278451" startTime="2026-11-14T20:16:10.6045735+05:00" endTime="2026-11-14T20:16:10.6046052+05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="45a13882-74a2-4696-84a9-bd50787c01f7" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="LibraryLending.Tests.Integration.ProductionReadinessTests.Readiness_checks_the_database_instead_of_only_the_web_process" storage="c:\users\adina\documents\codex\2026-11-14\rea\work\librarylending\tests\librarylending.tests.integration\bin\debug\net8.0\librarylending.tests.integration.dll" id="31d842bb-9fa4-c25d-c132-d516c1b03110">
+      <Execution id="45a13882-74a2-4696-84a9-bd50787c01f7" />
+      <TestMethod codeBase="C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Integration\bin\Debug\net8.0\LibraryLending.Tests.Integration.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LibraryLending.Tests.Integration.ProductionReadinessTests" name="Readiness_checks_the_database_instead_of_only_the_web_process" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="31d842bb-9fa4-c25d-c132-d516c1b03110" executionId="45a13882-74a2-4696-84a9-bd50787c01f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)&#xD;
+[xUnit.net 00:00:00.28]   Discovering: LibraryLending.Tests.Integration&#xD;
+[xUnit.net 00:00:00.42]   Discovered:  LibraryLending.Tests.Integration&#xD;
+[xUnit.net 00:00:00.43]   Starting:    LibraryLending.Tests.Integration&#xD;
+info: Microsoft.EntityFrameworkCore.Migrations[20402]&#xD;
+      Applying migration '20261114140755_InitialCreate'.&#xD;
+warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]&#xD;
+      No XML encryptor configured. Key {c946d44d-c746-4a80-be1b-230acad301a3} may be persisted to storage in unencrypted form.&#xD;
+fail: Microsoft.EntityFrameworkCore.Database.Command[20102]&#xD;
+      Failed executing DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      SELECT EXISTS (&#xD;
+          SELECT 1&#xD;
+          FROM "Books" AS "b")&#xD;
+fail: Microsoft.EntityFrameworkCore.Query[10100]&#xD;
+      An exception occurred while iterating over the results of a query for context type 'LibraryLending.Infrastructure.Persistence.LibraryDbContext'.&#xD;
+      Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 1: 'no such table: Books'.&#xD;
+         at Microsoft.Data.Sqlite.SqliteException.ThrowExceptionForRC(Int32 rc, sqlite3 db)&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.PrepareAndEnumerateStatements()+MoveNext()&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.GetStatements()+MoveNext()&#xD;
+         at Microsoft.Data.Sqlite.SqliteDataReader.NextResult()&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReader(CommandBehavior behavior)&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()&#xD;
+      Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 1: 'no such table: Books'.&#xD;
+         at Microsoft.Data.Sqlite.SqliteException.ThrowExceptionForRC(Int32 rc, sqlite3 db)&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.PrepareAndEnumerateStatements()+MoveNext()&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.GetStatements()+MoveNext()&#xD;
+         at Microsoft.Data.Sqlite.SqliteDataReader.NextResult()&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReader(CommandBehavior behavior)&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)&#xD;
+         at Microsoft.Data.Sqlite.SqliteCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)&#xD;
+         at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()&#xD;
+fail: Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService[103]&#xD;
+      Health check database with status Unhealthy completed after 81.3488ms with message 'Database unavailable.'&#xD;
+[xUnit.net 00:00:05.39]   Finished:    LibraryLending.Tests.Integration&#xD;
+</StdOut>
+    </Output>
+    <CollectorDataEntries>
+      <Collector agentName="DESKTOP-C8MLKOM" uri="datacollector://microsoft/CoverletCodeCoverage/1.0" collectorDisplayName="XPlat code coverage">
+        <UriAttachments>
+          <UriAttachment>
+            <A href="DESKTOP-C8MLKOM\coverage.cobertura.xml"></A>
+          </UriAttachment>
+        </UriAttachments>
+      </Collector>
+    </CollectorDataEntries>
+  </ResultSummary>
+</TestRun>

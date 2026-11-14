@@ -1,0 +1,12 @@
+@typeparam TItem
+<div class="table-scroll" tabindex="0" role="region" aria-label="@Label">
+    <table class="data-table"><caption class="visually-hidden">@Label</caption><thead><tr>@Header</tr></thead><tbody>@foreach (var item in Items) { <tr>@RowTemplate(item)</tr> }</tbody></table>
+    @if (!Items.Any()) { <div class="table-empty">@EmptyMessage</div> }
+</div>
+@code {
+    [Parameter] public IEnumerable<TItem> Items { get; set; } = [];
+    [Parameter, EditorRequired] public RenderFragment Header { get; set; } = default!;
+    [Parameter, EditorRequired] public RenderFragment<TItem> RowTemplate { get; set; } = default!;
+    [Parameter] public string Label { get; set; } = "Records";
+    [Parameter] public string EmptyMessage { get; set; } = "No records to show.";
+}

@@ -1,0 +1,16 @@
+@inject LibraryOptions Options
+<div class="table-scroll" tabindex="0" role="region" aria-label="Loans">
+    <table class="data-table"><caption class="visually-hidden">Library loans</caption><thead><tr><th>Book / copy</th>@if (ShowMembers) { <th>Member</th> }<th>Due date</th><th>Status</th><th>Fine (@Options.CurrencyLabel)</th>@if (CanReturn) { <th><span class="visually-hidden">Actions</span></th> }</tr></thead><tbody>
+        @foreach (var loan in Loans)
+        {
+            <tr data-testid="loan-row"><td><strong>@loan.BookTitle</strong><small>@loan.Barcode</small></td>@if (ShowMembers) { <td>@loan.MemberName</td> }<td>@loan.DueDate.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</td><td><StatusBadge Status="@(loan.ReturnedAtUtc.HasValue ? "Returned" : loan.DaysOverdue > 0 ? "Overdue" : "Borrowed")" Label="@(loan.ReturnedAtUtc.HasValue ? "Returned" : loan.DaysOverdue > 0 ? $"{loan.DaysOverdue} days overdue" : "On loan")" /></td><td class="numeric">@((loan.FineMinor / 100m).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</td>@if (CanReturn) { <td>@if (!loan.ReturnedAtUtc.HasValue) { <button class="button secondary small" aria-label="Return @loan.BookTitle" @onclick="() => OnReturn.InvokeAsync(loan)">Return</button> }</td> }</tr>
+        }
+    </tbody></table>
+    @if (Loans.Count == 0) { <div class="table-empty">No loans match this view.</div> }
+</div>
+@code {
+    [Parameter] public IReadOnlyList<LoanDto> Loans { get; set; } = [];
+    [Parameter] public bool ShowMembers { get; set; }
+    [Parameter] public bool CanReturn { get; set; }
+    [Parameter] public EventCallback<LoanDto> OnReturn { get; set; }
+}

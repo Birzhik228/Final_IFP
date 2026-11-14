@@ -1,0 +1,90 @@
+erDiagram
+    BOOK {
+        int Id PK
+        string Title
+        string Isbn UK
+        int CategoryId FK
+        int Year
+        string Description
+        string CoverUrl
+        bool IsArchived
+    }
+    AUTHOR {
+        int Id PK
+        string Name
+    }
+    BOOK_AUTHOR {
+        int BookId PK,FK
+        int AuthorId PK,FK
+        int DisplayOrder
+    }
+    CATEGORY {
+        int Id PK
+        string Name UK
+    }
+    BOOK_COPY {
+        int Id PK
+        int BookId FK
+        string Barcode UK
+        string Status
+        string Version
+    }
+    MEMBER {
+        int Id PK
+        string IdentityUserId FK,UK
+        string Name
+        string Email
+        string Phone
+        string Status
+        int BorrowingLimit
+        string Version
+    }
+    LOAN {
+        int Id PK
+        int BookCopyId FK
+        int MemberId FK
+        datetime BorrowedAtUtc
+        date DueDate
+        datetime ReturnedAtUtc
+        long DailyFineMinor
+        long FinalFineMinor
+    }
+    RESERVATION {
+        int Id PK
+        int BookId FK
+        int MemberId FK
+        string Status
+        int AssignedCopyId FK
+        datetime CreatedAtUtc
+        datetime ReadyAtUtc
+        datetime PickupDeadlineUtc
+        int FulfilledLoanId FK
+        string ClosureReason
+        string Version
+    }
+    IDENTITY_USER {
+        string Id PK
+        string Email
+        string PasswordHash
+    }
+    NOTIFICATION {
+        int Id PK
+        string UserId FK
+        string Kind
+        string Message
+        datetime CreatedAtUtc
+        datetime ReadAtUtc
+        string DedupeKey UK
+    }
+    BOOK ||--o{ BOOK_COPY : has
+    CATEGORY ||--o{ BOOK : classifies
+    BOOK ||--o{ BOOK_AUTHOR : credits
+    AUTHOR ||--o{ BOOK_AUTHOR : writes
+    BOOK_COPY ||--o{ LOAN : circulated_in
+    MEMBER ||--o{ LOAN : borrows
+    BOOK ||--o{ RESERVATION : requested_as
+    MEMBER ||--o{ RESERVATION : places
+    BOOK_COPY o|--o{ RESERVATION : assigned_over_time
+    LOAN o|--o{ RESERVATION : fulfills
+    IDENTITY_USER o|--o| MEMBER : signs_in_as
+    IDENTITY_USER ||--o{ NOTIFICATION : receives

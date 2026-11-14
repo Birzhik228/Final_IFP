@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "httpsReadiness": 200,
+  "httpRedirect": 307,
+  "realTlsHandshake": true,
+  "certificate": "ephemeral test-only self-signed; no system trust changes",
+  "authenticatedPage": 200,
+  "secureHttpOnlyCookie": true,
+  "encryptedPersistentKeyRing": true,
+  "cliOnlineBackup": "passed",
+  "cliRestore": "passed",
+  "cliIntegrity": "passed",
+  "generatedAtUtc": "2026-11-14T14:58:57.3139188+00:00"
+}

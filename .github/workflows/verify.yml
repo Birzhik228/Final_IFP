@@ -1,0 +1,73 @@
+name: Verify library
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet restore --locked-mode
+      - run: dotnet build --no-restore
+      - run: dotnet test tests/LibraryLending.Tests.Unit --no-build --collect:"XPlat Code Coverage" --logger "trx;LogFileName=unit.trx"
+      - run: dotnet test tests/LibraryLending.Tests.Integration --no-build --collect:"XPlat Code Coverage" --logger "trx;LogFileName=integration.trx"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-${{ matrix.os }}
+          path: '**/TestResults/**'
+  browsers:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    env:
+      ASPNETCORE_ENVIRONMENT: Development
+      Demo__Seed: 'true'
+      BackgroundJobs__Enabled: 'false'
+      LIBRARY_BASE_URL: http://127.0.0.1:5183
+      ConnectionStrings__Library: Data Source=${{ runner.temp }}/bookbridge-browser.db;Default Timeout=5
+      LIBRARY_SCREENSHOTS: ${{ runner.temp }}/screenshots
+      LIBRARY_A11Y_RESULTS: ${{ runner.temp }}/accessibility
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet restore --locked-mode
+      - run: dotnet build --no-restore
+      - name: Install browser and system dependencies
+        shell: pwsh
+        run: tests/LibraryLending.Tests.EndToEnd/bin/Debug/net8.0/playwright.ps1 install --with-deps ${{ matrix.browser }}
+      - name: Start isolated app
+        shell: bash
+        run: |
+          dotnet src/LibraryLending.Web/bin/Debug/net8.0/LibraryLending.Web.dll --contentRoot "$PWD/src/LibraryLending.Web" --urls "$LIBRARY_BASE_URL" > "$RUNNER_TEMP/server.log" 2>&1 &
+          echo "APP_PID=$!" >> "$GITHUB_ENV"
+          for attempt in {1..60}; do
+            if curl --fail --silent "$LIBRARY_BASE_URL/health"; then exit 0; fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/server.log"
+          exit 1
+      - name: Browser workflows and accessibility
+        run: dotnet test tests/LibraryLending.Tests.EndToEnd --no-build --logger "trx;LogFileName=browser-${{ matrix.browser }}.trx" -- Playwright.BrowserName=${{ matrix.browser }}
+      - name: Stop isolated app
+        if: always()
+        shell: bash
+        run: |
+          if [[ -n "${APP_PID:-}" ]]; then kill "$APP_PID" || true; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-${{ matrix.browser }}
+          path: |
+            tests/LibraryLending.Tests.EndToEnd/TestResults/
+            ${{ runner.temp }}/screenshots/
+            ${{ runner.temp }}/accessibility/
+            ${{ runner.temp }}/server.log

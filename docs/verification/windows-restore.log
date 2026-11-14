@@ -1,0 +1,10 @@
+  Determining projects to restore...
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Domain\LibraryLending.Domain.csproj (in 1,5 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Application\LibraryLending.Application.csproj (in 1,51 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.EndToEnd\LibraryLending.Tests.EndToEnd.csproj (in 3,12 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tools\LibraryLending.DatabaseTool\LibraryLending.DatabaseTool.csproj (in 3,14 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Performance\LibraryLending.Tests.Performance.csproj (in 3,14 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Unit\LibraryLending.Tests.Unit.csproj (in 3,13 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Web\LibraryLending.Web.csproj (in 3,2 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\src\LibraryLending.Infrastructure\LibraryLending.Infrastructure.csproj (in 3,18 sec).
+  Restored C:\Users\Adina\Documents\Codex\2026-11-14\rea\work\LibraryLending\tests\LibraryLending.Tests.Integration\LibraryLending.Tests.Integration.csproj (in 3,22 sec).

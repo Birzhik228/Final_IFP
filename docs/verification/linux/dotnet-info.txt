@@ -1,0 +1,43 @@
+.NET SDK:
+ Version:           8.0.428
+ Commit:            742a7a66c3
+ Workload version:  8.0.400-manifests.a830daf1
+ MSBuild version:   17.11.71+2613e0705
+
+Runtime Environment:
+ OS Name:     ubuntu
+ OS Version:  26.04
+ OS Platform: Linux
+ RID:         linux-x64
+ Base Path:   /var/tmp/bookbridge-gap-20261114/sdk/sdk/8.0.428/
+
+.NET workloads installed:
+Configured to use loose manifests when installing new manifests.
+There are no installed workloads to display.
+
+Host:
+  Version:      8.0.34
+  Architecture: x64
+  Commit:       b455eab3a0
+
+.NET SDKs installed:
+  8.0.428 [/var/tmp/bookbridge-gap-20261114/sdk/sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 8.0.34 [/var/tmp/bookbridge-gap-20261114/sdk/shared/Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 8.0.34 [/var/tmp/bookbridge-gap-20261114/sdk/shared/Microsoft.NETCore.App]
+
+Other architectures found:
+  None
+
+Environment variables:
+  DOTNET_ROOT       [/var/tmp/bookbridge-gap-20261114/sdk]
+
+global.json file:
+  /var/tmp/bookbridge-gap-20261114/source/global.json
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download

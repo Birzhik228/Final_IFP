@@ -1,0 +1,109 @@
+Summary
+  Generated on: 14.11.2026 - 20:16:59
+  Coverage date: 14.11.2026 - 19:52:22 - 14.11.2026 - 20:16:11
+  Parser: MultiReport (4x Cobertura)
+  Assemblies: 4
+  Classes: 81
+  Files: 52
+  Line coverage: 71.4%
+  Covered lines: 2240
+  Uncovered lines: 893
+  Coverable lines: 3133
+  Total lines: 3696
+  Branch coverage: 55.4% (718 of 1296)
+  Covered branches: 718
+  Total branches: 1296
+  Method coverage: 93.2% (803 of 861)
+  Full method coverage: 90.9% (783 of 861)
+  Covered methods: 803
+  Fully covered methods: 783
+  Total methods: 861
+
+LibraryLending.Application                                                             93.4%
+  LibraryLending.Application.AccountCredentials                                         100%
+  LibraryLending.Application.Actor                                                      100%
+  LibraryLending.Application.BookDetailDto                                              100%
+  LibraryLending.Application.BookDto                                                    100%
+  LibraryLending.Application.BookInput                                                  100%
+  LibraryLending.Application.BookQuery                                                  100%
+  LibraryLending.Application.CopyDto                                                    100%
+  LibraryLending.Application.DashboardDto                                               100%
+  LibraryLending.Application.LibraryOptions                                             100%
+  LibraryLending.Application.LibraryService                                              93%
+  LibraryLending.Application.LoanDto                                                    100%
+  LibraryLending.Application.MemberDto                                                  100%
+  LibraryLending.Application.MemberInput                                                100%
+  LibraryLending.Application.NotificationDto                                            100%
+  LibraryLending.Application.PageResult<T>                                               50%
+  LibraryLending.Application.PageResult<T>                                              100%
+  LibraryLending.Application.PopularBookDto                                             100%
+  LibraryLending.Application.ReservationDto                                             100%
+
+LibraryLending.Domain                                                                  90.1%
+  LibraryLending.Domain.Author                                                         66.6%
+  LibraryLending.Domain.Book                                                           81.8%
+  LibraryLending.Domain.BookAuthor                                                       60%
+  LibraryLending.Domain.BookCopy                                                        100%
+  LibraryLending.Domain.Category                                                         50%
+  LibraryLending.Domain.LendingRules                                                    100%
+  LibraryLending.Domain.Loan                                                            100%
+  LibraryLending.Domain.Member                                                          100%
+  LibraryLending.Domain.Notification                                                   71.4%
+  LibraryLending.Domain.Reservation                                                    92.8%
+  LibraryLending.Domain.Result<T>                                                       100%
+  LibraryLending.Domain.Result<T>                                                        75%
+
+LibraryLending.Infrastructure                                                          65.1%
+  LibraryLending.Infrastructure.Identity.MemberAccountService                          55.7%
+  LibraryLending.Infrastructure.Persistence.EfLibraryRepository                        97.6%
+  LibraryLending.Infrastructure.Persistence.EfLibraryRepository<T>                     86.9%
+  LibraryLending.Infrastructure.Persistence.EfLibrarySession                           94.4%
+  LibraryLending.Infrastructure.Persistence.LibraryDbContext                            100%
+  LibraryLending.Infrastructure.Persistence.LibraryWriteCoordinator                     100%
+  LibraryLending.Infrastructure.Persistence.LibraryWriteCoordinator.Lease               100%
+  LibraryLending.Infrastructure.Persistence.Migrations.InitialCreate                     97%
+  LibraryLending.Infrastructure.Persistence.Migrations.LibraryDbContextModelSnapshot      0%
+  LibraryLending.Infrastructure.Persistence.SqliteBackup                                  0%
+  LibraryLending.Infrastructure.Persistence.SqliteBackup                               92.3%
+  LibraryLending.Infrastructure.Seeding.DemoSeeder                                     24.3%
+  LibraryLending.Infrastructure.Seeding.DemoSeeder                                      100%
+
+LibraryLending.Web                                                                     84.6%
+  LibraryLending.Web.Components.Account.Login                                           100%
+  LibraryLending.Web.Components.Account.Password                                        100%
+  LibraryLending.Web.Components.App                                                     100%
+  LibraryLending.Web.Components.Layout.MainLayout                                      94.8%
+  LibraryLending.Web.Components.Pages.BookDetails                                      92.5%
+  LibraryLending.Web.Components.Pages.Books                                            94.7%
+  LibraryLending.Web.Components.Pages.Dashboard                                         100%
+  LibraryLending.Web.Components.Pages.Loans                                            91.6%
+  LibraryLending.Web.Components.Pages.Members                                          79.4%
+  LibraryLending.Web.Components.Pages.Members.MemberForm                                100%
+  LibraryLending.Web.Components.Pages.Notifications                                     100%
+  LibraryLending.Web.Components.Pages.Overdue                                          76.9%
+  LibraryLending.Web.Components.Pages.Reservations                                     58.3%
+  LibraryLending.Web.Components.Shared.BookCard                                         100%
+  LibraryLending.Web.Components.Shared.BookEditor                                       100%
+  LibraryLending.Web.Components.Shared.BookEditor.BookForm                              100%
+  LibraryLending.Web.Components.Shared.BookSearchBar                                    100%
+  LibraryLending.Web.Components.Shared.ConfirmDialog                                    100%
+  LibraryLending.Web.Components.Shared.DataTable<T>                                       0%
+  LibraryLending.Web.Components.Shared.DataTable<TItem>                                 100%
+  LibraryLending.Web.Components.Shared.LoadingPanel                                       0%
+  LibraryLending.Web.Components.Shared.LoanTable                                        100%
+  LibraryLending.Web.Components.Shared.MemberPicker                                     100%
+  LibraryLending.Web.Components.Shared.Pagination                                        80%
+  LibraryLending.Web.Components.Shared.StatusBadge                                      100%
+  LibraryLending.Web.Components.Shared.ToastNotification                                100%
+  LibraryLending.Web.DatabaseReadinessCheck                                            92.3%
+  LibraryLending.Web.DeadlineWorker                                                       0%
+  LibraryLending.Web.IdentityBootstrapper                                              21.2%
+  LibraryLending.Web.IdentityBootstrapper                                              87.8%
+  LibraryLending.Web.IdentitySessionValidator                                           100%
+  LibraryLending.Web.LibraryClaimsFactory                                               100%
+  LibraryLending.Web.RevalidatingIdentityStateProvider                                 28.5%
+  LibraryLending.Web.SignalRNotificationPublisher                                       100%
+  LibraryLending.Web.State.AppState                                                    86.6%
+  LibraryLending.Web.State.CurrentActor                                                 100%
+  LibraryLending.Web.State.LibraryPageBase                                             93.7%
+  Program                                                                              92.2%

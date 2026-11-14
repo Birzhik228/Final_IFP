@@ -1,0 +1,21 @@
+{
+  "scans": 114,
+  "violations": 0,
+  "browserVersions": [
+    [
+      "chromium",
+      "141.0.7390.37"
+    ],
+    [
+      "firefox",
+      "142.0.1"
+    ],
+    [
+      "webkit",
+      "26.0"
+    ]
+  ],
+  "incompleteRuleResults": 120,
+  "scope": "axe-core WCAG2 A/AA and WCAG2.1 AA tagged checks; both roles/themes and notification read states",
+  "limit": "Automated results retain incomplete checks for human review and do not certify full accessibility conformance."
+}

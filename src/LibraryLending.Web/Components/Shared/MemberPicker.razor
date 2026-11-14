@@ -1,0 +1,8 @@
+<div class="field"><label for="@Id">Member</label><select id="@Id" value="@Value" @onchange="Changed" required><option value="0">Choose a member</option>@foreach (var member in Members) { <option value="@member.Id">@member.Name (@member.ActiveLoans/@member.BorrowingLimit loans) · @member.Status</option> }</select></div>
+@code {
+    [Parameter] public IReadOnlyList<MemberDto> Members { get; set; } = [];
+    [Parameter] public int Value { get; set; }
+    [Parameter] public EventCallback<int> ValueChanged { get; set; }
+    [Parameter] public string Id { get; set; } = "member-picker";
+    private Task Changed(ChangeEventArgs args) => ValueChanged.InvokeAsync(int.TryParse(args.Value?.ToString(), out var value) ? value : 0);
+}
