@@ -2,21 +2,20 @@
 @attribute [Authorize]
 @inherits LibraryPageBase
 <PageTitle>Book catalogue · BookBridge</PageTitle>
-<div class="page-heading"><div><span class="eyebrow">DISCOVER SOMETHING GOOD</span><h1>The collection.</h1><p>Find a familiar favourite or a completely new perspective.</p></div>@if (User.IsLibrarian) { <button class="button primary" @onclick="() => showEditor = !showEditor">+ Add book</button> }</div>
+<BookSearchBar Categories="categories" Query="query" TotalCount="books.TotalCount" OnSearch="Search"><Actions>@if (User.IsLibrarian) { <button type="button" class="button secondary catalogue-add-book" @onclick="() => showEditor = !showEditor">+ Add book</button> }</Actions></BookSearchBar>
 @if (showEditor) { <BookEditor OnSave="SaveBook" OnCancel="() => showEditor = false" Busy="Busy" /> }
-<BookSearchBar Categories="categories" Query="query" OnSearch="Search" />
 @if (Loading) { <LoadingPanel Message="Finding your next read…" /> }
 else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
 else
 {
-    <div class="results-heading"><span><strong>@books.TotalCount</strong> titles in this view</span><span class="muted">A world of ideas, one shelf at a time.</span></div>
     @if (books.Items.Count == 0) { <section class="empty-state"><h2>No books found</h2><p>Try another title, author, or category.</p><button class="button secondary" @onclick="() => Search(new BookQuery())">Clear filters</button></section> }
     <div class="book-grid">@foreach (var book in books.Items) { <BookCard Book="book" @key="book.Id" /> }</div>
+    <div class="catalogue-note"><span class="catalogue-note-icon" aria-hidden="true"><Icon Name="info" /></span><p>Available books are issued by a librarian. Join the waiting list when all copies are unavailable.</p></div>
     <Pagination Page="books.Page" TotalPages="books.TotalPages" TotalCount="books.TotalCount" PageChanged="ChangePage" />
 }
 @code {
     private BookQuery query = new();
-    private PageResult<BookDto> books = new([], 0, 1, 9);
+    private PageResult<BookDto> books = new([], 0, 1, 12);
     private IReadOnlyList<string> categories = [];
     private bool showEditor;
     protected override async Task LoadAsync()

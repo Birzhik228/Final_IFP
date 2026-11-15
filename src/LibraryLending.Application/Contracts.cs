@@ -2,7 +2,7 @@ using LibraryLending.Domain;
 namespace LibraryLending.Application;
 
 public sealed record Actor(string UserId, bool IsLibrarian, int? MemberId);
-public sealed record BookQuery(string Search = "", string Category = "", bool AvailableOnly = false, int Page = 1, int PageSize = 9);
+public sealed record BookQuery(string Search = "", string Category = "", bool AvailableOnly = false, int Page = 1, int PageSize = 12, string Sort = "title");
 public sealed record PageResult<T>(IReadOnlyList<T> Items, int TotalCount, int Page, int PageSize)
 { public int TotalPages => Math.Max(1, (int)Math.Ceiling((double)TotalCount / PageSize)); }
 public sealed record BookDto(int Id, string Title, string Authors, string Isbn, string Category, int Year, string Description, string CoverUrl, int AvailableCopies, int TotalCopies, int QueueLength);

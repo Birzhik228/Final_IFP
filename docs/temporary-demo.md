@@ -60,7 +60,7 @@ The 15 November 2026 public browser run passed all 13 checks, including the seco
 
 - Open `/health` and `/health/ready` through the public HTTPS address.
 - Sign in as the librarian and a member using the private credentials file. Confirm the old development password fails.
-- Open **My profile** in both sessions. Check that members see only their own details, joining date when recorded, status, and borrowing allowance.
+- Open **Profile** through the header name/avatar in both sessions. Check that members see only their own details, joining date when recorded, status, and borrowing allowance.
 - On Members, confirm three of three member sign-in slots are used and a fourth account cannot be created. The per-member borrowing limit is unchanged.
 - Borrow an available copy, return it, and confirm its availability updates.
 - Place a reservation on a title without available copies. Return one of its copies as librarian and confirm the queued reservation becomes ready.

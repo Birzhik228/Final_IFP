@@ -1,6 +1,6 @@
-# UI mockups
+# Original UI wireframes (historical)
 
-These wireframes describe the intended information hierarchy. The application uses the same workflow on desktop and small screens; on a phone, navigation and cards stack vertically and tables allow horizontal scrolling.
+These wireframes record the original interface before the 15 November 2026 redesign. The current app uses horizontal role navigation, **Books**, **My Shelf** or **Lending desk** tabs, and a header notification bell. See [the current redesign and verification](../redesign-verification.md). The lending workflows below remain relevant, but their old sidebar and navigation labels are historical.
 
 ## Catalogue
 

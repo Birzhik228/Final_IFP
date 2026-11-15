@@ -17,8 +17,8 @@ Each criterion is worth 5% in the supplied assignment rubric. This matrix identi
 | 11 | Efficiency | Projection, pagination, short operations, indexes | See measured read/write latency, throughput, CPU, memory, and workload boundaries in performance.md |
 | 12 | Scalability | Provider migration and worker/cache notes | Multi-instance deployment is future work |
 | 13 | Resource utilization | Bounded state, per-operation contexts, notification deduplication | Measured process CPU/memory; persistent-circuit soak remains unverified |
-| 14 | Testing coverage | 74 unit + 64 integration cases on Windows and Linux; 14 browser cases on each of three engines | Combined runtime coverage: 71.4% lines / 55.4% branches; LendingRules 100% |
-| 15 | Quality assurance | Manual matrix, browser workflows, regression checks | Windows/Linux and three browser engines passed; 114 automated accessibility scans found zero violations |
+| 14 | Testing coverage | 14 November baseline: 74 unit + 64 integration cases on Windows and Linux; 14 browser cases on each of three engines. [15 November redesign](redesign-verification.md): 74 unit + 76 integration cases on Windows and 18 Chromium/Edge cases | Baseline combined runtime coverage: 71.4% lines / 55.4% branches; LendingRules 100%. Coverage was not remeasured for the redesign |
+| 15 | Quality assurance | Manual matrix, browser workflows, regression checks | 14 November baseline: Windows/Linux and three browser engines passed; 114 automated accessibility scans found zero violations. [15 November redesign](redesign-verification.md): 46 scans, zero violations, and focused manual review of incomplete findings; remote matrix still needs confirmation |
 | 16 | Documentation | README, run guide, user guide, architecture, endpoint and test guides | Reproduce setup from a fresh checkout |
 | 17 | Innovation | Automatic, explainable FIFO allocation with expiry/reassignment | Describe the fairness policy and edge cases |
 | 18 | Creative .NET/FP use | Pure rules, immutable DTOs, Result, LINQ, TimeProvider, templated components | Explain why each technique fits its task |

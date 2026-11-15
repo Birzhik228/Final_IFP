@@ -10,7 +10,7 @@ public sealed class AccessibilityFlows : PageTest
 {
     private static readonly string BaseUrl = (Environment.GetEnvironmentVariable("LIBRARY_BASE_URL") ?? "http://localhost:5180").TrimEnd('/');
 
-    public override BrowserNewContextOptions ContextOptions() => new() { ViewportSize = new() { Width = 1440, Height = 1000 }, Locale = "en-US" };
+    public override BrowserNewContextOptions ContextOptions() => new() { ViewportSize = new() { Width = 1440, Height = 1000 }, Locale = "en-US", ColorScheme = ColorScheme.Light };
 
     [Theory]
     [InlineData("librarian@library.local", "light")]
@@ -72,18 +72,26 @@ public sealed class AccessibilityFlows : PageTest
 
     private async Task CheckMobileNavigation()
     {
-        var sidebar = Page.Locator(".sidebar");
-        await Expect(sidebar).ToBeHiddenAsync();
+        var navigation = Page.Locator("#library-navigation.primary-nav");
+        await Expect(navigation).ToBeHiddenAsync();
         var toggle = Page.GetByRole(AriaRole.Button, new() { Name = "Toggle navigation", Exact = true });
         await toggle.FocusAsync();
         await Page.Keyboard.PressAsync("Enter");
         await Expect(toggle).ToHaveAttributeAsync("aria-expanded", "true");
-        await Expect(sidebar).ToBeVisibleAsync();
-        await Expect(sidebar.GetByRole(AriaRole.Link, new() { Name = "BookBridge home", Exact = true })).ToBeFocusedAsync();
+        await Expect(navigation).ToBeVisibleAsync();
+        await Expect(navigation.GetByRole(AriaRole.Link, new() { Name = "Home", Exact = true })).ToBeFocusedAsync();
         await Page.Keyboard.PressAsync("Escape");
         await Expect(toggle).ToHaveAttributeAsync("aria-expanded", "false");
         await Expect(toggle).ToBeFocusedAsync();
-        await Expect(sidebar).ToBeHiddenAsync();
+        await Expect(navigation).ToBeHiddenAsync();
+
+        await Page.Keyboard.PressAsync("Enter");
+        await navigation.GetByRole(AriaRole.Link, new() { Name = "Books", Exact = true }).FocusAsync();
+        await Page.Keyboard.PressAsync("Enter");
+        await Expect(Page).ToHaveURLAsync(BaseUrl + "/books");
+        await WaitForInteractive();
+        await Expect(navigation).ToBeHiddenAsync();
+        await Expect(toggle).ToHaveAttributeAsync("aria-expanded", "false");
     }
 
     [Theory]
@@ -94,20 +102,58 @@ public sealed class AccessibilityFlows : PageTest
         await Page.SetViewportSizeAsync(width, height);
         await Page.GotoAsync(BaseUrl + "/account/login");
         await SignIn("librarian@library.local");
-        foreach (var route in new[] { "/", "/books", "/members", "/overdue" })
+        foreach (var route in new[] { "/", "/books", "/books/1", "/loans", "/members", "/overdue", "/profile" })
         {
             await Page.GotoAsync(BaseUrl + route);
             await WaitForInteractive();
             Assert.True(await Page.EvaluateAsync<bool>("document.documentElement.scrollWidth <= window.innerWidth + 1"), route);
         }
-        var notifications = Page.Locator(".sidebar").GetByRole(AriaRole.Link, new() { Name = "Notifications", Exact = false });
+        var notifications = Page.Locator(".notification-link");
+        await Expect(notifications).ToBeVisibleAsync();
         await notifications.FocusAsync();
         await Page.Keyboard.PressAsync("Enter");
         await Expect(Page).ToHaveURLAsync(BaseUrl + "/notifications");
     }
 
+    [Theory]
+    [InlineData("member10@library.local")]
+    [InlineData("librarian@library.local")]
+    public async Task Theme_uses_device_preference_then_preserves_the_users_choice_across_pages(string email)
+    {
+        // A fresh context has no saved preference, so the initial page follows the device.
+        await Page.EmulateMediaAsync(new() { ColorScheme = ColorScheme.Dark });
+        await Page.GotoAsync(BaseUrl + "/account/login");
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
+        await SignIn(email);
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Toggle light or dark theme", Exact = true }).ClickAsync();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "light");
+        Assert.Equal("light", await Page.EvaluateAsync<string>("localStorage.getItem('library-theme')"));
+        await Page.ReloadAsync();
+        await WaitForInteractive();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "light");
+
+        await Page.GotoAsync(BaseUrl + "/books");
+        await WaitForInteractive();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "light");
+
+        // Account pages are static HTML: the control must work without a Blazor circuit.
+        await Page.GotoAsync(BaseUrl + "/account/password");
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "light");
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Toggle light or dark theme", Exact = true }).ClickAsync();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
+        Assert.Equal("dark", await Page.EvaluateAsync<string>("localStorage.getItem('library-theme')"));
+        await Page.ReloadAsync();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
+        await Page.GotoAsync(BaseUrl + "/profile");
+        await WaitForInteractive();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
+        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Your profile.", Exact = true })).ToBeVisibleAsync();
+    }
+
     private Task<JsonElement> Scan(string route) => BrowserAccessibility.ScanAsync(Page, Browser, route);
-    private Task SetTheme(string theme) => Page.EvaluateAsync("theme => {localStorage.setItem('library-theme',theme);document.documentElement.dataset.theme=theme;}", theme);
+    private Task SetTheme(string theme) => Page.EvaluateAsync("theme => {localStorage.setItem('library-theme',theme);document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}", theme);
     private async Task SignIn(string email)
     {
         await Page.GetByLabel("Email", new() { Exact = true }).FillAsync(email);

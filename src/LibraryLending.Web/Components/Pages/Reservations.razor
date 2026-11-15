@@ -2,6 +2,7 @@
 @attribute [Authorize]
 @inherits LibraryPageBase
 <PageTitle>Reservations · BookBridge</PageTitle>
+<LendingTabs IsLibrarian="User.IsLibrarian" />
 <div class="page-heading"><div><span class="eyebrow">GOOD THINGS ARE WORTH THE WAIT</span><h1>Reservations.</h1><p>First in line, first to read. Every returned copy moves the queue forward.</p></div><a class="button secondary" href="/books">Browse books →</a></div>
 <div class="tabs" role="group" aria-label="Reservation view"><button class="@(showHistory ? "" : "selected")" @onclick="() => showHistory = false">Active reservations</button><button class="@(showHistory ? "selected" : "")" @onclick="() => showHistory = true">History</button></div>
 @if (Loading) { <LoadingPanel /> }

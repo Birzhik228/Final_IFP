@@ -7,14 +7,22 @@
     <meta name="description" content="BookBridge — Library Lending &amp; Reservations. Browse books, manage loans, and reserve your next read." />
     <base href="/" />
     <link rel="stylesheet" href="vendor/bootstrap.min.css" />
-    <link rel="stylesheet" href="app.css" />
-    <script>document.documentElement.dataset.theme=localStorage.getItem('library-theme')||'light';</script>
+    <link rel="stylesheet" href="app.css?v=bright20261115" />
+    <script>
+        (() => {
+            let theme;
+            try { theme = localStorage.getItem('library-theme'); } catch { }
+            if (theme !== 'light' && theme !== 'dark') theme = window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme;
+        })();
+    </script>
     <HeadOutlet @rendermode="PageRenderMode" />
 </head>
 <body>
     <Routes @rendermode="PageRenderMode" />
     <script src="vendor/signalr.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=bright20261115"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 </html>

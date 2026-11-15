@@ -58,7 +58,9 @@ public sealed class EfLibraryRepository(IDbContextFactory<LibraryDbContext> fact
         if (!string.IsNullOrWhiteSpace(q.Search)) { var term = q.Search.Trim().ToLower(); query = query.Where(x => x.Title.ToLower().Contains(term) || x.Isbn.Contains(term) || x.BookAuthors.Any(a => a.Author.Name.ToLower().Contains(term))); }
         if (!string.IsNullOrWhiteSpace(q.Category)) query = query.Where(x => x.Category!.Name == q.Category);
         if (q.AvailableOnly) query = query.Where(x => x.Copies.Any(c => c.Status == CopyStatus.Available));
-        var total = await query.CountAsync(ct); var books = await query.OrderBy(x => x.Title).ThenBy(x => x.Id).Skip((q.Page - 1) * q.PageSize).Take(q.PageSize).ToListAsync(ct);
+        var total = await query.CountAsync(ct);
+        var ordered = q.Sort == "newest" ? query.OrderByDescending(x => x.Id) : query.OrderBy(x => x.Title).ThenBy(x => x.Id);
+        var books = await ordered.Skip((q.Page - 1) * q.PageSize).Take(q.PageSize).ToListAsync(ct);
         var ids = books.Select(x => x.Id).ToList(); var counts = await db.Reservations.Where(r => ids.Contains(r.BookId) && r.Status == ReservationStatus.Waiting).GroupBy(r => r.BookId).Select(g => new { Id = g.Key, Count = g.Count() }).ToDictionaryAsync(x => x.Id, x => x.Count, ct);
         return new(books.Select(x => MapBook(x, counts.GetValueOrDefault(x.Id))).ToList(), total, q.Page, q.PageSize);
     }

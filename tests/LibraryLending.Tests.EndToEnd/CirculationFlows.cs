@@ -18,7 +18,8 @@ public sealed class CirculationFlows : PageTest
     public override BrowserNewContextOptions ContextOptions() => new()
     {
         ViewportSize = new() { Width = 1440, Height = 1000 },
-        Locale = "en-US"
+        Locale = "en-US",
+        ColorScheme = ColorScheme.Light
     };
 
     [Fact]
@@ -108,15 +109,37 @@ public sealed class CirculationFlows : PageTest
         await SignInAsync(Page, "member10@library.local");
         await NavigateReadyAsync(Page, "/books");
         await Expect(Page.GetByLabel("Search books", new() { Exact = true })).ToBeVisibleAsync();
+        var categories = Page.GetByRole(AriaRole.Group, new() { Name = "Book categories", Exact = true });
+        await categories.GetByRole(AriaRole.Button, new() { Name = "Science", Exact = true }).ClickAsync();
+        await Expect(Page.GetByLabel("Category", new() { Exact = true })).ToHaveValueAsync("Science");
+        await Expect(Page.GetByTestId("book-card")).ToHaveCountAsync(4);
+        await Page.GetByLabel("Sort by", new() { Exact = true }).SelectOptionAsync("newest");
+        await Expect(Page.GetByTestId("book-card").First).ToContainTextAsync("Silent Spring");
+        await Page.GetByLabel("Sort by", new() { Exact = true }).SelectOptionAsync("title");
+        await Expect(Page.GetByTestId("book-card").First).ToContainTextAsync("A Brief History of Time");
+        await categories.GetByRole(AriaRole.Button, new() { Name = "All books", Exact = true }).ClickAsync();
+        await Expect(Page.GetByLabel("Category", new() { Exact = true })).ToHaveValueAsync("");
+
+        await Page.GetByLabel("Search books", new() { Exact = true }).FillAsync("Clean Code");
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Search", Exact = true }).ClickAsync();
+        await Expect(Page.GetByTestId("book-card")).ToHaveCountAsync(1);
+        await Page.GetByLabel("Available now", new() { Exact = true }).CheckAsync();
+        await Expect(Page.GetByTestId("book-card")).ToHaveCountAsync(0);
+        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "No books found", Exact = true })).ToBeVisibleAsync();
+        await Page.GetByLabel("Available now", new() { Exact = true }).UncheckAsync();
+        await Expect(Page.GetByTestId("book-card")).ToHaveCountAsync(1);
         await Page.GetByLabel("Search books", new() { Exact = true }).FillAsync("Pride and Prejudice");
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search", Exact = true }).ClickAsync();
         await Expect(Page.GetByTestId("book-card")).ToHaveCountAsync(1);
         await Expect(Page.GetByRole(AriaRole.Button, new() { NameRegex = new Regex("Add book") })).ToHaveCountAsync(0);
         Assert.True(await Page.EvaluateAsync<bool>("document.documentElement.scrollWidth <= window.innerWidth + 1"));
         await ScreenshotAsync(Page, "catalogue-phone-light.png");
+        var light = await BrowserAccessibility.ScanAsync(Page, Browser, "/books (member phone light)");
         await Page.GetByRole(AriaRole.Button, new() { Name = "Toggle light or dark theme", Exact = true }).ClickAsync();
         await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
         await ScreenshotAsync(Page, "catalogue-phone-dark.png");
+        var dark = await BrowserAccessibility.ScanAsync(Page, Browser, "/books (member phone dark)");
+        await BrowserAccessibility.SaveAndAssertAsync(Browser, "member-catalogue-phone", new[] { light, dark });
     }
 
     [Fact]
@@ -203,7 +226,7 @@ public sealed class CirculationFlows : PageTest
     public async Task Member_profile_shows_only_their_own_details_at_desktop_and_phone_width()
     {
         await SignInAsync(Page, "member10@library.local");
-        await Page.Locator(".sidebar a[href='/profile']").ClickAsync();
+        await Page.Locator(".primary-nav a[href='/profile']").ClickAsync();
         await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Your profile.", Exact = true })).ToBeVisibleAsync();
         var main = Page.GetByRole(AriaRole.Main);
         await Expect(main).ToContainTextAsync("Riley James");

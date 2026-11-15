@@ -2,6 +2,7 @@
 @attribute [Authorize]
 @inherits LibraryPageBase
 <PageTitle>Loans & returns · BookBridge</PageTitle>
+<LendingTabs IsLibrarian="User.IsLibrarian" />
 <div class="page-heading"><div><span class="eyebrow">KEEP THE STORIES MOVING</span><h1>@(User.IsLibrarian ? "Loans & returns." : "Your borrowed books.")</h1><p>@(User.IsLibrarian ? "Track every checkout and welcome each book back." : "Keep an eye on due dates and make room for your next read.")</p></div><a class="button primary" href="/books">Find a book →</a></div>
 <form class="search-toolbar" @onsubmit="Search" @onsubmit:preventDefault><div class="search-input"><label class="visually-hidden" for="loan-search">Search loans</label><span aria-hidden="true">⌕</span><input id="loan-search" type="search" @bind="search" placeholder="Search by book or member…" /></div><label class="visually-hidden" for="loan-status">Loan status</label><select id="loan-status" @bind="status"><option value="active">Active loans</option><option value="returned">Returned loans</option><option value="all">All loans</option></select><button type="submit" class="button primary">Search</button></form>
 @if (Loading) { <LoadingPanel /> }

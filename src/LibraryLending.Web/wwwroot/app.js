@@ -1,6 +1,26 @@
 window.library = (() => {
     let connection, dotnet, retryTimer, previousFocus;
     const notifyStatus = online => dotnet?.invokeMethodAsync('NotificationConnectionChanged', online).catch(() => {});
+    const closeNavigation = restoreFocus => {
+        const navigation = document.getElementById('library-navigation');
+        const button = document.querySelector('[aria-controls="library-navigation"]');
+        if (!navigation?.classList.contains('mobile-open')) return;
+        navigation.classList.remove('mobile-open');
+        button?.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) button?.focus();
+    };
+    document.addEventListener('pointerdown', event => {
+        const navigation = document.getElementById('library-navigation');
+        const button = document.querySelector('[aria-controls="library-navigation"]');
+        if (!navigation?.contains(event.target) && !button?.contains(event.target)) closeNavigation(false);
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') closeNavigation(true);
+    });
+    window.addEventListener('resize', () => {
+        const button = document.querySelector('[aria-controls="library-navigation"]');
+        if (button && getComputedStyle(button).display === 'none') closeNavigation(false);
+    });
     async function startConnection(current) {
         if (connection !== current || !dotnet) return;
         try { await current.start(); if (connection === current) { notifyStatus(true); dotnet?.invokeMethodAsync('LibraryChanged').catch(() => {}); } }
@@ -14,18 +34,13 @@ window.library = (() => {
             navigation?.classList.toggle('mobile-open', open);
             if (open) navigation?.querySelector('a')?.focus();
         },
-        closeNavigation(restoreFocus) {
-            const navigation = document.getElementById('library-navigation');
-            const button = document.querySelector('[aria-controls="library-navigation"]');
-            if (!navigation?.classList.contains('mobile-open')) return;
-            navigation.classList.remove('mobile-open');
-            button?.setAttribute('aria-expanded', 'false');
-            if (restoreFocus) button?.focus();
-        },
+        closeNavigation,
         toggleTheme() {
             const dark = document.documentElement.dataset.theme !== 'dark';
-            document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-            localStorage.setItem('library-theme', dark ? 'dark' : 'light');
+            const theme = dark ? 'dark' : 'light';
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme;
+            try { localStorage.setItem('library-theme', theme); } catch { }
             return dark;
         },
         async connect(reference) {

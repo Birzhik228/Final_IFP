@@ -1,0 +1,19 @@
+<div @key="CoverSource" class="book-cover cover-@(Book.Id % 6) @(CoverSource is null ? "" : "has-image")">
+    @if (CoverSource is not null)
+    {
+        <img src="@CoverSource" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.hidden=true;this.parentElement.classList.remove('has-image')" />
+    }
+    <div class="cover-type"><span class="cover-category">@Book.Category</span><strong>@Book.Title</strong><span class="cover-line"></span><small>@Book.Authors</small></div>
+    <span class="cover-spine" aria-hidden="true"></span>
+</div>
+@code {
+    [Parameter, EditorRequired] public BookDto Book { get; set; } = default!;
+    private string? CoverSource => !string.IsNullOrWhiteSpace(Book.CoverUrl) ? Book.CoverUrl : Book.Title.Trim().ToLowerInvariant() switch
+    {
+        "cosmos" => "/images/covers/cosmos.png",
+        "clean code" => "/images/covers/clean-code.png",
+        "a brief history of time" => "/images/covers/brief-history-time.png",
+        "a wizard of earthsea" => "/images/covers/earthsea.png",
+        _ => null
+    };
+}

@@ -1,15 +1,43 @@
-<form class="search-toolbar" @onsubmit="Submit" @onsubmit:preventDefault>
-    <div class="search-input"><label class="visually-hidden" for="book-search">Search books</label><span aria-hidden="true">⌕</span><input id="book-search" type="search" @bind="search" placeholder="Search title, author, or ISBN…" /></div>
-    <div><label class="visually-hidden" for="category-filter">Category</label><select id="category-filter" @bind="category"><option value="">All categories</option>@foreach (var item in Categories) { <option value="@item">@item</option> }</select></div>
-    <label class="checkbox-label"><input type="checkbox" @bind="available" />Available only</label>
-    <button type="submit" class="button primary">Search</button>
+<form class="catalogue-browser" @onsubmit="Submit" @onsubmit:preventDefault>
+    <section class="catalogue-hero" aria-labelledby="catalogue-heading">
+        <div class="catalogue-hero-copy">
+            <div class="catalogue-hero-heading"><h1 id="catalogue-heading">Find your next great read</h1>@Actions</div>
+            <div class="catalogue-search">
+                <label class="visually-hidden" for="book-search">Search books</label>
+                <Icon Name="search" />
+                <input id="book-search" type="search" @bind="search" placeholder="Search by title, author, or ISBN" />
+                <button type="submit" class="button primary">Search</button>
+            </div>
+        </div>
+        <div class="catalogue-hero-art"><LibraryIllustration /></div>
+    </section>
+    <div class="catalogue-filters">
+        <div class="category-chips" role="group" aria-label="Book categories">
+            <button type="button" class="category-chip @(string.IsNullOrEmpty(category) ? "selected" : "")" aria-pressed="@(string.IsNullOrEmpty(category) ? "true" : "false")" @onclick="ClearCategory">All books</button>
+            @foreach (var item in FeaturedCategories)
+            {
+                <button type="button" class="category-chip @(category == item ? "selected" : "")" aria-pressed="@(category == item ? "true" : "false")" @onclick="() => ChooseCategory(item)">@item</button>
+            }
+        </div>
+        <div class="catalogue-controls">
+            <div class="category-select"><label class="visually-hidden" for="category-filter">Category</label><select id="category-filter" @bind="category" @bind:after="Submit"><option value="">All categories</option>@foreach (var item in Categories) { <option value="@item">@item</option> }</select></div>
+            <label class="checkbox-label"><input type="checkbox" @bind="available" @bind:after="Submit" />Available now</label>
+            <span class="catalogue-count" role="status">@TotalCount books</span>
+            <div class="catalogue-sort"><label for="book-sort">Sort by</label><select id="book-sort" @bind="sort" @bind:after="Submit"><option value="title">Title A–Z</option><option value="newest">Recently added</option></select></div>
+        </div>
+    </div>
 </form>
 @code {
     [Parameter] public IReadOnlyList<string> Categories { get; set; } = [];
     [Parameter] public BookQuery Query { get; set; } = new();
+    [Parameter] public int TotalCount { get; set; }
     [Parameter] public EventCallback<BookQuery> OnSearch { get; set; }
-    private string search = "", category = "";
+    [Parameter] public RenderFragment? Actions { get; set; }
+    private static readonly string[] FeaturedCategories = ["Fiction", "Science", "Technology"];
+    private string search = "", category = "", sort = "title";
     private bool available;
-    protected override void OnParametersSet() { search = Query.Search; category = Query.Category; available = Query.AvailableOnly; }
-    private Task Submit() => OnSearch.InvokeAsync(new BookQuery(search, category, available));
+    protected override void OnParametersSet() { search = Query.Search; category = Query.Category; available = Query.AvailableOnly; sort = Query.Sort; }
+    private Task Submit() => OnSearch.InvokeAsync(Query with { Search = search, Category = category, AvailableOnly = available, Sort = sort, Page = 1 });
+    private Task ChooseCategory(string value) { category = value; return Submit(); }
+    private Task ClearCategory() => ChooseCategory("");
 }

@@ -56,8 +56,8 @@ Do this before starting the presentation timer.
 
 1. Start the isolated public demo server and its temporary tunnel. Keep the host computer awake, powered, and connected. Retrieve the current public URL from the private access file. Separately start and check `http://localhost:5180`, using its own credentials and database as the standby. Do not use the production origin on port 5190 as a browser fallback.
 2. Use a fresh demo initialized from the standard seed. Verify the preconditions below. Do not reset or overwrite a database while an application is using it. After a full rehearsal, prepare a fresh isolated demo and use its newly generated credentials for the defense.
-3. Use **two separate browser profiles or different browsers**, not two ordinary tabs sharing the same sign-in cookies. Sign in to the same demo URL as librarian in profile A and Jamie in profile B. Open **My profile** briefly to verify Jamie's own name, contact information, joining date when recorded, and loan allowance. Keep the credential record off the shared screen.
-4. In A, prepare tabs for Catalogue, Loans, Reservations, and Overdue. In B, open Reservations and keep the Clean Code row visible. Arrange the two windows side by side for the live transition.
+3. Use **two separate browser profiles or different browsers**, not two ordinary tabs sharing the same sign-in cookies. Sign in to the same demo URL as librarian in profile A and Jamie in profile B. Open **Profile** briefly to verify Jamie's own name, contact information, joining date when recorded, and loan allowance. Keep the credential record off the shared screen.
+4. In A, prepare **Books**, **Lending desk → Loans & returns**, **Lending desk → Reservations**, and **Reports**. In B, open **My Shelf → Reservations** and keep the Clean Code row visible. Arrange the two windows side by side for the live transition.
 5. Open the architecture/sequence diagrams and one concurrency test in the editor. Keep the latest local test report and the GitHub Actions result for the presented commit ready. Local tests and remote CI are separate evidence.
 6. Test the presentation display, browser zoom, keyboard switching, and CSV download location. Capture a few fallback screenshots from the isolated demo before resetting it; label them with their date and source version.
 
@@ -67,7 +67,7 @@ These are fictional seeded library records, not presenter identities. Use the ge
 
 | Role or record | Identifier | Required initial state |
 | --- | --- | --- |
-| Librarian, browser A | `librarian@library.local` | Can access Members, circulation actions, and Overdue |
+| Librarian, browser A | `librarian@library.local` | Can access Members, Lending desk, and Reports |
 | Jamie Chen, browser B | `member2@library.local` | Active, no overdue loans, first Waiting reservation for Clean Code |
 | Morgan Reed | Member record without a sign-in account | Active, no overdue loans, below the borrowing limit |
 | Avery Park | Member record without a sign-in account | No active reservation for Clean Code |
@@ -87,13 +87,13 @@ The times below are relative to the start of slide 11. The people in the Member 
 | Time | Action | Say or verify |
 | --- | --- | --- |
 | 00:00–00:20 | Show A's librarian navigation and B's Jamie session. | “Staff operate circulation; members see their own records.” Both sessions are signed in before the timer. |
-| 00:20–01:05 | In A, search Catalogue for **Pride and Prejudice**, open it, select **Morgan Reed**, and Borrow `LIB-002-01`. Open Loans, search Morgan Reed, and show the new loan. | The copy becomes Borrowed; the new due date is 14 calendar days from the configured library date. Use the displayed date rather than a date written in these notes. |
+| 00:20–01:05 | In A, search **Books** for **Pride and Prejudice**, open it, select **Morgan Reed**, and Borrow `LIB-002-01`. Open **Lending desk → Loans & returns**, search Morgan Reed, and show the new loan. | The copy becomes Borrowed; the new due date is 14 calendar days from the configured library date. Use the displayed date rather than a date written in these notes. |
 | 01:05–01:30 | Return that same Pride and Prejudice loan and choose **Confirm return**. Switch Loan status to Returned and search again. | Show its returned history and zero fine for a same-day return. The copy is Available again because nobody was waiting. |
-| 01:30–02:00 | In A, open **Clean Code**, select **Avery Park**, and choose **Join reservation queue**. Open Reservations. | Both copies were already borrowed. Jamie remains first, Robin second, and Avery joins third. Creating a new request must not displace earlier requests. |
-| 02:00–02:45 | Keep B's Reservations page visible. In A, open Overdue, search **Alex Morgan**, apply the filter, and return **Clean Code**, confirming the action. | Watch Jamie's row in B change from Waiting to **Ready without manually refreshing**. Show barcode `LIB-001-01` and the UTC pickup deadline, 72 hours after assignment. Robin and Avery remain waiting. |
-| 02:45–03:15 | In B, open Notifications and show the Clean Code ready message. | The notification is stored in the database. Reloading shows persistence, but only the earlier unrefreshed transition demonstrates live delivery. Do not describe a manual reload as a successful push. |
-| 03:15–03:40 | In A, open Reservations and choose **Confirm pickup** for **Jamie Chen / Clean Code**. | Pickup creates Jamie's loan and completes that reservation. A held copy has a dedicated pickup action; ordinary checkout cannot take it for another member. |
-| 03:40–04:00 | In A, open Overdue, clear the Alex filter and apply filters, then export CSV. | Other seeded overdue loans remain. Explain accrued versus finalized fines and identify the downloaded report; no payment is collected. |
+| 01:30–02:00 | In A, open **Clean Code**, select **Avery Park**, and choose **Join reservation queue**. Open **Lending desk → Reservations**. | Both copies were already borrowed. Jamie remains first, Robin second, and Avery joins third. Creating a new request must not displace earlier requests. |
+| 02:00–02:45 | Keep B's **My Shelf → Reservations** page visible. In A, open **Reports**, search **Alex Morgan**, apply the filter, and return **Clean Code**, confirming the action. | Watch Jamie's row in B change from Waiting to **Ready without manually refreshing**. Show barcode `LIB-001-01` and the UTC pickup deadline, 72 hours after assignment. Robin and Avery remain waiting. |
+| 02:45–03:15 | In B, open the header notification bell and show the Clean Code ready message. | The notification is stored in the database. Reloading shows persistence, but only the earlier unrefreshed transition demonstrates live delivery. Do not describe a manual reload as a successful push. |
+| 03:15–03:40 | In A, open **Lending desk → Reservations** and choose **Confirm pickup** for **Jamie Chen / Clean Code**. | Pickup creates Jamie's loan and completes that reservation. A held copy has a dedicated pickup action; ordinary checkout cannot take it for another member. |
+| 03:40–04:00 | In A, open **Reports**, clear the Alex filter and apply filters, then export CSV. | Other seeded overdue loans remain. Explain accrued versus finalized fines and identify the downloaded report; no payment is collected. |
 
 If the public connection is slow, allow up to 15 seconds to observe the live transition, then follow the recovery plan. If behind schedule, omit opening the downloaded CSV and explain pickup while showing the Ready row; prioritize the borrow, return, queue, and observed member update.
 

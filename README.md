@@ -59,13 +59,13 @@ These credentials are for the local seeded demonstration. Configure real account
 
 ## Main workflows
 
-1. Sign in as a librarian and open **Catalogue**. Select a book, choose a member, and borrow an available physical copy.
-2. Open **Loans** and return the loan. A late return stores the final fine. A waiting reservation receives the returned copy automatically.
+1. Sign in as a librarian and open **Books**. Select a book, choose a member, and borrow an available physical copy.
+2. Open **Lending desk → Loans & returns** and return the loan. A late return stores the final fine. A waiting reservation receives the returned copy automatically.
 3. Sign in as a member, open an unavailable book, and join its reservation queue.
-4. When a reservation becomes ready, the member receives an in-app notification. A librarian confirms collection before its pickup deadline.
-5. Open **Overdue** as a librarian to filter and sort late loans and download CSV.
+4. When a reservation becomes ready, the member receives an in-app notification through the header bell. A librarian opens **Lending desk → Reservations** and confirms collection before its pickup deadline. Members review their own queue in **My Shelf → Reservations**.
+5. Open **Reports** as a librarian to filter and sort overdue loans and download CSV.
 6. On **Members**, create a membership and, when a sign-in slot is available, use **Create sign-in account** to issue a generated temporary password. At most **three member login accounts** are allowed; the librarian account is separate. The seeded demo already uses all three slots. Circulation records remain available even when they have no login account.
-7. Open **My profile** to see your own account details. Members see their name, email, phone, joining date when recorded, membership status, borrowing limit, active loans, and remaining allowance. Use **Change password** to update your own password.
+7. Open **Profile** or your name/avatar in the header to see your own account details. Members see their name, email, phone, joining date when recorded, membership status, borrowing limit, active loans, and remaining allowance. Use **Change password** on the profile page to update your own password.
 
 See [the user guide](docs/user-guide.md) for role-specific instructions and [the architecture guide](docs/architecture.md) for implementation decisions.
 
@@ -114,10 +114,13 @@ Baseline verification (14 November 2026): **74 unit and 64 integration tests on 
 
 Profile/account-limit verification (15 November 2026): **74 unit + 75 integration tests on Windows**, **16 Chromium/Edge browser cases**, and **seven checks through the public demo** passed. See [the new verification record](docs/verification/profiles-2026-11-15.md) for scope, migration checks, and the updated account rules.
 
+Bright-design verification (15 November 2026): **74 unit + 76 integration tests on Windows** and **18 Chromium/Edge browser cases** passed. The redesign includes horizontal role navigation, a clearer catalogue, and persistent dark mode. See [the redesign verification](docs/redesign-verification.md) for behavior, assets, and test limits.
+
 ## Documentation and defense
 
 - [Architecture and design decisions](docs/architecture.md)
 - [Role-based user guide](docs/user-guide.md)
+- [Bright redesign, dark mode, and verification](docs/redesign-verification.md)
 - [Testing and coverage](docs/testing.md)
 - [HTTP and SignalR endpoint reference](docs/endpoint-reference.md)
 - [Scaling and operational limits](docs/scalability.md)

@@ -49,7 +49,7 @@ dotnet test tests/LibraryLending.Tests.EndToEnd -- Playwright.BrowserName=webkit
 
 The default base URL is `http://localhost:5180`. Override it with the environment variable `LIBRARY_BASE_URL`. The tests sign in using the explicitly seeded development accounts and create uniquely named records for mutation workflows. Do not run them against a deployed real library.
 
-The 14 browser cases cover borrowing/returning, editing an empty optional cover URL, member reservation and live allocation, overdue filtering/CSV, phone layout, desktop themes, member account provisioning/password change, role/theme accessibility scans, keyboard dialogs/navigation, tablet layout, and short landscape navigation. Populated unread/read notification states also receive accessibility scans.
+The 18 browser cases cover borrowing/returning, editing an empty optional cover URL, member reservation and live allocation, catalogue search/filter controls, overdue filtering/CSV, phone layout, member account provisioning/password change, profile isolation, role/theme accessibility scans, keyboard dialogs/navigation, tablet layout, and short landscape navigation. Theme checks cover the operating-system default and saved choices across reloads, page navigation, and account forms for both roles. Populated unread/read notification states also receive accessibility scans.
 
 Set `LIBRARY_SCREENSHOTS` for screenshots and `LIBRARY_A11Y_RESULTS` for axe-core JSON. The bundled, pinned axe-core 4.10.3 uses WCAG 2.0 A/AA and WCAG 2.1 AA rule tags. Reports retain both violations and incomplete checks that need human review. Automated scans do not prove full accessibility conformance.
 
@@ -100,6 +100,8 @@ Review branch coverage for rules and application decisions, not only the overall
 | Platforms | Windows and Linux verified locally; macOS CI configured but not executed |
 
 ## Recorded results
+
+The [15 November redesign verification](redesign-verification.md) records the latest local result: 74 unit, 76 integration, and 18 Chromium/Edge browser cases passed. The configured three-platform unit/integration matrix and three-engine browser matrix now expect **504 passing cases** in total: `(74 + 76) × 3 + 18 × 3`. This expected count is not evidence that a remote run has completed.
 
 Verified on 14 November 2026 using .NET SDK 8.0.428/runtime 8.0.34. Windows Release solution build and locked dependency restore passed with zero compiler warnings/errors. Linux verification used a separate native build on WSL2 Ubuntu 26.04.1 x64; see [platform details](performance.md#linux-verification).
 
