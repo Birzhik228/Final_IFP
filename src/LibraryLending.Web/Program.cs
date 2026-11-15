@@ -84,7 +84,8 @@ using (var scope = app.Services.CreateScope())
     if (app.Configuration.GetValue("Database:ApplyMigrations", app.Environment.IsDevelopment())) await db.Database.MigrateAsync();
     else if ((await db.Database.GetPendingMigrationsAsync()).Any()) throw new InvalidOperationException("Apply pending database migrations before starting production.");
     await IdentityBootstrapper.InitializeAsync(scope.ServiceProvider, app.Configuration);
-    if (app.Environment.IsDevelopment() && app.Configuration.GetValue("Demo:Seed", false)) await DemoSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>(), scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<TimeProvider>(), options);
+    // The explicit Demo environment is for disposable public samples. Production never seeds demo accounts.
+    if ((app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Demo")) && app.Configuration.GetValue("Demo:Seed", false)) await DemoSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>(), scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<TimeProvider>(), options);
 }
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 app.MapHealthChecks("/health/ready");

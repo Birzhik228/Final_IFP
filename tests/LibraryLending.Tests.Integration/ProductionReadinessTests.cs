@@ -16,15 +16,17 @@ public sealed class ProductionFactory : WebApplicationFactory<Program>
 {
     public string DirectoryPath { get; } = Path.Combine(Path.GetTempPath(), "BookBridge.Production.Tests", Guid.NewGuid().ToString("N"));
     public bool Bootstrap { get; init; } = true;
+    public string EnvironmentName { get; init; } = "Production";
+    public bool DemoSeed { get; init; } = true;
     public string Password { get; init; } = "InitialAdminPassword9!";
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         Directory.CreateDirectory(DirectoryPath);
-        builder.UseEnvironment("Production");
+        builder.UseEnvironment(EnvironmentName);
         builder.UseSetting("ConnectionStrings:Library", $"Data Source={Path.Combine(DirectoryPath, "library.db")};Pooling=False");
         builder.UseSetting("DataProtection:KeyPath", Path.Combine(DirectoryPath, "keys"));
         builder.UseSetting("Database:ApplyMigrations", "true");
-        builder.UseSetting("Demo:Seed", "true"); // Production must ignore an accidentally enabled demo flag.
+        builder.UseSetting("Demo:Seed", DemoSeed.ToString()); // Production must ignore an accidentally enabled demo flag.
         builder.UseSetting("Bootstrap:Enabled", Bootstrap.ToString());
         builder.UseSetting("Bootstrap:Email", "librarian@example.test");
         builder.UseSetting("Bootstrap:Password", Password);
@@ -40,6 +42,50 @@ public sealed class ProductionFactory : WebApplicationFactory<Program>
 
 public sealed class ProductionReadinessTests
 {
+    [Fact]
+    public async Task Explicit_demo_environment_seeds_sample_accounts_and_retains_secure_login()
+    {
+        await using var factory = new ProductionFactory { EnvironmentName = "Demo", Bootstrap = false };
+        using var client = factory.CreateClient(new() { BaseAddress = new Uri("https://example.test"), AllowAutoRedirect = false, HandleCookies = true });
+        using (var scope = factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
+            (await db.Books.CountAsync()).Should().Be(30);
+            (await db.Users.CountAsync()).Should().Be(4);
+            var users = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            (await users.GetUsersInRoleAsync("Member")).Should().HaveCount(3);
+        }
+        (await client.GetAsync("/health/ready")).StatusCode.Should().Be(HttpStatusCode.OK);
+        var login = await client.GetAsync("/account/login");
+        login.StatusCode.Should().Be(HttpStatusCode.OK);
+        login.Headers.GetValues("Strict-Transport-Security").Should().NotBeEmpty();
+        var html = await login.Content.ReadAsStringAsync();
+        html.Should().Contain("Public demo: accounts are shared and data may reset.");
+        var input = Regex.Matches(html, "<input\\b[^>]*>").Select(match => match.Value).Single(value => value.Contains("__RequestVerificationToken"));
+        var token = WebUtility.HtmlDecode(Regex.Match(input, "value=\"([^\"]+)\"").Groups[1].Value);
+        var response = await client.PostAsync("/account/sign-in", new FormUrlEncodedContent(new Dictionary<string, string>
+        { ["email"] = "member2@library.local", ["password"] = "LibraryDemo1!", ["__RequestVerificationToken"] = token }));
+        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        var authCookie = response.Headers.GetValues("Set-Cookie").Single(value => value.StartsWith(".AspNetCore.Identity.Application="));
+        authCookie.ToLowerInvariant().Should().Contain("secure").And.Contain("httponly");
+        Directory.GetFiles(Path.Combine(factory.DirectoryPath, "keys"), "*.xml").Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public async Task Demo_seed_requires_explicit_flag_and_http_still_redirects()
+    {
+        await using var factory = new ProductionFactory { EnvironmentName = "Demo", DemoSeed = false, Bootstrap = false };
+        using var client = factory.CreateClient(new() { BaseAddress = new Uri("http://example.test"), AllowAutoRedirect = false });
+        client.DefaultRequestHeaders.Add("X-Forwarded-Proto", "https");
+        var response = await client.GetAsync("/account/login");
+        response.StatusCode.Should().Be(HttpStatusCode.TemporaryRedirect);
+        response.Headers.Location!.Scheme.Should().Be("https");
+        using var scope = factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
+        (await db.Users.CountAsync()).Should().Be(0);
+        (await db.Books.CountAsync()).Should().Be(0);
+    }
+
     [Fact]
     public async Task Production_bootstraps_only_the_requested_admin_and_never_seeds_demo_records()
     {

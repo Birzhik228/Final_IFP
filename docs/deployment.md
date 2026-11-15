@@ -2,6 +2,8 @@
 
 The local launchers deliberately run the seeded Development demonstration. A hosted library must use `Production`, its own database, its own administrator, persistent key storage, and HTTPS. The application now enforces production key storage and HTTPS, ignores the demo-seed flag in Production, and supports an explicit first-administrator bootstrap. These controls and backup/restore are covered by integration tests; deployment to an external server has not been performed.
 
+For a disposable public sample, use the separate [Free Render demo](render-demo.md). Its explicitly selected `Demo` environment permits sample accounts and temporary data while retaining non-development secure cookies and generic errors. It is not the persistent production setup described below.
+
 ## Build and initialize
 
 Use .NET 8 and run the commands from the solution directory:

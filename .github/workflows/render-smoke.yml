@@ -1,0 +1,72 @@
+name: Verify Render container
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'global.json'
+      - 'Directory.Build.props'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'render.yaml'
+      - '.github/workflows/render-smoke.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'global.json'
+      - 'Directory.Build.props'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'render.yaml'
+      - '.github/workflows/render-smoke.yml'
+permissions:
+  contents: read
+jobs:
+  container:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the deployment image
+        run: docker build --pull --tag bookbridge-demo:ci .
+      - name: Start an isolated demo container
+        run: |
+          docker run --detach --name bookbridge-render-smoke \
+            --memory 512m \
+            --publish 127.0.0.1:5199:10000 \
+            --env ASPNETCORE_ENVIRONMENT=Demo \
+            --env ASPNETCORE_FORWARDEDHEADERS_ENABLED=true \
+            --env Demo__Seed=true \
+            --env Database__ApplyMigrations=true \
+            --env 'ConnectionStrings__Library=Data Source=/tmp/bookbridge/library.db;Default Timeout=5' \
+            --env DataProtection__KeyPath=/tmp/bookbridge/keys \
+            --env BackgroundJobs__Enabled=true \
+            bookbridge-demo:ci
+      - name: Check readiness and HTTPS login rendering
+        shell: bash
+        run: |
+          for attempt in {1..60}; do
+            if curl --fail --silent --header 'X-Forwarded-Proto: https' \
+              http://127.0.0.1:5199/health/ready; then
+              break
+            fi
+            if [ "$attempt" -eq 60 ]; then exit 1; fi
+            sleep 2
+          done
+          curl --fail --silent --show-error --header 'X-Forwarded-Proto: https' \
+            http://127.0.0.1:5199/account/login --output "$RUNNER_TEMP/render-login.html"
+          grep -q 'BookBridge' "$RUNNER_TEMP/render-login.html"
+          grep -q '__RequestVerificationToken' "$RUNNER_TEMP/render-login.html"
+          test "$(docker inspect --format '{{.Config.User}}' bookbridge-render-smoke)" = app
+      - name: Save container logs
+        if: always()
+        run: docker logs bookbridge-render-smoke > "$RUNNER_TEMP/render-container.log" 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: render-container-smoke
+          path: |
+            ${{ runner.temp }}/render-container.log
+            ${{ runner.temp }}/render-login.html
+      - name: Stop and remove the disposable container
+        if: always()
+        run: docker rm --force bookbridge-render-smoke || true

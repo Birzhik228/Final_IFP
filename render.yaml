@@ -1,0 +1,33 @@
+# Disposable public demonstration, not persistent library hosting.
+services:
+  - type: web
+    name: bookbridge-demo
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health/ready
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Demo
+      - key: ASPNETCORE_HTTP_PORTS
+        value: "10000"
+      - key: PORT
+        value: "10000"
+      # Render's app port is isolated behind its HTTPS load balancer.
+      # Do not enable this cloud flag on a directly exposed Kestrel listener.
+      - key: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+        value: "true"
+      - key: Demo__Seed
+        value: "true"
+      - key: Database__ApplyMigrations
+        value: "true"
+      - key: ConnectionStrings__Library
+        value: Data Source=/tmp/bookbridge/library.db;Default Timeout=5
+      - key: DataProtection__KeyPath
+        value: /tmp/bookbridge/keys
+      - key: BackgroundJobs__Enabled
+        value: "true"

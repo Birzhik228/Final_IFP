@@ -1,10 +1,15 @@
 @page "/account/login"
 @attribute [AllowAnonymous]
+@inject IWebHostEnvironment HostEnvironment
 <PageTitle>Sign in · BookBridge</PageTitle>
 <div class="login-wrap">
     <section class="login-story"><span class="eyebrow">WELCOME TO BOOKBRIDGE</span><h1>Your next chapter<br />starts here.</h1><p>Discover the collection, keep track of your loans, and reserve the books you’re looking forward to.</p><div class="book-stack" aria-hidden="true"><span>THE ART OF READING</span><span>A WORLD OF IDEAS</span><span>ONE MORE CHAPTER</span></div></section>
     <section class="panel login-panel"><span class="eyebrow">BookBridge</span><h2>Welcome back</h2><p class="muted">Library Lending &amp; Reservations</p>
         @if (!string.IsNullOrWhiteSpace(Error)) { <div class="message error" role="alert">@Error</div> }
+        @if (HostEnvironment.IsEnvironment("Demo"))
+        {
+            <p class="message">Public demo: accounts are shared and data may reset. Use sample information only.</p>
+        }
         <form method="post" action="/account/sign-in" data-enhance="false">
             <AntiforgeryToken />
             <input type="hidden" name="returnUrl" value="@(ReturnUrl ?? "/")" />

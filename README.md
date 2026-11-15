@@ -57,6 +57,10 @@ Seed records are demonstration data, including synthetic ISBNs and edition years
 
 These credentials are for the local seeded demonstration. Configure real accounts and deployment settings separately before operating a real library.
 
+## Free public demo from GitHub
+
+[Deploy to Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2FBirzhik228%2FFinal_IFP) using the included Free Blueprint. See [setup, demo accounts and reset behavior](docs/render-demo.md). Render runs the C# server; GitHub Pages cannot run this application by itself. The public demo works while your computer is off, but idle startup takes time and demo data resets when the service restarts, redeploys or sleeps. Use fictional information only.
+
 ## Main workflows
 
 1. As a member, open an available book and select **Request to borrow**. Review or cancel the pending request under **My Shelf → Requests**.

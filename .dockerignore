@@ -1,0 +1,22 @@
+# Build only application source. Never send local library data or credentials.
+**
+!global.json
+!Directory.Build.props
+!src/
+!src/**
+src/**/bin/
+src/**/obj/
+src/**/App_Data/
+src/**/*.db*
+src/**/.env*
+src/**/appsettings.Local.json
+src/**/appsettings.*.local.json
+src/**/appsettings.Production.json
+src/**/secrets.json
+src/**/secrets/
+src/**/keys/
+src/**/data-protection-keys/
+src/**/*.pfx
+src/**/*.p12
+src/**/*.pem
+src/**/*.key
