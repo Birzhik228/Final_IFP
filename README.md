@@ -94,6 +94,7 @@ Only active members can reserve or borrow. Checkout and reservation pickup rejec
 | `LibraryLending.Tests.EndToEnd` | Browser workflows against a running application |
 | `LibraryLending.Tests.Performance` | Repeatable service-level load measurements against a larger isolated database |
 | `LibraryLending.DatabaseTool` | Consistent SQLite backup, integrity verification, and restore into a new file |
+| `LibraryLending.DemoTool` | Isolated sample database with independently generated private demo passwords |
 
 ## Testing
 
@@ -115,8 +116,10 @@ Verified: **74 unit and 64 integration tests on both Windows and Linux**, plus *
 - [HTTP and SignalR endpoint reference](docs/endpoint-reference.md)
 - [Scaling and operational limits](docs/scalability.md)
 - [Production setup, health checks, and backup/restore](docs/deployment.md)
+- [Temporary public demo with a separate database](docs/temporary-demo.md)
 - [Measured performance](docs/performance.md)
 - [15–20 minute defense slides](docs/defense-slides.md)
+- [Timed defense rehearsal and fallback guide](docs/defense-rehearsal.md)
 - [Ten defense questions](docs/defense-questions.md)
 - [Twenty-criterion rubric checklist](docs/rubric-checklist.md)
 - [UI mockups](docs/mockups/wireframes.md)

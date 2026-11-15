@@ -13,6 +13,12 @@ jobs:
           global-json-file: global.json
       - run: dotnet restore --locked-mode
       - run: dotnet build --no-restore
+      - name: Initialize isolated demo database
+        shell: bash
+        env:
+          DEMO_DATABASE_PATH: ${{ runner.temp }}/bookbridge-demo-smoke.db
+          DEMO_CREDENTIALS_PATH: ${{ runner.temp }}/bookbridge-demo-credentials.json
+        run: dotnet run --project tools/LibraryLending.DemoTool --no-build -- initialize "$DEMO_DATABASE_PATH" "$DEMO_CREDENTIALS_PATH"
       - run: dotnet test tests/LibraryLending.Tests.Unit --no-build --collect:"XPlat Code Coverage" --logger "trx;LogFileName=unit.trx"
       - run: dotnet test tests/LibraryLending.Tests.Integration --no-build --collect:"XPlat Code Coverage" --logger "trx;LogFileName=integration.trx"
       - uses: actions/upload-artifact@v4

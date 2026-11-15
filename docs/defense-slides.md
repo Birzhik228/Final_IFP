@@ -1,16 +1,19 @@
 # BookBridge defense slides
 
-Target duration: 18 minutes including a short live demonstration. Replace the name placeholders before presenting. Demonstrate with local seeded data and keep the application running before the call begins.
+Target duration: 18 minutes, including a four-minute live demonstration. Allow up to two additional minutes for questions if these count toward the course's 15–20-minute slot. Use the [timed rehearsal guide](defense-rehearsal.md) for preparation, exact demo actions, code questions, and a connection-loss fallback. The guide is a plan; the team still needs to rehearse it aloud.
 
 ## Slide 1 — Team and project
 
 Time: 30 seconds.
 
 - BookBridge — Library Lending & Reservations.
-- Team member 1: [Full name].
-- Team member 2, if applicable: [Full name].
-- Course: [Course name]. Date: [Defense date].
+- Team member 1: Mubtal Dinmukhamed.
+- Team member 2: Rukhanov Birzhan.
+- Course: Introduction to Functional programming.
+- Defense date: 16 November 2026.
 - Both team members understand the complete borrowing and reservation workflow.
+
+Contribution notes: [Mubtal Dinmukhamed: actual implementation and verification work]. [Rukhanov Birzhan: actual implementation and verification work].
 
 Speaker note: Introduce the project as a circulation tool for a small library. State each member's real contribution; do not claim work someone did not perform.
 
@@ -126,16 +129,16 @@ Show [wireframes](mockups/wireframes.md) beside the running catalogue and detail
 
 ## Slide 11 — Live demonstration
 
-Time: 3 minutes.
+Time: 4 minutes.
 
-1. Sign in as librarian and show catalogue search.
-2. Issue an available copy to an eligible member; show its due date.
-3. Open a fully borrowed title with waiting reservations.
-4. Return one of its copies and show the Ready reservation.
-5. In a second member session, show the persisted/live notification.
-6. Show the overdue report and CSV export.
+1. Show the librarian session and Jamie Chen's separate member session, signed in before the timer starts.
+2. Search for **Pride and Prejudice**. Issue `LIB-002-01` to **Morgan Reed**, show the 14-day due date, and return that same loan.
+3. Open **Clean Code**, whose two copies are borrowed. Add **Avery Park** to its reservation queue behind Jamie and Robin.
+4. Return **Alex Morgan's** Clean Code copy, `LIB-001-01`. Jamie's first-in-line reservation becomes **Ready** with a 72-hour pickup window.
+5. Keep Jamie's Reservations page visible while returning the copy: show the live change without refreshing, then open Notifications to show the stored message. Confirm Jamie's pickup as librarian.
+6. Show the remaining overdue report and export its CSV.
 
-Preparation: identify the exact seeded book, loan, and member before the defense. Keep one clean database copy available for restoring the demonstration outside the running app. If the network/browser session disconnects, demonstrate the persisted notification after reloading.
+Preparation: use a fresh, separate seeded demo database and the credentials generated for that demo. Rehearsing changes its records; prepare another clean demo before presenting. Verify the named copies and queue beforehand. Retrieve the current public URL from the private access file and prepare the separate development standby at `http://localhost:5180`. The standby has its own database and credentials; switching to it starts a separate demonstration. The production origin on port 5190 is for the tunnel and cannot serve as a direct browser fallback. Follow [defense-rehearsal.md](defense-rehearsal.md) if the connection fails; distinguish a recovered stored notification from a live update that was actually observed.
 
 ## Slide 12 — Challenges and solutions
 
@@ -159,8 +162,9 @@ Time: 1 minute 15 seconds.
 - Playwright covers borrow, return, reserve, and overdue workflows.
 - Coverage is collected with `dotnet test --collect:"XPlat Code Coverage"`.
 - Report actual passed/failed counts and measured coverage from [testing.md](testing.md).
+- Check the [GitHub Actions run for the presented commit](https://github.com/Birzhik228/Final_IFP/actions) separately from local test results.
 
-Speaker note: Do not invent coverage percentages or imply that untested operating systems have been tested. Open one meaningful concurrency test and explain its assertion.
+Speaker note: The first remote workflow failed before test jobs started. Describe a later run as passed only after its result has been verified for the presented commit. Do not invent coverage percentages or imply that untested operating systems have been tested. Open one meaningful concurrency test and explain its assertion.
 
 ## Slide 14 — Scope, future growth, and conclusion
 
