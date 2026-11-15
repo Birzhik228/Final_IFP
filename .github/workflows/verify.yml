@@ -31,11 +31,16 @@ jobs:
       Demo__Seed: 'true'
       BackgroundJobs__Enabled: 'false'
       LIBRARY_BASE_URL: http://127.0.0.1:5183
-      ConnectionStrings__Library: Data Source=${{ runner.temp }}/bookbridge-browser.db;Default Timeout=5
-      LIBRARY_SCREENSHOTS: ${{ runner.temp }}/screenshots
-      LIBRARY_A11Y_RESULTS: ${{ runner.temp }}/accessibility
     steps:
       - uses: actions/checkout@v4
+      - name: Configure isolated browser test paths
+        shell: bash
+        run: |
+          {
+            echo "ConnectionStrings__Library=Data Source=$RUNNER_TEMP/bookbridge-browser.db;Default Timeout=5"
+            echo "LIBRARY_SCREENSHOTS=$RUNNER_TEMP/screenshots"
+            echo "LIBRARY_A11Y_RESULTS=$RUNNER_TEMP/accessibility"
+          } >> "$GITHUB_ENV"
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
