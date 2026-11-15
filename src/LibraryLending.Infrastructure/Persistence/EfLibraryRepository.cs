@@ -98,6 +98,17 @@ public sealed class EfLibraryRepository(IDbContextFactory<LibraryDbContext> fact
                     : 0))
             .ToListAsync(ct);
     }
+    public async Task<IReadOnlyList<BorrowRequestDto>> GetBorrowRequestsAsync(int? memberId, string? userId, CancellationToken ct)
+    {
+        await using var db = await factory.CreateDbContextAsync(ct);
+        var query = db.BorrowRequests.AsNoTracking().AsQueryable();
+        if (memberId.HasValue) query = query.Where(x => x.MemberId == memberId.Value && x.Member.IdentityUserId == userId);
+        return await query.OrderBy(x => x.Status != BorrowRequestStatus.Pending).ThenByDescending(x => x.CreatedAtUtc).ThenByDescending(x => x.Id)
+            .Select(x => new BorrowRequestDto(x.Id, x.BookId, x.Book.Title, x.MemberId, x.Member.Name,
+                x.Status, x.CreatedAtUtc, x.ReviewedAtUtc, x.ReviewNote, x.LoanId,
+                x.Loan == null ? null : x.Loan.BookCopy.Barcode, x.Loan == null ? null : x.Loan.DueDate))
+            .ToListAsync(ct);
+    }
     public async Task<IReadOnlyList<NotificationDto>> GetNotificationsAsync(string userId, CancellationToken ct) { await using var db = await factory.CreateDbContextAsync(ct); return await db.Notifications.AsNoTracking().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedAtUtc).Take(100).Select(x => new NotificationDto(x.Id, x.Message, x.Kind, x.CreatedAtUtc, x.ReadAtUtc != null)).ToListAsync(ct); }
     public async Task MarkNotificationsReadAsync(string userId, CancellationToken ct) { await using var db = await factory.CreateDbContextAsync(ct); var now = clock.GetUtcNow().UtcDateTime; await db.Notifications.Where(x => x.UserId == userId && x.ReadAtUtc == null).ExecuteUpdateAsync(s => s.SetProperty(x => x.ReadAtUtc, now), ct); }
     public async Task<DashboardDto> GetDashboardAsync(int? memberId, CancellationToken ct)
@@ -116,6 +127,9 @@ internal sealed class EfLibrarySession(LibraryDbContext db) : ILibrarySession
     public Task<Member?> MemberAsync(int id, CancellationToken ct) => db.Members.SingleOrDefaultAsync(x => x.Id == id, ct);
     public Task<Loan?> LoanAsync(int id, CancellationToken ct) => db.Loans.SingleOrDefaultAsync(x => x.Id == id, ct);
     public Task<Reservation?> ReservationAsync(int id, CancellationToken ct) => db.Reservations.Include(x => x.Member).Include(x => x.Book).SingleOrDefaultAsync(x => x.Id == id, ct);
+    public Task<BorrowRequest?> BorrowRequestAsync(int id, CancellationToken ct) => db.BorrowRequests.Include(x => x.Member).Include(x => x.Book).SingleOrDefaultAsync(x => x.Id == id, ct);
+    public Task<bool> HasPendingBorrowRequestAsync(int bookId, int memberId, CancellationToken ct) => db.BorrowRequests.AnyAsync(x => x.BookId == bookId && x.MemberId == memberId && x.Status == BorrowRequestStatus.Pending, ct);
+    public Task<List<string>> LibrarianUserIdsAsync(CancellationToken ct) => (from userRole in db.UserRoles join role in db.Roles on userRole.RoleId equals role.Id where role.NormalizedName == "LIBRARIAN" select userRole.UserId).Distinct().ToListAsync(ct);
     public Task<List<Loan>> OpenLoansAsync(int? memberId, CancellationToken ct) => db.Loans.Include(x => x.Member).Include(x => x.BookCopy).ThenInclude(x => x.Book).Where(x => x.ReturnedAtUtc == null && (!memberId.HasValue || x.MemberId == memberId)).ToListAsync(ct);
     public Task<List<Reservation>> ActiveReservationsAsync(int? bookId, CancellationToken ct) => db.Reservations.Include(x => x.Member).Include(x => x.Book).Where(x => (!bookId.HasValue || x.BookId == bookId) && (x.Status == ReservationStatus.Waiting || x.Status == ReservationStatus.Ready)).OrderBy(x => x.CreatedAtUtc).ThenBy(x => x.Id).ToListAsync(ct);
     public Task<List<BookCopy>> AvailableCopiesAsync(int bookId, CancellationToken ct) => db.Copies.Where(x => x.BookId == bookId && x.Status == CopyStatus.Available).ToListAsync(ct);

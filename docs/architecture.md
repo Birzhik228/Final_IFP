@@ -25,7 +25,7 @@ Request and response DTOs are immutable records. Fine calculation, overdue-day c
 
 ## Persistence and transactions
 
-Books, authors, copies, members, loans, reservations, and notifications have explicit relational mappings. Unique and filtered indexes protect ISBNs, barcodes, active loans, active reservations, and ready holds. Overdue and deadline indexes support the background worker and reports.
+Books, authors, copies, members, loans, borrow requests, reservations, and notifications have explicit relational mappings. Unique and filtered indexes protect ISBNs, barcodes, active loans, pending requests, active reservations, and ready holds. Overdue and deadline indexes support the background worker and reports.
 
 Each circulation command creates an operation-scoped context. All reads and writes for that command share its transaction. Short SQLite write transactions serialize competing modifications; concurrency tokens detect stale entity updates. Retries must restart the complete operation, re-read the state, and re-evaluate the rules.
 
@@ -49,13 +49,23 @@ SQLite has no SQL Server-style automatically updated `rowversion`; application-m
 
 Reservations are ordered by creation instant and then ID for deterministic tie-breaking. Assignment changes Waiting to Ready, attaches a specific copy, and sets a 72-hour pickup deadline. Collection changes Ready to Fulfilled and creates a loan. Cancellation or expiry immediately attempts to assign the released copy to the next waiting member.
 
+## Borrow request review
+
+`BorrowRequest` records a member's request for an available title. Its states are Pending, Accepted, Rejected and Cancelled. Pending requests do not change copy status. A filtered unique index permits one Pending request per member/title; closed requests remain as history.
+
+`RequestBorrowAsync` checks the authenticated member link, availability, borrowing eligibility and conflicting reservations, then stores the request and librarian notifications. `AcceptBorrowRequestAsync` requires a librarian and rechecks the pending state, membership, loan allowance, overdue loans, availability and reservation priority. It chooses an available copy and creates the loan in the same transaction as the Accepted decision and member notification. Acceptance starts the loan immediately. No additional pickup step applies to this route.
+
+`RejectBorrowRequestAsync` records the librarian's decision and optional reason without changing inventory. `CancelBorrowRequestAsync` permits the requesting member to withdraw a pending request. Repeated or competing decisions cannot create a second loan or overwrite a completed decision. Failed acceptance preserves the pending request and rolls back all loan changes. A pending request must be cancelled before the same member joins that title's reservation queue.
+
+Request queries return all records to librarians and only the authenticated member's records to members. The stored request, review timestamps, reviewer, note and accepted loan link make the result inspectable after reconnecting.
+
 ## Time and money
 
 Audit and pickup timestamps use UTC. Due dates and overdue-day calculations use the configured library timezone. An injected `TimeProvider` lets tests advance time without waiting. The due date itself has zero overdue days. Each loan stores its daily fine rate; changing the configuration does not rewrite existing loan terms. Money is stored as integer minor units to avoid floating-point rounding errors.
 
 ## Authentication and authorization
 
-Identity supplies password handling and cookies. Librarian commands include checkout, return, member/catalogue management, and pickup confirmation. Members can browse, reserve for themselves, cancel their own reservations, and read their own records. User identity and membership are derived server-side from authenticated claims. A supplied member ID is never sufficient authorization.
+Identity supplies password handling and cookies. Librarian commands include request review, checkout, return, member/catalogue management, and pickup confirmation. Members can request available books, reserve unavailable books for themselves, cancel their own pending requests/reservations, and read their own records. User identity and membership are derived server-side from authenticated claims. A supplied member ID is never sufficient authorization.
 
 Component visibility improves usability, but every sensitive query and command also checks authorization. Login/logout follow HTTP request handling rather than trying to alter authentication cookies from an established interactive circuit.
 

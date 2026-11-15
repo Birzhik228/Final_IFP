@@ -66,7 +66,7 @@
     private int UnreadCount => State.Notifications.Count(notification => !notification.IsRead);
     private string AccountName => profile?.Name ?? (actor?.IsLibrarian == true ? "Librarian" : "Member");
     private string AccountInitials => string.Concat(AccountName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(part => char.ToUpperInvariant(part[0])));
-    private bool IsLendingRoute => Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].TrimEnd('/') is "loans" or "reservations";
+    private bool IsLendingRoute => Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].TrimEnd('/') is "loans" or "reservations" or "requests";
 
     protected override async Task OnInitializedAsync()
     {

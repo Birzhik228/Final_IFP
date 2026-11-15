@@ -10,7 +10,7 @@ namespace LibraryLending.Tests.EndToEnd;
 public sealed class BrowserCollection { }
 
 [Collection("Library browser workflows")]
-public sealed class CirculationFlows : PageTest
+public sealed partial class CirculationFlows : PageTest
 {
     private static readonly string BaseUrl = (Environment.GetEnvironmentVariable("LIBRARY_BASE_URL") ?? "http://localhost:5180").TrimEnd('/');
     private const string Password = "LibraryDemo1!";

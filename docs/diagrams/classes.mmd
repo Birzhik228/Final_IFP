@@ -27,6 +27,7 @@ classDiagram
         string Name
         MembershipStatus Status
         int BorrowingLimit
+        DateTime JoinedAtUtc
     }
     class Loan {
         int Id
@@ -41,6 +42,25 @@ classDiagram
         ReservationStatus Status
         DateTime CreatedAtUtc
         DateTime PickupDeadlineUtc
+    }
+    class BorrowRequest {
+        int Id
+        int BookId
+        int MemberId
+        BorrowRequestStatus Status
+        DateTime CreatedAtUtc
+        DateTime ReviewedAtUtc
+        string ReviewerUserId
+        string ReviewNote
+        int LoanId
+        string Version
+    }
+    class BorrowRequestStatus {
+        <<enumeration>>
+        Pending
+        Accepted
+        Rejected
+        Cancelled
     }
     class Notification {
         int Id
@@ -61,7 +81,25 @@ classDiagram
         +ReturnAsync(actor, loanId)
         +ReserveAsync(actor, bookId, memberId)
         +PickupAsync(actor, reservationId)
+        +GetBorrowRequestsAsync(actor)
+        +RequestBorrowAsync(actor, bookId)
+        +AcceptBorrowRequestAsync(actor, requestId)
+        +RejectBorrowRequestAsync(actor, requestId, reason)
+        +CancelBorrowRequestAsync(actor, requestId)
         +ProcessDeadlinesAsync()
+    }
+    class LibraryService {
+        +RequestBorrowAsync(actor, bookId)
+        +AcceptBorrowRequestAsync(actor, requestId)
+        +RejectBorrowRequestAsync(actor, requestId, reason)
+        +CancelBorrowRequestAsync(actor, requestId)
+        -EligibleAsync(session, member)
+        -CreateLoanAsync(session, copy, member)
+    }
+    class ILibraryRepository {
+        <<interface>>
+        +ExecuteAsync(operation)
+        +GetBorrowRequestsAsync(memberId, userId)
     }
     Book "1" --> "0..*" BookCopy : copies
     Book "0..*" --> "1" Category : categorized as
@@ -71,5 +109,11 @@ classDiagram
     Book "1" <-- "0..*" Reservation : queue
     Member "1" <-- "0..*" Reservation : requests
     Reservation "0..*" --> "0..1" BookCopy : assignment history
-    ILibraryService ..> LendingRules : uses
-    ILibraryService ..> Notification : creates
+    Book "1" <-- "0..*" BorrowRequest : available title requests
+    Member "1" <-- "0..*" BorrowRequest : submits
+    BorrowRequest "0..1" --> "0..1" Loan : acceptance creates
+    BorrowRequest --> BorrowRequestStatus : status
+    ILibraryService <|.. LibraryService : implements
+    LibraryService ..> LendingRules : checks eligibility
+    LibraryService ..> ILibraryRepository : uses atomic session
+    LibraryService ..> Notification : records outcomes

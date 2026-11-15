@@ -37,6 +37,7 @@ erDiagram
         string Phone
         string Status
         int BorrowingLimit
+        datetime JoinedAtUtc
         string Version
     }
     LOAN {
@@ -60,6 +61,18 @@ erDiagram
         datetime PickupDeadlineUtc
         int FulfilledLoanId FK
         string ClosureReason
+        string Version
+    }
+    BORROW_REQUEST {
+        int Id PK
+        int BookId FK
+        int MemberId FK
+        string Status
+        datetime CreatedAtUtc
+        datetime ReviewedAtUtc
+        string ReviewerUserId FK
+        string ReviewNote
+        int LoanId FK,UK
         string Version
     }
     IDENTITY_USER {
@@ -86,5 +99,11 @@ erDiagram
     MEMBER ||--o{ RESERVATION : places
     BOOK_COPY o|--o{ RESERVATION : assigned_over_time
     LOAN o|--o{ RESERVATION : fulfills
+    BOOK ||--o{ BORROW_REQUEST : requested_title
+    MEMBER ||--o{ BORROW_REQUEST : submits
+    LOAN o|--o| BORROW_REQUEST : created_on_acceptance
+    IDENTITY_USER o|--o{ BORROW_REQUEST : reviews_or_cancels
     IDENTITY_USER o|--o| MEMBER : signs_in_as
     IDENTITY_USER ||--o{ NOTIFICATION : receives
+    %% BorrowRequests has a filtered unique (BookId, MemberId) index for Status = Pending.
+    %% A pending request does not reserve a BookCopy. Acceptance selects a copy and creates a Loan atomically.

@@ -1,0 +1,83 @@
+@page "/requests"
+@attribute [Authorize]
+@inherits LibraryPageBase
+<PageTitle>Borrow requests · BookBridge</PageTitle>
+<LendingTabs IsLibrarian="User.IsLibrarian" />
+<div class="page-heading">
+    <div><span class="eyebrow">FROM REQUEST TO YOUR NEXT READ</span><h1>Borrow requests.</h1><p>@(User.IsLibrarian ? "Review member requests for available books. Accepting a request issues a copy and starts its loan." : "Track your requests and see the librarian’s decision.")</p></div>
+    <a class="button secondary" href="/books">Browse books →</a>
+</div>
+<div class="tabs" role="group" aria-label="Borrow request view">
+    <button class="@(showHistory ? "" : "selected")" aria-pressed="@(!showHistory)" @onclick="() => showHistory = false">Pending requests</button>
+    <button class="@(showHistory ? "selected" : "")" aria-pressed="@showHistory" @onclick="() => showHistory = true">History</button>
+</div>
+@if (Loading) { <LoadingPanel /> }
+else if (LoadError is not null) { <p class="message error" role="alert">@LoadError</p> }
+else
+{
+    <section class="panel table-panel">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Borrow requests">
+            <table class="data-table request-table">
+                <caption class="visually-hidden">Borrow requests</caption>
+                <thead><tr><th>Book</th>@if (User.IsLibrarian) { <th>Member</th> }<th>Status</th><th>Details</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+                <tbody>
+                    @foreach (var request in VisibleRequests)
+                    {
+                        <tr data-testid="borrow-request-row" data-request-id="@request.Id" @key="request.Id">
+                            <td><a href="/books/@request.BookId"><strong>@request.BookTitle</strong></a><small>Requested @FormatDate(request.CreatedAtUtc) UTC</small></td>
+                            @if (User.IsLibrarian) { <td>@request.MemberName</td> }
+                            <td><StatusBadge Status="@request.Status.ToString()" /></td>
+                            <td class="request-details">
+                                @if (request.Status == BorrowRequestStatus.Pending) { <span class="muted">Waiting for librarian review</span> }
+                                @if (request.LoanId.HasValue)
+                                {
+                                    <a class="text-link" href="/loans">View loan</a>
+                                    <small>Copy @request.Barcode</small>
+                                    <small>Due @request.DueDate?.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</small>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(request.ReviewNote)) { <p class="request-review-note">@request.ReviewNote</p> }
+                                @if (request.ReviewedAtUtc.HasValue) { <small>Updated @FormatDate(request.ReviewedAtUtc.Value) UTC</small> }
+                            </td>
+                            <td>
+                                @if (request.Status == BorrowRequestStatus.Pending)
+                                {
+                                    <div class="table-actions">
+                                        @if (User.IsLibrarian)
+                                        {
+                                            <button class="button primary small" disabled="@Busy" @onclick="() => acceptRequest = request">Accept &amp; issue book</button>
+                                            <button class="text-button danger-text" disabled="@Busy" @onclick="() => ChooseReject(request)">Reject</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="text-button danger-text" disabled="@Busy" @onclick="() => cancelRequest = request">Cancel request</button>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (!VisibleRequests.Any()) { <div class="table-empty">@(showHistory ? "No request history yet." : "No pending borrow requests.")</div> }
+        </div>
+    </section>
+    <p class="page-note">Requests do not hold a copy. Acceptance requires an available copy, an eligible member and no waiting reservation queue. The librarian can reject a request with a note.</p>
+}
+<ConfirmDialog Open="@(acceptRequest is not null)" Title="Accept borrow request?" Message="@(acceptRequest is null ? "" : $"Issue an available copy of {acceptRequest.BookTitle} to {acceptRequest.MemberName}. Accepting creates a loan now and starts its borrowing period.")" ConfirmText="Accept & issue book" Busy="Busy" OnConfirm="Accept" OnCancel="() => acceptRequest = null" />
+<ConfirmDialog Open="@(rejectRequest is not null)" Title="Reject borrow request?" Message="@(rejectRequest is null ? "" : $"Decline the request for {rejectRequest.BookTitle}. The member will receive a notification and can read your note.")" ConfirmText="Reject request" Danger="true" Busy="Busy" OnConfirm="Reject" OnCancel="() => rejectRequest = null">
+    <div class="field"><label for="request-rejection-reason">Reason (optional)</label><textarea id="request-rejection-reason" @bind="rejectionReason" @bind:event="oninput" maxlength="500" rows="3" disabled="@Busy" aria-describedby="request-rejection-help"></textarea><small id="request-rejection-help">Up to 500 characters. This note is visible to the member.</small></div>
+</ConfirmDialog>
+<ConfirmDialog Open="@(cancelRequest is not null)" Title="Cancel borrow request?" Message="The librarian will no longer review this request. You can send a new request later if a copy is available." ConfirmText="Confirm cancellation" Danger="true" Busy="Busy" OnConfirm="Cancel" OnCancel="() => cancelRequest = null" />
+@code {
+    private IReadOnlyList<BorrowRequestDto> requests = [];
+    private bool showHistory;
+    private BorrowRequestDto? acceptRequest, rejectRequest, cancelRequest;
+    private string rejectionReason = "";
+    private IEnumerable<BorrowRequestDto> VisibleRequests => requests.Where(request => showHistory ? request.Status != BorrowRequestStatus.Pending : request.Status == BorrowRequestStatus.Pending);
+    private static string FormatDate(DateTime value) => value.ToString("dd MMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+    protected override async Task LoadAsync() => requests = await Library.GetBorrowRequestsAsync(User);
+    private void ChooseReject(BorrowRequestDto request) { rejectRequest = request; rejectionReason = ""; }
+    private async Task Accept() { if (acceptRequest is not null && await RunCommand(() => Library.AcceptBorrowRequestAsync(User, acceptRequest.Id), "Request accepted. The book has been issued and the loan is active.")) acceptRequest = null; }
+    private async Task Reject() { if (rejectRequest is not null && await RunCommand(() => Library.RejectBorrowRequestAsync(User, rejectRequest.Id, rejectionReason), "Request rejected. The member has been notified.")) { rejectRequest = null; rejectionReason = ""; } }
+    private async Task Cancel() { if (cancelRequest is not null && await RunCommand(() => Library.CancelBorrowRequestAsync(User, cancelRequest.Id), "Borrow request cancelled.")) cancelRequest = null; }
+}

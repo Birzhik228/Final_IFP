@@ -9,8 +9,8 @@ else if (LoadError is not null) { <p class="message error" role="alert">@LoadErr
 else
 {
     @if (books.Items.Count == 0) { <section class="empty-state"><h2>No books found</h2><p>Try another title, author, or category.</p><button class="button secondary" @onclick="() => Search(new BookQuery())">Clear filters</button></section> }
-    <div class="book-grid">@foreach (var book in books.Items) { <BookCard Book="book" @key="book.Id" /> }</div>
-    <div class="catalogue-note"><span class="catalogue-note-icon" aria-hidden="true"><Icon Name="info" /></span><p>Available books are issued by a librarian. Join the waiting list when all copies are unavailable.</p></div>
+    <div class="book-grid">@foreach (var book in books.Items) { <BookCard Book="book" CanRequest="@(!User.IsLibrarian && User.MemberId.HasValue)" @key="book.Id" /> }</div>
+    <div class="catalogue-note"><span class="catalogue-note-icon" aria-hidden="true"><Icon Name="info" /></span><p>Request an available book for librarian approval. Join the waiting list when all copies are unavailable.</p></div>
     <Pagination Page="books.Page" TotalPages="books.TotalPages" TotalCount="books.TotalCount" PageChanged="ChangePage" />
 }
 @code {

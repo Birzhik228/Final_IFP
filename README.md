@@ -2,7 +2,7 @@
 
 **Library Lending & Reservations**
 
-BookBridge is a library circulation application built for a C# final project. Librarians maintain books and physical copies, manage members, issue and return loans, and review overdue items. Members browse the catalogue, join a reservation queue, and see their own profile, loans, and notifications. Solution and namespace identifiers remain `LibraryLending`.
+BookBridge is a library circulation application built for a C# final project. Librarians maintain books and physical copies, manage members, review borrowing requests, issue and return loans, and review overdue items. Members request available books, join a reservation queue for unavailable books, and see their own profile, requests, loans, and notifications. Solution and namespace identifiers remain `LibraryLending`.
 
 The main feature is an automatic FIFO reservation queue. Returning a copy reserves it for the next waiting member for 72 hours. Expiry or cancellation passes the copy to the next member. Database transactions protect each transition.
 
@@ -59,13 +59,14 @@ These credentials are for the local seeded demonstration. Configure real account
 
 ## Main workflows
 
-1. Sign in as a librarian and open **Books**. Select a book, choose a member, and borrow an available physical copy.
-2. Open **Lending desk → Loans & returns** and return the loan. A late return stores the final fine. A waiting reservation receives the returned copy automatically.
-3. Sign in as a member, open an unavailable book, and join its reservation queue.
-4. When a reservation becomes ready, the member receives an in-app notification through the header bell. A librarian opens **Lending desk → Reservations** and confirms collection before its pickup deadline. Members review their own queue in **My Shelf → Reservations**.
-5. Open **Reports** as a librarian to filter and sort overdue loans and download CSV.
-6. On **Members**, create a membership and, when a sign-in slot is available, use **Create sign-in account** to issue a generated temporary password. At most **three member login accounts** are allowed; the librarian account is separate. The seeded demo already uses all three slots. Circulation records remain available even when they have no login account.
-7. Open **Profile** or your name/avatar in the header to see your own account details. Members see their name, email, phone, joining date when recorded, membership status, borrowing limit, active loans, and remaining allowance. Use **Change password** on the profile page to update your own password.
+1. As a member, open an available book and select **Request to borrow**. Review or cancel the pending request under **My Shelf → Requests**.
+2. As a librarian, open **Lending desk → Requests**. **Accept & issue book** creates a loan for an available copy and starts its due-date period. **Reject** closes the request with an optional reason. The member receives a notification of the decision.
+3. Librarians can still issue books directly: open **Books**, select a title and member, and borrow an available physical copy. Pending requests do not hold inventory or override an existing reservation queue.
+4. Open **Lending desk → Loans & returns** and return the loan. A late return stores the final fine. A waiting reservation receives the returned copy automatically.
+5. As a member, open an unavailable book and join its reservation queue. When it becomes Ready, collect it within the pickup window. The librarian confirms collection under **Lending desk → Reservations**. Members see their queue under **My Shelf → Reservations**.
+6. Open **Reports** as a librarian to filter and sort overdue loans and download CSV.
+7. On **Members**, create a membership and, when a sign-in slot is available, use **Create sign-in account** to issue a generated temporary password. At most **three member login accounts** are allowed; the librarian account is separate. The seeded demo already uses all three slots. Circulation records remain available even when they have no login account.
+8. Open **Profile** or your name/avatar in the header to see your own account details. Members see their name, email, phone, joining date when recorded, membership status, borrowing limit, active loans, and remaining allowance. Use **Change password** on the profile page to update your own password.
 
 See [the user guide](docs/user-guide.md) for role-specific instructions and [the architecture guide](docs/architecture.md) for implementation decisions.
 
@@ -84,6 +85,8 @@ See [the user guide](docs/user-guide.md) for role-specific instructions and [the
 Loan, fine, and calendar options are configured in the `Library` configuration section. Borrowing limits are configurable per member. The three-account maximum is a separate application rule; it does not lower the borrowing limit to three books. A loan keeps a snapshot of its daily fine rate. A fine starts on the calendar day after its due date. No fine accrues on the due date itself.
 
 Only active members can reserve or borrow. Checkout and reservation pickup reject overdue members and members at their borrowing limit. A ready reservation can be collected only for its assigned member. A new reservation cannot be made while an unallocated copy is available, and duplicate active reservations are rejected.
+
+Borrow requests have Pending, Accepted, Rejected and Cancelled states. One member can have only one pending request per title. Submission and acceptance both check borrowing eligibility. Acceptance rechecks availability inside the same transaction that creates the loan, and cannot bypass a waiting reservation queue. If availability changes, the request remains pending until reviewed or cancelled. Members can cancel it before joining the reservation queue. Request history and review details remain stored.
 
 ## Project organization
 
@@ -110,11 +113,13 @@ dotnet test tests/LibraryLending.Tests.Unit --collect:"XPlat Code Coverage"
 
 Browser tests require installed Playwright browsers and a running isolated test instance. The commands and complete verification matrix are in [the testing guide](docs/testing.md). Test results are recorded there; a runnable test suite is not itself evidence that all environments have passed.
 
-Baseline verification (14 November 2026): **74 unit and 64 integration tests on both Windows and Linux**, plus **14 browser cases on each of Chromium, Firefox, and WebKit**. All passed. Automated accessibility checks recorded **114 scans with zero reported violations**. Combined runtime coverage was **71.4% lines / 55.4% branches**, including generated EF code. Production HTTPS, bootstrap, readiness, session revocation, and backup/restore checks also passed. See [recorded results and limits](docs/testing.md#recorded-results), [coverage](docs/verification/coverage/index.html), and [measured performance](docs/performance.md).
+Current borrow-request verification (15–16 November 2026): **74 unit + 96 integration cases on Windows**, and **20 browser cases on each of Chromium, Firefox and WebKit**, passed with no failures or skips. This is **190 distinct cases / 230 executions**. The browser suite recorded **156 automated accessibility scans with zero reported violations**, retaining incomplete checks for review. See [the borrow-request verification and evidence](docs/verification/borrow-requests-2026-11-15.md). These are local results, not a claim that new remote CI jobs have passed.
 
-Profile/account-limit verification (15 November 2026): **74 unit + 75 integration tests on Windows**, **16 Chromium/Edge browser cases**, and **seven checks through the public demo** passed. See [the new verification record](docs/verification/profiles-2026-11-15.md) for scope, migration checks, and the updated account rules.
+Historical baseline verification (14 November 2026): **74 unit and 64 integration tests on both Windows and Linux**, plus **14 browser cases on each of Chromium, Firefox, and WebKit**. All passed. Automated accessibility checks recorded **114 scans with zero reported violations**. Combined runtime coverage was **71.4% lines / 55.4% branches**, including generated EF code. Production HTTPS, bootstrap, readiness, session revocation, and backup/restore checks also passed. See [recorded results and limits](docs/testing.md#recorded-results), [coverage](docs/verification/coverage/index.html), and [measured performance](docs/performance.md). These measurements predate borrow requests; no new coverage measurement is claimed.
 
-Bright-design verification (15 November 2026): **74 unit + 76 integration tests on Windows** and **18 Chromium/Edge browser cases** passed. The redesign includes horizontal role navigation, a clearer catalogue, and persistent dark mode. See [the redesign verification](docs/redesign-verification.md) for behavior, assets, and test limits.
+Historical profile/account-limit verification (15 November 2026): **74 unit + 75 integration tests on Windows**, **16 Chromium/Edge browser cases**, and **seven checks through the public demo** passed. See [that verification record](docs/verification/profiles-2026-11-15.md) for scope, migration checks, and the updated account rules.
+
+Historical bright-design verification (15 November 2026): **74 unit + 76 integration tests on Windows** and **18 Chromium/Edge browser cases** passed. The redesign includes horizontal role navigation, a clearer catalogue, and persistent dark mode. See [the redesign verification](docs/redesign-verification.md) for behavior, assets, and test limits.
 
 ## Documentation and defense
 

@@ -14,6 +14,7 @@ public sealed class LibraryService(ILibraryRepository repository, TimeProvider c
     public Task<IReadOnlyList<MemberDto>> GetMembersAsync(Actor actor, CancellationToken ct = default) => actor.IsLibrarian ? repository.GetMembersAsync(ct) : Task.FromResult<IReadOnlyList<MemberDto>>([]);
     public Task<IReadOnlyList<LoanDto>> GetLoansAsync(Actor actor, bool overdueOnly = false, string search = "", string sort = "due", CancellationToken ct = default) => repository.GetLoansAsync(actor.IsLibrarian ? null : actor.MemberId ?? -1, overdueOnly, search, sort, ct);
     public Task<IReadOnlyList<ReservationDto>> GetReservationsAsync(Actor actor, CancellationToken ct = default) => repository.GetReservationsAsync(actor.IsLibrarian ? null : actor.MemberId ?? -1, ct);
+    public Task<IReadOnlyList<BorrowRequestDto>> GetBorrowRequestsAsync(Actor actor, CancellationToken ct = default) => repository.GetBorrowRequestsAsync(actor.IsLibrarian ? null : actor.MemberId ?? -1, actor.IsLibrarian ? null : actor.UserId, ct);
     public Task<IReadOnlyList<NotificationDto>> GetNotificationsAsync(Actor actor, CancellationToken ct = default) => repository.GetNotificationsAsync(actor.UserId, ct);
     public Task<DashboardDto> GetDashboardAsync(Actor actor, CancellationToken ct = default) => repository.GetDashboardAsync(actor.IsLibrarian ? null : actor.MemberId ?? -1, ct);
     public Task MarkNotificationsReadAsync(Actor actor, CancellationToken ct = default) => repository.MarkNotificationsReadAsync(actor.UserId, ct);
@@ -98,6 +99,102 @@ public sealed class LibraryService(ILibraryRepository repository, TimeProvider c
         }, ct);
     }
 
+    public async Task<Result<int>> RequestBorrowAsync(Actor actor, int bookId, CancellationToken ct = default)
+    {
+        if (actor.IsLibrarian || actor.MemberId is not int memberId || string.IsNullOrWhiteSpace(actor.UserId))
+            return Fail("Sign in as a member to request a book.");
+        return await repository.ExecuteAsync<int>(async s =>
+        {
+            var member = await s.MemberAsync(memberId, ct);
+            if (member is null || member.IdentityUserId != actor.UserId) return Fail("Your membership could not be verified.");
+            var book = await s.BookAsync(bookId, ct);
+            if (book is null || book.IsArchived) return Fail("This book is not available in the catalogue.");
+            if (await s.HasPendingBorrowRequestAsync(bookId, memberId, ct)) return Fail("You already have a pending request for this book.");
+            var reservations = await s.ActiveReservationsAsync(bookId, ct);
+            if (reservations.Any(r => r.MemberId == memberId)) return Fail("You already have an active reservation for this book.");
+            if (reservations.Any(r => r.Status == ReservationStatus.Waiting)) return Fail("This book has a reservation queue. Waiting members have priority.");
+            if ((await s.AvailableCopiesAsync(bookId, ct)).Count == 0) return Fail("No copy is available. Join the reservation queue instead.");
+            var eligible = await EligibleAsync(s, member, ct);
+            if (!eligible.IsSuccess) return Fail(eligible.Error);
+            var request = new BorrowRequest { BookId = bookId, MemberId = memberId, CreatedAtUtc = Now };
+            s.Add(request);
+            await s.SaveAsync(ct);
+            foreach (var librarianId in await s.LibrarianUserIdsAsync(ct))
+                await s.NotifyAsync(librarianId, "borrow-requested", $"{member.Name} requested to borrow {book.Title}. Review it in Borrow requests.", $"borrow-requested:{request.Id}:{librarianId}", Now, ct);
+            return Result<int>.Success(request.Id);
+        }, ct);
+    }
+
+    public async Task<Result<int>> AcceptBorrowRequestAsync(Actor actor, int requestId, CancellationToken ct = default)
+    {
+        if (!actor.IsLibrarian) return Fail("Only librarians can accept borrow requests.");
+        return await repository.ExecuteAsync<int>(async s =>
+        {
+            var request = await s.BorrowRequestAsync(requestId, ct);
+            if (request is null) return Fail("Borrow request was not found.");
+            if (request.Status != BorrowRequestStatus.Pending) return Fail("This request has already been reviewed or cancelled.");
+            if (request.Book.IsArchived) return Fail("This book is no longer available in the catalogue. Reject the request instead.");
+            var reservations = await s.ActiveReservationsAsync(request.BookId, ct);
+            if (reservations.Any(r => r.Status == ReservationStatus.Waiting || r.MemberId == request.MemberId))
+                return Fail("This book has an active reservation to fulfil first. The request remains pending.");
+            var eligible = await EligibleAsync(s, request.Member, ct);
+            if (!eligible.IsSuccess) return Fail(eligible.Error);
+            var copy = (await s.AvailableCopiesAsync(request.BookId, ct)).OrderBy(c => c.Id).FirstOrDefault();
+            if (copy is null) return Fail("No copy is available now. The request remains pending; reject it if the member should join the reservation queue.");
+            // Loan creation and review are one transaction. Concurrent reviews cannot issue two copies.
+            var loan = await CreateLoanAsync(s, copy, request.Member, ct);
+            if (!loan.IsSuccess) return loan;
+            request.Status = BorrowRequestStatus.Accepted;
+            request.LoanId = loan.Value;
+            request.ReviewedAtUtc = Now;
+            request.ReviewerUserId = actor.UserId;
+            request.Version = Guid.NewGuid().ToString("N");
+            await s.NotifyAsync(request.Member.IdentityUserId, "borrow-accepted", $"Your request for {request.Book.Title} was accepted. Copy {copy.Barcode} has been issued to you. See My loans for the due date.", $"borrow-accepted:{request.Id}", Now, ct);
+            return loan;
+        }, ct);
+    }
+
+    public async Task<Result<int>> RejectBorrowRequestAsync(Actor actor, int requestId, string reason = "", CancellationToken ct = default)
+    {
+        if (!actor.IsLibrarian) return Fail("Only librarians can reject borrow requests.");
+        reason = reason?.Trim() ?? "";
+        if (reason.Length > 500) return Fail("The rejection reason must be 500 characters or fewer.");
+        return await repository.ExecuteAsync<int>(async s =>
+        {
+            var request = await s.BorrowRequestAsync(requestId, ct);
+            if (request is null) return Fail("Borrow request was not found.");
+            if (request.Status != BorrowRequestStatus.Pending) return Fail("This request has already been reviewed or cancelled.");
+            request.Status = BorrowRequestStatus.Rejected;
+            request.ReviewedAtUtc = Now;
+            request.ReviewerUserId = actor.UserId;
+            request.ReviewNote = reason;
+            request.Version = Guid.NewGuid().ToString("N");
+            var note = string.IsNullOrEmpty(reason) ? "" : $" Reason: {reason}";
+            await s.NotifyAsync(request.Member.IdentityUserId, "borrow-rejected", $"Your request for {request.Book.Title} was rejected.{note}", $"borrow-rejected:{request.Id}", Now, ct);
+            return Result<int>.Success(request.Id);
+        }, ct);
+    }
+
+    public async Task<Result<int>> CancelBorrowRequestAsync(Actor actor, int requestId, CancellationToken ct = default)
+    {
+        if (actor.IsLibrarian || actor.MemberId is not int memberId || string.IsNullOrWhiteSpace(actor.UserId))
+            return Fail("Only the requesting member can cancel this request.");
+        return await repository.ExecuteAsync<int>(async s =>
+        {
+            var request = await s.BorrowRequestAsync(requestId, ct);
+            if (request is null || request.MemberId != memberId || request.Member.IdentityUserId != actor.UserId)
+                return Fail("Borrow request was not found or access was denied.");
+            if (request.Status != BorrowRequestStatus.Pending) return Fail("Only pending requests can be cancelled.");
+            request.Status = BorrowRequestStatus.Cancelled;
+            request.ReviewedAtUtc = Now;
+            request.ReviewerUserId = actor.UserId;
+            request.Version = Guid.NewGuid().ToString("N");
+            foreach (var librarianId in await s.LibrarianUserIdsAsync(ct))
+                await s.NotifyAsync(librarianId, "borrow-cancelled", $"{request.Member.Name} cancelled their request for {request.Book.Title}.", $"borrow-cancelled:{request.Id}:{librarianId}", Now, ct);
+            return Result<int>.Success(request.Id);
+        }, ct);
+    }
+
     public async Task<Result<int>> ReturnAsync(Actor actor, int loanId, CancellationToken ct = default)
     {
         if (!actor.IsLibrarian) return Fail("Only librarians can accept returns.");
@@ -120,8 +217,9 @@ public sealed class LibraryService(ILibraryRepository repository, TimeProvider c
             var member = await s.MemberAsync(memberId, ct); var book = await s.BookAsync(bookId, ct);
             if (member is null || book is null) return Fail("Book or member was not found.");
             if (member.Status != MembershipStatus.Active) return Fail("Only active members can reserve books.");
+            if (await s.HasPendingBorrowRequestAsync(bookId, memberId, ct)) return Fail("Cancel the pending borrow request before joining this book's reservation queue.");
             if ((await s.ActiveReservationsAsync(bookId, ct)).Any(r => r.MemberId == memberId)) return Fail("This member already has an active reservation for this book.");
-            if ((await s.AvailableCopiesAsync(bookId, ct)).Count > 0) return Fail("A copy is available. Ask a librarian to check it out.");
+            if ((await s.AvailableCopiesAsync(bookId, ct)).Count > 0) return Fail("A copy is available. Use Request to borrow or ask a librarian to issue it.");
             var r = new Reservation { BookId = bookId, MemberId = memberId, Status = ReservationStatus.Waiting, CreatedAtUtc = Now }; s.Add(r); await s.SaveAsync(ct); return Result<int>.Success(r.Id);
         }, ct);
     }

@@ -12,13 +12,17 @@ else
     @if (showEditor) { <BookEditor Book="details.Book" Busy="Busy" OnSave="SaveBook" OnCancel="() => showEditor = false" /> }
     <section class="panel" id="reserve"><div class="section-heading"><div><span class="eyebrow">CIRCULATION</span><h2>@(User.IsLibrarian ? "Borrow or reserve" : "Availability & reservations")</h2></div><span class="muted">14-day loans · 3-day pickup window</span></div>
         @if (User.IsLibrarian) { <div class="borrow-controls"><MemberPicker Members="members" @bind-Value="selectedMember" /><p class="muted">Select the member before borrowing a copy or joining the queue.</p></div> }
-        @if (!User.IsLibrarian && details.Book.AvailableCopies > 0)
+        @if (!User.IsLibrarian && pendingRequest is not null)
         {
-            <div class="availability-callout"><strong>Available at the library</strong><p>Ask a librarian to borrow this book. Reservations open when all copies are unavailable.</p></div>
+            <div class="availability-callout" id="request"><div><strong>Request pending</strong><p>A librarian will review your request. You can follow its status or cancel it from Borrow requests.</p></div><div class="request-callout-actions"><button class="button primary" disabled>Request to borrow</button><a class="text-link" href="/requests">View request</a></div></div>
+        }
+        else if (!User.IsLibrarian && User.MemberId.HasValue && details.Book.AvailableCopies > 0)
+        {
+            <div class="availability-callout" id="request"><div><strong>Available to request</strong><p>Send a request to the librarian. A loan starts only when your request is accepted; sending it does not hold a copy.</p></div><button class="button primary" disabled="@Busy" @onclick="RequestBorrow">Request to borrow</button></div>
         }
         @if (details.Book.AvailableCopies == 0 && (User.IsLibrarian || User.MemberId.HasValue))
         {
-            <div class="reservation-callout"><div><strong>Save your place in line.</strong><p>We’ll notify you when a returned copy is ready for pickup.</p></div><button class="button primary" disabled="@(Busy || TargetMember <= 0)" @onclick="Reserve">Join reservation queue</button></div>
+            <div class="reservation-callout"><div><strong>Save your place in line.</strong><p>@(pendingRequest is null ? "We’ll notify you when a returned copy is ready for pickup." : "Cancel your pending borrow request before joining the reservation queue.")</p></div><button class="button primary" disabled="@(Busy || TargetMember <= 0 || pendingRequest is not null)" @onclick="Reserve">Join reservation queue</button></div>
         }
         <DataTable TItem="CopyDto" Items="details.Copies" Label="Physical copies"><Header><th>Barcode</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></Header><RowTemplate Context="copy"><td><strong>@copy.Barcode</strong></td><td><StatusBadge Status="@copy.Status.ToString()" /></td><td><div class="table-actions">@if (User.IsLibrarian && copy.Status == CopyStatus.Available) { <button class="button primary small" aria-label="Borrow copy @copy.Barcode" disabled="@(Busy || selectedMember <= 0)" @onclick="() => Borrow(copy.Id)">Borrow</button> }@if (User.IsLibrarian && copy.Status != CopyStatus.Lost) { <button class="text-button danger-text" disabled="@Busy" @onclick="() => lostCopy = copy">Mark lost</button> }</div></td></RowTemplate></DataTable>
         @if (User.IsLibrarian)
@@ -37,10 +41,18 @@ else
     private bool showEditor;
     private string barcode = "";
     private CopyDto? lostCopy;
-    protected override async Task LoadAsync() { details = await Library.GetBookAsync(Id); if (User.IsLibrarian) members = await Library.GetMembersAsync(User); loadedId = Id; }
+    private BorrowRequestDto? pendingRequest;
+    protected override async Task LoadAsync()
+    {
+        details = await Library.GetBookAsync(Id);
+        if (User.IsLibrarian) members = await Library.GetMembersAsync(User);
+        else if (User.MemberId.HasValue) pendingRequest = (await Library.GetBorrowRequestsAsync(User)).FirstOrDefault(request => request.BookId == Id && request.Status == BorrowRequestStatus.Pending);
+        loadedId = Id;
+    }
     protected override async Task OnParametersSetAsync() { if (!Loading && loadedId != Id) await ReloadAsync(); }
     private Task<bool> Borrow(int copyId) => RunCommand(() => Library.BorrowAsync(User, copyId, selectedMember), "Copy borrowed. The loan is now active.");
     private Task<bool> Reserve() => RunCommand(() => Library.ReserveAsync(User, Id, TargetMember), "Reservation added. Your place in the queue is saved.");
+    private Task<bool> RequestBorrow() => RunCommand(() => Library.RequestBorrowAsync(User, Id), "Borrow request sent. A librarian will review it.");
     private async Task AddCopy() { if (await RunCommand(() => Library.AddCopyAsync(User, Id, barcode), "Copy added.")) barcode = ""; }
     private async Task SaveBook(BookInput input) { if (await RunCommand(() => Library.SaveBookAsync(User, Id, input), "Book details updated.")) showEditor = false; }
     private async Task MarkLost() { if (lostCopy is not null && await RunCommand(() => Library.MarkLostAsync(User, lostCopy.Id), "Copy marked as lost.")) lostCopy = null; }

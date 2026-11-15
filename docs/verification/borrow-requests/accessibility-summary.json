@@ -1,0 +1,2450 @@
+{
+  "scope": "Local Windows browser verification on 15 November 2026, Asia/Qyzylorda. Raw scans retain incomplete checks; zero automated violations is not full WCAG conformance.",
+  "axeVersion": "4.10.3",
+  "scanCount": 156,
+  "violationCount": 0,
+  "scansWithIncompleteChecks": 116,
+  "incompleteRuleIds": [
+    "aria-valid-attr-value",
+    "color-contrast",
+    "link-in-text-block",
+    "th-has-data-cells"
+  ],
+  "engines": {
+    "chromium": {
+      "version": "141.0.7390.37",
+      "scans": 52,
+      "violations": 0
+    },
+    "firefox": {
+      "version": "142.0.1",
+      "scans": 52,
+      "violations": 0
+    },
+    "webkit": {
+      "version": "26.0",
+      "scans": 52,
+      "violations": 0
+    }
+  },
+  "sourceFiles": [
+    {
+      "file": "chromium-borrow-request-review.json",
+      "sha256": "a7f5094e70e603d2100464fa5f39284f96b3a6a9888a3469a7be629ca65a49ea",
+      "scans": 2
+    },
+    {
+      "file": "chromium-librarian-dark.json",
+      "sha256": "458eb4c2ccd92a3494bf0c918f5422729dba8914a13294e631504605c5199f63",
+      "scans": 12
+    },
+    {
+      "file": "chromium-librarian-light.json",
+      "sha256": "c99134736dea5c0493b723365dd03e3eef55700d98c4bcb4875689a7450d5de1",
+      "scans": 12
+    },
+    {
+      "file": "chromium-member-catalogue-phone.json",
+      "sha256": "67ee45bf1aa9f0d5a96f23bedfc94edd5dd82a846958da526e7e39d9123c8d62",
+      "scans": 2
+    },
+    {
+      "file": "chromium-member-profile-phone.json",
+      "sha256": "9392134dadef2c5eabae36d108591c5fde37a6d3b80b101ddfd1ad126b5ba870",
+      "scans": 2
+    },
+    {
+      "file": "chromium-member10-dark.json",
+      "sha256": "5302c10a923be40109f0e8c4cff7e68754d889f315ccd055188b94d369a15b50",
+      "scans": 10
+    },
+    {
+      "file": "chromium-member10-light.json",
+      "sha256": "b3f725e20dbce3703c8c6e2779d1d77e0ef3eeaca0519c8dc44377fc39a176c2",
+      "scans": 10
+    },
+    {
+      "file": "chromium-notification-read-states.json",
+      "sha256": "5e02d50fc71527bfbfcdd39a8bdbdf2fab33b95229f453eeb4c94705cc8afb98",
+      "scans": 2
+    },
+    {
+      "file": "firefox-borrow-request-review.json",
+      "sha256": "59095466f940ed7bf4360c112af0ccaf4d69b15da6aa846812321bcca0d74569",
+      "scans": 2
+    },
+    {
+      "file": "firefox-librarian-dark.json",
+      "sha256": "a15ee222f217879098a36e79efec27aab1a5c5fe94f82469efcf3624aad50a9f",
+      "scans": 12
+    },
+    {
+      "file": "firefox-librarian-light.json",
+      "sha256": "66a739da66b3b55dd7bd68f03e4e12acbacc7b72635598888e63927b2bd4cf17",
+      "scans": 12
+    },
+    {
+      "file": "firefox-member-catalogue-phone.json",
+      "sha256": "0805263bf5ee7fdca726fb252281e3a4ed5d37d3d014f9fdf6769cbeca75ff25",
+      "scans": 2
+    },
+    {
+      "file": "firefox-member-profile-phone.json",
+      "sha256": "e3e1a9b34327e41ef7b5cdbb00454931aa551839f5837e2e738bde3d1af1e755",
+      "scans": 2
+    },
+    {
+      "file": "firefox-member10-dark.json",
+      "sha256": "82c7fbaa7f95365635046715f2b02fb8979d5040b81e06633e48908d75f640d6",
+      "scans": 10
+    },
+    {
+      "file": "firefox-member10-light.json",
+      "sha256": "d78df63acc2bfd5a544557c0cd50ef23ab75ac4fa6197a15d737ed8acfa0d080",
+      "scans": 10
+    },
+    {
+      "file": "firefox-notification-read-states.json",
+      "sha256": "d4daf7a9f28e7cd22a96795e290a2afd5a08f2fb03cec7507cb2412c4e92c4d9",
+      "scans": 2
+    },
+    {
+      "file": "webkit-borrow-request-review.json",
+      "sha256": "5cc044f93e704ea54917473be05dcb651788b0d28ee0cd10b40630a5ecce6a03",
+      "scans": 2
+    },
+    {
+      "file": "webkit-librarian-dark.json",
+      "sha256": "ff736560b9dc199570a93fd9658b80743b6e752087c7183feeae766e7a357402",
+      "scans": 12
+    },
+    {
+      "file": "webkit-librarian-light.json",
+      "sha256": "e20dc94de51ea620d65c71468a328ae46386ee7979e9c0a3cd619589e515cab3",
+      "scans": 12
+    },
+    {
+      "file": "webkit-member-catalogue-phone.json",
+      "sha256": "fb7393227a195c90c36ba2906f97f2f7141341a8bdbf14bb5de0f8ca6d291aff",
+      "scans": 2
+    },
+    {
+      "file": "webkit-member-profile-phone.json",
+      "sha256": "2a66187a8ee441dcfd81d9851ad1914225688c4f140aca05b658a59d44437b81",
+      "scans": 2
+    },
+    {
+      "file": "webkit-member10-dark.json",
+      "sha256": "46d76b875bfc5446755eddb38c97cf25cc5275c9c4a3265ba6f0292ae0abff08",
+      "scans": 10
+    },
+    {
+      "file": "webkit-member10-light.json",
+      "sha256": "0847cd90a0c24e8f9a21d01c8708fe40579d9e52d10a0986a32516c585f7c207",
+      "scans": 10
+    },
+    {
+      "file": "webkit-notification-read-states.json",
+      "sha256": "883a9fe50082b53fe30d65713a949a201819135be8533e16d7d470fb2cf8b0bf",
+      "scans": 2
+    }
+  ],
+  "scans": [
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/requests (reject dialog light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:01.017Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "color-contrast",
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/requests (member history phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:01.825Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "color-contrast",
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "login",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:26.426Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:27.224Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:27.747Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books/1",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:28.050Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/loans",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:28.357Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/members",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:28.663Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/reservations",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:28.838Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/requests",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:29.007Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/overdue",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:29.237Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/notifications",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:29.411Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/profile",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:29.581Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/account/password",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:29.720Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "login",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:30.085Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:30.610Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:31.026Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books/1",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:31.239Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/loans",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:31.460Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/members",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:31.786Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/reservations",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:32.002Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/requests",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:32.184Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/overdue",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:32.390Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/notifications",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:32.574Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/profile",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:32.772Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/account/password",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:32.923Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books (member phone light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:55.214Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books (member phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:55.595Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/profile (member phone light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:45.546Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/profile (member phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:45.796Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "login",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:22.902Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:23.552Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:24.056Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books/1",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:24.304Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/loans",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:24.550Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/reservations",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:24.803Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/requests",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:25.046Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/notifications",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:25.280Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/profile",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:25.656Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/account/password",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:53:25.942Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "login",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:19.147Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:19.813Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:20.301Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/books/1",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:20.648Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/loans",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:20.948Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/reservations",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:21.210Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/requests",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:21.507Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/notifications",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:21.815Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/profile",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:22.163Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/account/password",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:22.438Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/notifications (unread)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:49.574Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "route": "/notifications (read)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:53:49.830Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/requests (reject dialog light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:26.607Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "color-contrast",
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/requests (member history phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:27.145Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "color-contrast",
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "login",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:31.543Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:32.364Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:32.996Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books/1",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:33.418Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/loans",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:33.828Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/members",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:34.436Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/reservations",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:34.845Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/requests",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:35.196Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/overdue",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:35.605Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/notifications",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:35.993Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/profile",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:36.330Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/account/password",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:36.625Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "login",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:37.294Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:38.146Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:38.772Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books/1",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:39.184Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/loans",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:39.574Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/members",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:40.128Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/reservations",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:40.584Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/requests",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:41.021Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/overdue",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:41.435Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/notifications",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:41.787Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/profile",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:42.131Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/account/password",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:42.415Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books (member phone light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:21.015Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books (member phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:21.280Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/profile (member phone light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:04.454Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/profile (member phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:04.873Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "login",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:26.633Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:27.357Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:28.035Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books/1",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:28.447Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/loans",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:28.866Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/reservations",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:29.300Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/requests",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:29.787Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/notifications",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:30.152Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/profile",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:30.550Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/account/password",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:54:30.822Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "login",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:21.762Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:22.476Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:23.198Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/books/1",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:23.594Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/loans",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:23.972Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/reservations",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:24.446Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/requests",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:24.881Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/notifications",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:25.225Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/profile",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:25.647Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/account/password",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:54:25.953Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/notifications (unread)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:12.147Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "142.0.1",
+      "route": "/notifications (read)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:12.474Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/requests (reject dialog light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:57:12.053Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "color-contrast",
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/requests (member history phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:57:13.749Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "color-contrast",
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "login",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:56.587Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:57.999Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:58.816Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books/1",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:59.548Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/loans",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:00.349Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/members",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:01.359Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/reservations",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:02.115Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/requests",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:02.828Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/overdue",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:03.552Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/notifications",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:04.267Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/profile",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:05.019Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/account/password",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:05.400Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "login",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:06.053Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:07.428Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:08.320Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books/1",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:09.077Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/loans",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:09.897Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/members",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:10.941Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/reservations",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:11.741Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "link-in-text-block"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/requests",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:12.383Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/overdue",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:13.225Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/notifications",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:13.934Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/profile",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:14.581Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/account/password",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:14.971Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books (member phone light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:57:02.591Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books (member phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:57:03.202Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/profile (member phone light)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:43.817Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/profile (member phone dark)",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:56:44.223Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "login",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:49.220Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:50.473Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:51.352Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books/1",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:52.137Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/loans",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:52.823Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/reservations",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:53.478Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/requests",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:54.155Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/notifications",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:54.843Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/profile",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:55.618Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/account/password",
+      "theme": "dark",
+      "timestampUtc": "2026-11-15T18:55:55.983Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "login",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:41.773Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:43.153Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:44.088Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/books/1",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:44.682Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/loans",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:45.184Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/reservations",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:45.864Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/requests",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:46.616Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "aria-valid-attr-value",
+        "th-has-data-cells"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/notifications",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:47.340Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/profile",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:48.094Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/account/password",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:55:48.479Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/notifications (unread)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:51.478Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    },
+    {
+      "browser": "webkit",
+      "version": "26.0",
+      "route": "/notifications (read)",
+      "theme": "light",
+      "timestampUtc": "2026-11-15T18:56:52.047Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": 0,
+      "incompleteRuleIds": [
+        "color-contrast"
+      ]
+    }
+  ]
+}

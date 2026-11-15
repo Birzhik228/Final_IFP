@@ -18,6 +18,8 @@ dotnet test tests/LibraryLending.Tests.Integration
 
 Use WebApplicationFactory with an isolated SQLite database and the real EF mappings/migrations. Important cases include two borrowers competing for one copy, one member competing for their final loan slot, duplicate reservations, repeated returns, atomic return-to-reservation assignment, expiry, cancellation, authorization, and notification deduplication.
 
+`BorrowRequestTests` adds 20 cases for available-book requests: pending requests do not hold inventory; acceptance creates an audited loan; rejection and cancellation preserve inventory; member reads and commands remain private; duplicate submissions and concurrent reviews cannot duplicate requests or loans. Tests also recheck eligibility and availability at acceptance, preserve the existing reservation queue's priority, and exercise the database's filtered unique index directly.
+
 SQLite in-memory databases can be suitable for ordinary repository checks if their connection remains open. Concurrency tests should use separate connections to a temporary file database so they exercise actual locking behavior.
 
 ## End-to-end tests
@@ -49,7 +51,7 @@ dotnet test tests/LibraryLending.Tests.EndToEnd -- Playwright.BrowserName=webkit
 
 The default base URL is `http://localhost:5180`. Override it with the environment variable `LIBRARY_BASE_URL`. The tests sign in using the explicitly seeded development accounts and create uniquely named records for mutation workflows. Do not run them against a deployed real library.
 
-The 18 browser cases cover borrowing/returning, editing an empty optional cover URL, member reservation and live allocation, catalogue search/filter controls, overdue filtering/CSV, phone layout, member account provisioning/password change, profile isolation, role/theme accessibility scans, keyboard dialogs/navigation, tablet layout, and short landscape navigation. Theme checks cover the operating-system default and saved choices across reloads, page navigation, and account forms for both roles. Populated unread/read notification states also receive accessibility scans.
+The 20 browser cases cover borrowing/returning, editing an empty optional cover URL, member reservation and live allocation, catalogue search/filter controls, overdue filtering/CSV, phone layout, member account provisioning/password change, profile isolation, role/theme accessibility scans, keyboard dialogs/navigation, tablet layout, and short landscape navigation. Borrow-request workflows verify live librarian review, accepted loans, rejected notes, member privacy and cancellation. Theme checks cover the operating-system default and saved choices across reloads, page navigation, and account forms for both roles. Populated unread/read notifications, the rejection dialog and request history at phone width also receive accessibility scans.
 
 Set `LIBRARY_SCREENSHOTS` for screenshots and `LIBRARY_A11Y_RESULTS` for axe-core JSON. The bundled, pinned axe-core 4.10.3 uses WCAG 2.0 A/AA and WCAG 2.1 AA rule tags. Reports retain both violations and incomplete checks that need human review. Automated scans do not prove full accessibility conformance.
 
@@ -87,21 +89,27 @@ Review branch coverage for rules and application decisions, not only the overall
 
 | Area | Check |
 | --- | --- |
-| Desktop | Catalogue, detail, loans, reservations, members, dashboard, reports |
+| Desktop | Catalogue, detail, borrow requests, loans, reservations, members, dashboard, reports |
 | Tablet/phone | Navigation, stacked forms, usable tables, no page-level horizontal overflow |
 | Keyboard | Tab order, visible focus, button activation, dialog close/cancel behavior |
 | Roles | Librarian actions unavailable to Member; member can only access own records |
 | Validation | Empty title, invalid ISBN/year, duplicate barcode, invalid member limit |
 | Time | Due-date boundary, pickup deadline boundary, changed fine-rate configuration |
-| Notifications | Two sessions, successful update after return, recovery after reconnect |
+| Notifications | Two sessions, new requests and review decisions, successful update after return, recovery after reconnect |
 | Error recovery | Concurrent borrow, repeated return, database contention, disconnected circuit |
 | Themes | Text/status readability in light and dark modes |
 | Browsers | Chromium, Firefox, WebKit; run the complete browser matrix |
-| Platforms | Windows and Linux verified locally; macOS CI configured but not executed |
+| Platforms | Current feature verified on Windows; earlier Linux results below are historical; run current Linux/macOS jobs in CI |
 
 ## Recorded results
 
-The [15 November redesign verification](redesign-verification.md) records the latest local result: 74 unit, 76 integration, and 18 Chromium/Edge browser cases passed. The configured three-platform unit/integration matrix and three-engine browser matrix now expect **504 passing cases** in total: `(74 + 76) × 3 + 18 × 3`. This expected count is not evidence that a remote run has completed.
+The latest [borrow-request verification](verification/borrow-requests-2026-11-15.md) covers the working tree tested on **15–16 November 2026, Asia/Qyzylorda**. It passed **74 unit and 96 integration cases on Windows**, plus **20 browser cases on each of Chromium, Firefox and WebKit**. This is **190 distinct cases and 230 successful executions**, with zero failures or skips. Browser repetitions are not extra distinct tests. The retained [TRXs and accessibility summary](verification/borrow-requests/) support these local results; they do not establish a new GitHub Actions result.
+
+The browser run recorded **156 axe-core page/state scans with zero reported violations**. Incomplete checks remain recorded for human review. The new `/requests` route is included for both roles in both themes, with additional rejection-dialog and dark phone-history checks. No fresh coverage percentage is claimed for the borrow-request change.
+
+### Historical results before borrow requests
+
+The [15 November redesign verification](redesign-verification.md) records the earlier 74 unit, 76 integration and 18 Chromium/Edge cases. Its counts and the results below predate borrow requests and must not be used as evidence for the new feature.
 
 Verified on 14 November 2026 using .NET SDK 8.0.428/runtime 8.0.34. Windows Release solution build and locked dependency restore passed with zero compiler warnings/errors. Linux verification used a separate native build on WSL2 Ubuntu 26.04.1 x64; see [platform details](performance.md#linux-verification).
 
@@ -121,9 +129,9 @@ The browser suite performed **114 axe-core page/state scans with zero reported v
 
 The real production-mode Kestrel smoke passed an HTTPS handshake, HTTP redirect, sign-in, Secure/HttpOnly cookies, certificate-encrypted persistent keys, online command-line backup, restore, and integrity verification. It used a temporary self-signed certificate without changing system trust. See [production results](verification/production/results.json) and [deployment instructions](deployment.md). Linux Kestrel health/readiness/login checks are recorded in [the Linux smoke log](verification/linux/smoke.log).
 
-## Measured coverage
+## Historical measured coverage
 
-The [combined coverage report](verification/coverage/index.html) merges the final Windows unit/integration runs with instrumented server execution during the three-browser suite. It covers the four runtime application assemblies; test/performance assemblies and the command-line entry point are outside this metric. Coverage is **71.4% of lines and 55.4% of branches**, including generated EF migrations/model snapshots.
+The **14 November baseline** [combined coverage report](verification/coverage/index.html) merges its Windows unit/integration runs with instrumented server execution during the three-browser suite. It covers the four runtime application assemblies; test/performance assemblies and the command-line entry point are outside this metric. That baseline measured **71.4% of lines and 55.4% of branches**, including generated EF migrations/model snapshots. Coverage was not recollected after borrow requests were added.
 
 | Runtime assembly | Line coverage |
 | --- | --- |
@@ -139,4 +147,4 @@ The earlier run measured 72.3% lines and 67.0% branches. New regressions exercis
 
 See [performance.md](performance.md) for the larger-database workload, throughput/latency, CPU/memory measurements, concurrency invariants, and reproducible commands. Measurements use one service process and SQLite, excluding HTTP/browser/circuit/network costs. No internet-facing user capacity or long-term soak result is claimed.
 
-The GitHub workflow configures three operating systems and three browser engines, but remote CI was not executed in this session. macOS execution, physical phones/tablets, assistive-technology review, long-running circuit-load tests, and an actual hosted production deployment remain unverified. Personal names and the required live defense remain the student's presentation work.
+The GitHub workflow configures three operating systems and three browser engines. The borrow-request results above are local Windows evidence; a new remote CI run and current-feature Linux/macOS execution are not claimed. Physical phones/tablets, assistive-technology review, long-running circuit-load tests and production hosting require their own verification.

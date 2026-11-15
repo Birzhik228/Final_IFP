@@ -61,7 +61,7 @@ window.library = (() => {
             element.focus();
             element.addEventListener('keydown', event => {
                 if (event.key !== 'Tab') return;
-                const buttons = element.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex="0"]');
+                const buttons = element.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]');
                 if (!buttons.length) { event.preventDefault(); return; }
                 const first = buttons[0], last = buttons[buttons.length - 1];
                 if (event.shiftKey && (document.activeElement === first || document.activeElement === element)) { event.preventDefault(); last.focus(); }

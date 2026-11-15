@@ -9,6 +9,9 @@ public interface ILibrarySession
     Task<Member?> MemberAsync(int id, CancellationToken ct);
     Task<Loan?> LoanAsync(int id, CancellationToken ct);
     Task<Reservation?> ReservationAsync(int id, CancellationToken ct);
+    Task<BorrowRequest?> BorrowRequestAsync(int id, CancellationToken ct);
+    Task<bool> HasPendingBorrowRequestAsync(int bookId, int memberId, CancellationToken ct);
+    Task<List<string>> LibrarianUserIdsAsync(CancellationToken ct);
     Task<List<Loan>> OpenLoansAsync(int? memberId, CancellationToken ct);
     Task<List<Reservation>> ActiveReservationsAsync(int? bookId, CancellationToken ct);
     Task<List<BookCopy>> AvailableCopiesAsync(int bookId, CancellationToken ct);
@@ -31,6 +34,7 @@ public interface ILibraryRepository
     Task<IReadOnlyList<MemberDto>> GetMembersAsync(CancellationToken ct);
     Task<IReadOnlyList<LoanDto>> GetLoansAsync(int? memberId, bool overdueOnly, string search, string sort, CancellationToken ct);
     Task<IReadOnlyList<ReservationDto>> GetReservationsAsync(int? memberId, CancellationToken ct);
+    Task<IReadOnlyList<BorrowRequestDto>> GetBorrowRequestsAsync(int? memberId, string? userId, CancellationToken ct);
     Task<IReadOnlyList<NotificationDto>> GetNotificationsAsync(string userId, CancellationToken ct);
     Task<DashboardDto> GetDashboardAsync(int? memberId, CancellationToken ct);
     Task MarkNotificationsReadAsync(string userId, CancellationToken ct);

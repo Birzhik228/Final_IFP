@@ -127,6 +127,66 @@ namespace LibraryLending.Infrastructure.Persistence.Migrations
                     b.ToTable("Copies");
                 });
 
+            modelBuilder.Entity("LibraryLending.Domain.BorrowRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("LoanId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ReviewNote")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ReviewedAtUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReviewerUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Version")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoanId")
+                        .IsUnique()
+                        .HasFilter("\"LoanId\" IS NOT NULL");
+
+                    b.HasIndex("ReviewerUserId");
+
+                    b.HasIndex("BookId", "MemberId")
+                        .IsUnique()
+                        .HasFilter("\"Status\" = 'Pending'");
+
+                    b.HasIndex("MemberId", "CreatedAtUtc");
+
+                    b.HasIndex("Status", "CreatedAtUtc", "Id");
+
+                    b.ToTable("BorrowRequests", t =>
+                        {
+                            t.HasCheckConstraint("CK_BorrowRequest_Review", "length(\"ReviewNote\") <= 500 AND ((\"Status\" = 'Pending' AND \"ReviewedAtUtc\" IS NULL AND \"ReviewerUserId\" IS NULL AND \"LoanId\" IS NULL) OR (\"Status\" = 'Accepted' AND \"ReviewedAtUtc\" IS NOT NULL AND \"ReviewerUserId\" IS NOT NULL AND \"LoanId\" IS NOT NULL) OR (\"Status\" = 'Rejected' AND \"ReviewedAtUtc\" IS NOT NULL AND \"ReviewerUserId\" IS NOT NULL AND \"LoanId\" IS NULL) OR (\"Status\" = 'Cancelled' AND \"ReviewedAtUtc\" IS NOT NULL AND \"LoanId\" IS NULL))");
+                        });
+                });
+
             modelBuilder.Entity("LibraryLending.Domain.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -567,6 +627,37 @@ namespace LibraryLending.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("LibraryLending.Domain.BorrowRequest", b =>
+                {
+                    b.HasOne("LibraryLending.Domain.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LibraryLending.Domain.Loan", "Loan")
+                        .WithMany()
+                        .HasForeignKey("LoanId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LibraryLending.Domain.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("ReviewerUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Loan");
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("LibraryLending.Domain.Loan", b =>

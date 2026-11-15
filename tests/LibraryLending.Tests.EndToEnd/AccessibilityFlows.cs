@@ -25,8 +25,8 @@ public sealed class AccessibilityFlows : PageTest
         reports.Add(await Scan("login"));
         await SignIn(email);
         var routes = email.StartsWith("librarian", StringComparison.Ordinal)
-            ? new[] { "/", "/books", "/books/1", "/loans", "/members", "/reservations", "/overdue", "/notifications", "/profile", "/account/password" }
-            : new[] { "/", "/books", "/books/1", "/loans", "/reservations", "/notifications", "/profile", "/account/password" };
+            ? new[] { "/", "/books", "/books/1", "/loans", "/members", "/reservations", "/requests", "/overdue", "/notifications", "/profile", "/account/password" }
+            : new[] { "/", "/books", "/books/1", "/loans", "/reservations", "/requests", "/notifications", "/profile", "/account/password" };
         foreach (var route in routes)
         {
             await Page.GotoAsync(BaseUrl + route);

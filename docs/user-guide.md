@@ -26,7 +26,17 @@ For a member without an account, select **Create sign-in account** in that row. 
 
 The seeded demo's three member logins belong to Jamie Chen (`member2@library.local`), Robin Ellis (`member7@library.local`), and Riley James (`member10@library.local`). The other seeded members remain circulation records for the library's history.
 
-### Borrowing
+### Borrow requests
+
+Open **Lending desk → Requests** to review pending requests. Each row identifies the book, member and request date.
+
+- **Accept & issue book** asks for confirmation, then selects an available physical copy and creates the loan. The normal loan period starts immediately. Use this action when issuing the book to the member.
+- **Reject** closes the request without creating a loan. You may include a reason for the member.
+- **History** shows accepted, rejected and cancelled requests. Accepted requests show the issued copy and due date.
+
+Pending requests do not hold copies. Acceptance checks availability, active membership, overdue loans and the borrowing limit again. Existing waiting reservations have priority. If a check fails, the app explains why and leaves the request pending; no partial loan is created. A new request notifies librarians, and an acceptance or rejection notifies the requesting member.
+
+### Direct borrowing
 
 1. Open the book details.
 2. Select the intended member.
@@ -53,13 +63,21 @@ Open **Reports** to view the overdue member, book, due date, overdue days, and a
 
 Use the credentials provided by the librarian. Open **Profile**, select **Change password**, enter your current password and the new password twice, and submit. The password must meet the displayed Identity policy, including at least ten characters with uppercase/lowercase letters, a digit, and a symbol. The application confirms a successful change; use the new password for future sign-ins.
 
-### Browse and reserve
+### Request an available book
 
-Open **Books** and select a title. If all unallocated copies are unavailable, follow **Join waiting list** to its reservation section and join the queue. Your request is placed at the end of the queue. You cannot create a second active reservation for the same title. If a copy is available, ask the librarian to issue it instead.
+Open **Books**, choose an available title and select **Request to borrow**. The request appears as Pending under **My Shelf → Requests**. It does not reserve a physical copy or create a loan yet.
+
+The librarian can accept and issue an available copy, or reject the request. You receive a notification of the decision. An accepted request includes the copy barcode and due date, and the loan appears under **My loans**. A rejection may include the librarian's reason. You can cancel a pending request if you no longer need it.
+
+You must have active membership, no overdue loans and room within your borrowing limit to submit a request. Only one pending request per title is allowed. If all copies become unavailable before acceptance, cancel the pending request before joining the reservation queue.
+
+### Reserve an unavailable book
+
+Open **Books** and select a title. If all unallocated copies are unavailable, follow **Join waiting list** to its reservation section and join the queue. Your reservation is placed at the end of the queue. You cannot create a second active reservation for the same title. Available titles use **Request to borrow** instead.
 
 ### Personal records
 
-**My Shelf → My loans** shows your own loan history, due dates, and current fines. **My Shelf → Reservations** shows your own queue positions and pickup deadlines. Cancel a reservation when you no longer need the book. The header notification bell opens due-soon, overdue, and reservation-ready messages; mark them read after reviewing them.
+**My Shelf → My loans** shows your own loan history, due dates, and current fines. **My Shelf → Requests** shows pending requests and decisions. **My Shelf → Reservations** shows your own queue positions and pickup deadlines. Cancel a request or reservation when you no longer need the book. The header notification bell opens borrowing decisions, due-soon, overdue, and reservation-ready messages; mark them read after reviewing them.
 
 ### Collect a reserved copy
 
@@ -73,6 +91,8 @@ After a Ready notification, collect the book before the displayed deadline. A li
 | Borrowing limit reached | Return an open loan or have a librarian review the limit |
 | Copy no longer available | Refresh the book and select an available copy |
 | Duplicate reservation | Review the existing reservation |
+| Pending borrow request already exists | Review or cancel it under Requests |
+| Requested book is no longer available | Keep the request pending, or cancel it and join the reservation queue |
 | Pickup deadline passed | Join the queue again if the book is still unavailable |
 | Access denied | Sign in with the role allowed to perform the action |
 | Connection interrupted | Reconnect or refresh; persistent records remain in SQLite |

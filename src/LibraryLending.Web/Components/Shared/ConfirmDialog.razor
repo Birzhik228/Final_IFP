@@ -1,7 +1,7 @@
 @inject IJSRuntime JS
 @if (Open)
 {
-    <div class="dialog-backdrop"><section class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" @onkeydown="KeyDown" tabindex="-1" @ref="dialog"><span class="eyebrow">PLEASE CONFIRM</span><h2 id="confirm-title">@Title</h2><p>@Message</p><div class="button-row"><button class="button secondary" disabled="@Busy" @onclick="() => OnCancel.InvokeAsync()">Cancel</button><button class="button @(Danger ? "danger" : "primary")" disabled="@Busy" @onclick="() => OnConfirm.InvokeAsync()">@(Busy ? "Working…" : ConfirmText)</button></div></section></div>
+    <div class="dialog-backdrop"><section class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" @onkeydown="KeyDown" tabindex="-1" @ref="dialog"><span class="eyebrow">PLEASE CONFIRM</span><h2 id="confirm-title">@Title</h2><p>@Message</p>@ChildContent<div class="button-row"><button class="button secondary" disabled="@Busy" @onclick="() => OnCancel.InvokeAsync()">Cancel</button><button class="button @(Danger ? "danger" : "primary")" disabled="@Busy" @onclick="() => OnConfirm.InvokeAsync()">@(Busy ? "Working…" : ConfirmText)</button></div></section></div>
 }
 @code {
     [Parameter] public bool Open { get; set; }
@@ -10,6 +10,7 @@
     [Parameter] public string ConfirmText { get; set; } = "Confirm";
     [Parameter] public bool Danger { get; set; }
     [Parameter] public bool Busy { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public EventCallback OnConfirm { get; set; }
     [Parameter] public EventCallback OnCancel { get; set; }
     private ElementReference dialog;
