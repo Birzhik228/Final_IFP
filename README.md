@@ -2,7 +2,7 @@
 
 **Library Lending & Reservations**
 
-BookBridge is a library circulation application built for a C# final project. Librarians maintain books and physical copies, manage members, issue and return loans, and review overdue items. Members browse the catalogue, join a reservation queue, and see their own loans and notifications. Solution and namespace identifiers remain `LibraryLending`.
+BookBridge is a library circulation application built for a C# final project. Librarians maintain books and physical copies, manage members, issue and return loans, and review overdue items. Members browse the catalogue, join a reservation queue, and see their own profile, loans, and notifications. Solution and namespace identifiers remain `LibraryLending`.
 
 The main feature is an automatic FIFO reservation queue. Returning a copy reserves it for the next waiting member for 72 hours. Expiry or cancellation passes the copy to the next member. Database transactions protect each transition.
 
@@ -44,14 +44,16 @@ dotnet run --project src/LibraryLending.Web --launch-profile LibraryLending
 
 Open the local URL printed by the application. The development profile uses `http://localhost:5180`. The application applies migrations and seeds its development database on first startup. Its seed is repeatable and does not insert duplicate catalogue records on every launch.
 
-The development data includes at least 30 books, multiple physical copies, 10 members, overdue loans, and reservations. Use a separate empty database for automated tests.
+The development data includes at least 30 books, multiple physical copies, 10 member records for circulation history, overdue loans, and reservations. Only three member records have sign-in accounts: Jamie Chen, Robin Ellis, and Riley James. Use a separate empty database for automated tests.
 
 Seed records are demonstration data, including synthetic ISBNs and edition years. They are not an authoritative bibliographic catalogue. Clean Code has two overdue borrowed copies and a queue beginning with Jamie Chen; Pride and Prejudice has available copies.
 
 | Development account | Password | Role |
 | --- | --- | --- |
 | `librarian@library.local` | `LibraryDemo1!` | Librarian |
-| `member1@library.local` | `LibraryDemo1!` | Member |
+| `member2@library.local` | `LibraryDemo1!` | Member — Jamie Chen |
+| `member7@library.local` | `LibraryDemo1!` | Member — Robin Ellis |
+| `member10@library.local` | `LibraryDemo1!` | Member — Riley James |
 
 These credentials are for the local seeded demonstration. Configure real accounts and deployment settings separately before operating a real library.
 
@@ -62,7 +64,8 @@ These credentials are for the local seeded demonstration. Configure real account
 3. Sign in as a member, open an unavailable book, and join its reservation queue.
 4. When a reservation becomes ready, the member receives an in-app notification. A librarian confirms collection before its pickup deadline.
 5. Open **Overdue** as a librarian to filter and sort late loans and download CSV.
-6. On **Members**, create a membership and use **Create sign-in account** to issue a generated temporary password. The member can use **Change password** after signing in.
+6. On **Members**, create a membership and, when a sign-in slot is available, use **Create sign-in account** to issue a generated temporary password. At most **three member login accounts** are allowed; the librarian account is separate. The seeded demo already uses all three slots. Circulation records remain available even when they have no login account.
+7. Open **My profile** to see your own account details. Members see their name, email, phone, joining date when recorded, membership status, borrowing limit, active loans, and remaining allowance. Use **Change password** to update your own password.
 
 See [the user guide](docs/user-guide.md) for role-specific instructions and [the architecture guide](docs/architecture.md) for implementation decisions.
 
@@ -72,12 +75,13 @@ See [the user guide](docs/user-guide.md) for role-specific instructions and [the
 | --- | --- |
 | Loan duration | 14 calendar days |
 | Member borrowing limit | 5 open loans |
+| Member login accounts | Maximum 3, excluding librarians |
 | Reservation pickup window | 72 hours |
 | Daily overdue fine | 100 minor units, displayed as 1.00 CU |
 | Library calendar timezone | UTC |
 | Background sweep | Every 60 seconds |
 
-The options are configured in the `Library` configuration section. Borrowing limits are also configurable per member. A loan keeps a snapshot of its daily fine rate. A fine starts on the calendar day after its due date. No fine accrues on the due date itself.
+Loan, fine, and calendar options are configured in the `Library` configuration section. Borrowing limits are configurable per member. The three-account maximum is a separate application rule; it does not lower the borrowing limit to three books. A loan keeps a snapshot of its daily fine rate. A fine starts on the calendar day after its due date. No fine accrues on the due date itself.
 
 Only active members can reserve or borrow. Checkout and reservation pickup reject overdue members and members at their borrowing limit. A ready reservation can be collected only for its assigned member. A new reservation cannot be made while an unallocated copy is available, and duplicate active reservations are rejected.
 
@@ -106,7 +110,9 @@ dotnet test tests/LibraryLending.Tests.Unit --collect:"XPlat Code Coverage"
 
 Browser tests require installed Playwright browsers and a running isolated test instance. The commands and complete verification matrix are in [the testing guide](docs/testing.md). Test results are recorded there; a runnable test suite is not itself evidence that all environments have passed.
 
-Verified: **74 unit and 64 integration tests on both Windows and Linux**, plus **14 browser cases on each of Chromium, Firefox, and WebKit**. All passed. Automated accessibility checks recorded **114 scans with zero reported violations**. Combined runtime coverage is **71.4% lines / 55.4% branches**, including generated EF code. Production HTTPS, bootstrap, readiness, session revocation, and backup/restore checks also passed. See [recorded results and limits](docs/testing.md#recorded-results), [coverage](docs/verification/coverage/index.html), and [measured performance](docs/performance.md).
+Baseline verification (14 November 2026): **74 unit and 64 integration tests on both Windows and Linux**, plus **14 browser cases on each of Chromium, Firefox, and WebKit**. All passed. Automated accessibility checks recorded **114 scans with zero reported violations**. Combined runtime coverage was **71.4% lines / 55.4% branches**, including generated EF code. Production HTTPS, bootstrap, readiness, session revocation, and backup/restore checks also passed. See [recorded results and limits](docs/testing.md#recorded-results), [coverage](docs/verification/coverage/index.html), and [measured performance](docs/performance.md).
+
+Profile/account-limit verification (15 November 2026): **74 unit + 75 integration tests on Windows**, **16 Chromium/Edge browser cases**, and **seven checks through the public demo** passed. See [the new verification record](docs/verification/profiles-2026-11-15.md) for scope, migration checks, and the updated account rules.
 
 ## Documentation and defense
 

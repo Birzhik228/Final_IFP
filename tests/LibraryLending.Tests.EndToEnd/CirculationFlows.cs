@@ -51,7 +51,7 @@ public sealed class CirculationFlows : PageTest
 
         await using var memberContext = await Browser.NewContextAsync(ContextOptions());
         var memberPage = await memberContext.NewPageAsync();
-        await SignInAsync(memberPage, "member1@library.local");
+        await SignInAsync(memberPage, "member10@library.local");
         await NavigateReadyAsync(memberPage, bookUrl);
         await memberPage.GetByRole(AriaRole.Button, new() { Name = "Join reservation queue", Exact = true }).ClickAsync();
         await Expect(memberPage.GetByRole(AriaRole.Main)).ToContainTextAsync("1 waiting");
@@ -73,7 +73,7 @@ public sealed class CirculationFlows : PageTest
         var readReport = await BrowserAccessibility.ScanAsync(memberPage, Browser, "/notifications (read)");
         await BrowserAccessibility.SaveAndAssertAsync(Browser, "notification-read-states", new[] { unreadReport, readReport });
 
-        // The held copy belongs to Alex, and a normal borrow action must not be offered.
+        // The held copy belongs to Riley, and a normal borrow action must not be offered.
         await NavigateReadyAsync(Page, bookUrl);
         await Expect(Page.GetByRole(AriaRole.Button, new() { NameRegex = new Regex("^Borrow copy ") })).ToHaveCountAsync(0);
         await Expect(Page.GetByRole(AriaRole.Main)).ToContainTextAsync("Reserved");
@@ -105,7 +105,7 @@ public sealed class CirculationFlows : PageTest
     public async Task Member_catalogue_is_usable_at_phone_width()
     {
         await Page.SetViewportSizeAsync(390, 844);
-        await SignInAsync(Page, "member1@library.local");
+        await SignInAsync(Page, "member10@library.local");
         await NavigateReadyAsync(Page, "/books");
         await Expect(Page.GetByLabel("Search books", new() { Exact = true })).ToBeVisibleAsync();
         await Page.GetByLabel("Search books", new() { Exact = true }).FillAsync("Pride and Prejudice");
@@ -137,13 +137,14 @@ public sealed class CirculationFlows : PageTest
     }
 
     [Fact]
-    public async Task Librarian_can_provision_a_member_who_can_change_their_password()
+    public async Task Librarian_cannot_create_a_fourth_member_sign_in_account()
     {
         await SignInAsync(Page, "librarian@library.local");
         var unique = Guid.NewGuid().ToString("N")[..10];
         var name = "Browser member " + unique;
         var email = $"browser-{unique}@library.local";
         await NavigateReadyAsync(Page, "/members");
+        await Expect(Page.GetByRole(AriaRole.Main)).ToContainTextAsync("3 of 3 member sign-in accounts");
         await Page.GetByRole(AriaRole.Button, new() { NameRegex = new Regex("Add member") }).ClickAsync();
         await Page.GetByLabel("Full name", new() { Exact = true }).FillAsync(name);
         await Page.GetByLabel("Email", new() { Exact = true }).FillAsync(email);
@@ -153,22 +154,87 @@ public sealed class CirculationFlows : PageTest
         await Page.GetByLabel("Search members", new() { Exact = true }).FillAsync(name);
         var row = Page.GetByRole(AriaRole.Row).Filter(new() { HasText = name });
         await row.GetByRole(AriaRole.Button, new() { Name = "Create sign-in account", Exact = true }).ClickAsync();
-        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Member sign-in account created", Exact = true })).ToBeVisibleAsync();
-        var temporaryPassword = await Page.GetByLabel("Temporary password", new() { Exact = true }).InputValueAsync();
-        await using var memberContext = await Browser.NewContextAsync(ContextOptions());
-        var memberPage = await memberContext.NewPageAsync();
-        await SignInAsync(memberPage, email, temporaryPassword);
-        await memberPage.GotoAsync(BaseUrl + "/account/password");
-        var newPassword = "Changed-" + unique + "A1!";
-        await memberPage.GetByLabel("Current password", new() { Exact = true }).FillAsync(temporaryPassword);
-        await memberPage.GetByLabel("New password", new() { Exact = true }).FillAsync(newPassword);
-        await memberPage.GetByLabel("Confirm new password", new() { Exact = true }).FillAsync(newPassword);
-        await memberPage.GetByRole(AriaRole.Button, new() { Name = "Change password", Exact = true }).ClickAsync();
-        await Expect(memberPage.GetByRole(AriaRole.Main)).ToContainTextAsync("Your password has been changed");
-        await memberPage.GetByRole(AriaRole.Button, new() { Name = "Sign out", Exact = true }).ClickAsync();
-        await SignInAsync(memberPage, email, newPassword);
-        await NavigateReadyAsync(memberPage, "/loans");
-        await Expect(memberPage.GetByRole(AriaRole.Main)).ToContainTextAsync("No loans match this view");
+        await Expect(Page.GetByRole(AriaRole.Alert)).ToContainTextAsync("The library allows a maximum of 3 member login accounts. No account was created.");
+        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Member sign-in account created", Exact = true })).ToHaveCountAsync(0);
+        await Expect(Page.GetByLabel("Temporary password", new() { Exact = true })).ToHaveCountAsync(0);
+        await NavigateReadyAsync(Page, "/members");
+        await Page.GetByLabel("Search members", new() { Exact = true }).FillAsync(name);
+        await Expect(Page.GetByRole(AriaRole.Row).Filter(new() { HasText = name })
+            .GetByRole(AriaRole.Button, new() { Name = "Create sign-in account", Exact = true })).ToBeVisibleAsync();
+        await Expect(Page.GetByRole(AriaRole.Main)).ToContainTextAsync("3 of 3 member sign-in accounts");
+    }
+
+    [Fact]
+    public async Task Member_can_change_their_password_and_sign_in_with_it()
+    {
+        const string email = "member7@library.local";
+        var newPassword = "Changed-" + Guid.NewGuid().ToString("N")[..10] + "A1!";
+        var changed = false;
+        try
+        {
+            await SignInAsync(Page, email);
+            await Page.GotoAsync(BaseUrl + "/account/password");
+            await FillPasswordChangeAsync(Page, Password, newPassword);
+            await Page.GetByRole(AriaRole.Button, new() { Name = "Change password", Exact = true }).ClickAsync();
+            changed = true;
+            await Expect(Page.GetByRole(AriaRole.Main)).ToContainTextAsync("Your password has been changed");
+            await Page.GetByRole(AriaRole.Button, new() { Name = "Sign out", Exact = true }).ClickAsync();
+            await SignInAsync(Page, email, newPassword);
+            await NavigateReadyAsync(Page, "/profile");
+            await Expect(Page.GetByRole(AriaRole.Main)).ToContainTextAsync("Robin Ellis");
+        }
+        finally
+        {
+            // Every browser suite shares the seeded account. Restore it even if a later assertion fails.
+            if (changed)
+            {
+                await using var cleanupContext = await Browser.NewContextAsync(ContextOptions());
+                var cleanupPage = await cleanupContext.NewPageAsync();
+                await SignInAsync(cleanupPage, email, newPassword);
+                await cleanupPage.GotoAsync(BaseUrl + "/account/password");
+                await FillPasswordChangeAsync(cleanupPage, newPassword, Password);
+                await cleanupPage.GetByRole(AriaRole.Button, new() { Name = "Change password", Exact = true }).ClickAsync();
+                await Expect(cleanupPage.GetByRole(AriaRole.Main)).ToContainTextAsync("Your password has been changed");
+            }
+        }
+    }
+
+    [Fact]
+    public async Task Member_profile_shows_only_their_own_details_at_desktop_and_phone_width()
+    {
+        await SignInAsync(Page, "member10@library.local");
+        await Page.Locator(".sidebar a[href='/profile']").ClickAsync();
+        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Your profile.", Exact = true })).ToBeVisibleAsync();
+        var main = Page.GetByRole(AriaRole.Main);
+        await Expect(main).ToContainTextAsync("Riley James");
+        await Expect(main).ToContainTextAsync("member10@library.local");
+        await Expect(main).ToContainTextAsync("Member since");
+        await Expect(main).ToContainTextAsync("Membership status");
+        await Expect(main).ToContainTextAsync("Borrowing limit");
+        await Expect(main).ToContainTextAsync("Available to borrow");
+        await Expect(main).Not.ToContainTextAsync("Jamie Chen");
+        await Expect(main).Not.ToContainTextAsync("Robin Ellis");
+
+        // A guessed query parameter cannot select another member's profile.
+        await NavigateReadyAsync(Page, "/profile?memberId=2");
+        await Expect(main).ToContainTextAsync("Riley James");
+        await Expect(main).Not.ToContainTextAsync("Jamie Chen");
+        await Page.SetViewportSizeAsync(390, 844);
+        Assert.True(await Page.EvaluateAsync<bool>("document.documentElement.scrollWidth <= window.innerWidth + 1"));
+        await ScreenshotAsync(Page, "profile-member-phone-light.png");
+        var light = await BrowserAccessibility.ScanAsync(Page, Browser, "/profile (member phone light)");
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Toggle light or dark theme", Exact = true }).ClickAsync();
+        await Expect(Page.Locator("html")).ToHaveAttributeAsync("data-theme", "dark");
+        await ScreenshotAsync(Page, "profile-member-phone-dark.png");
+        var dark = await BrowserAccessibility.ScanAsync(Page, Browser, "/profile (member phone dark)");
+        await BrowserAccessibility.SaveAndAssertAsync(Browser, "member-profile-phone", new[] { light, dark });
+    }
+
+    private static async Task FillPasswordChangeAsync(IPage page, string currentPassword, string newPassword)
+    {
+        await page.GetByLabel("Current password", new() { Exact = true }).FillAsync(currentPassword);
+        await page.GetByLabel("New password", new() { Exact = true }).FillAsync(newPassword);
+        await page.GetByLabel("Confirm new password", new() { Exact = true }).FillAsync(newPassword);
     }
 
     private static async Task SignInAsync(IPage page, string email, string password = Password)

@@ -87,7 +87,7 @@ public abstract class LibraryTestBase : IAsyncLifetime
         var service = scope.ServiceProvider.GetRequiredService<ILibraryService>();
         var members = await service.GetMembersAsync(Librarian);
         var overdueIds = (await service.GetLoansAsync(Librarian, true)).Select(x => x.MemberId).ToHashSet();
-        EligibleMemberId = members.First(x => x.Status == Domain.MembershipStatus.Active && x.ActiveLoans < x.BorrowingLimit && !overdueIds.Contains(x.Id)).Id;
+        EligibleMemberId = members.First(x => x.HasAccount && x.Status == Domain.MembershipStatus.Active && x.ActiveLoans < x.BorrowingLimit && !overdueIds.Contains(x.Id)).Id;
         var dbFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<LibraryDbContext>>();
         await using var db = await dbFactory.CreateDbContextAsync();
         var eligible = await db.Members.SingleAsync(x => x.Id == EligibleMemberId);

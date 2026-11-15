@@ -9,6 +9,7 @@ namespace LibraryLending.Infrastructure.Seeding;
 public static class DemoSeeder
 {
     public const string Password = "LibraryDemo1!";
+    public static IReadOnlyList<int> LoginMemberNumbers { get; } = Array.AsReadOnly(new[] { 2, 7, 10 });
     public static async Task SeedAsync(LibraryDbContext db, UserManager<IdentityUser> users, RoleManager<IdentityRole> roles, TimeProvider clock, LibraryOptions options)
     {
         foreach (var role in new[] { "Librarian", "Member" }) if (!await roles.RoleExistsAsync(role)) await roles.CreateAsync(new IdentityRole(role));
@@ -22,7 +23,14 @@ public static class DemoSeeder
         if (await db.Books.AnyAsync()) return;
         var names = new[] { "Alex Morgan", "Jamie Chen", "Sam Rivera", "Taylor Brooks", "Jordan Patel", "Casey Kim", "Robin Ellis", "Morgan Reed", "Avery Park", "Riley James" };
         var members = new List<Member>();
-        for (var i = 0; i < 10; i++) { var email = $"member{i + 1}@library.local"; var user = await Account(email, "Member"); members.Add(new Member { Name = names[i], Email = email, IdentityUserId = user.Id, Phone = $"+1 555 010 {i + 1:00}", Status = MembershipStatus.Active, BorrowingLimit = 5 }); }
+        for (var i = 0; i < names.Length; i++)
+        {
+            var email = $"member{i + 1}@library.local";
+            var user = LoginMemberNumbers.Contains(i + 1) ? await Account(email, "Member") : null;
+            members.Add(new Member { Name = names[i], Email = email, IdentityUserId = user?.Id,
+                Phone = $"+1 555 010 {i + 1:00}", Status = MembershipStatus.Active, BorrowingLimit = 5,
+                JoinedAtUtc = clock.GetUtcNow().UtcDateTime });
+        }
         db.Members.AddRange(members);
         var data = new (string Title, string Author, string Category, int Year)[]{
    ("Clean Code","Robert C. Martin","Technology",2008),("Pride and Prejudice","Jane Austen","Fiction",1813),("The Pragmatic Programmer","Andrew Hunt; David Thomas","Technology",1999),("Design Patterns","Erich Gamma; Richard Helm; Ralph Johnson; John Vlissides","Technology",1994),("Refactoring","Martin Fowler","Technology",1999),

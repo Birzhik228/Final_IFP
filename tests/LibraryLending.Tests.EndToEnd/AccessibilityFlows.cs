@@ -15,8 +15,8 @@ public sealed class AccessibilityFlows : PageTest
     [Theory]
     [InlineData("librarian@library.local", "light")]
     [InlineData("librarian@library.local", "dark")]
-    [InlineData("member1@library.local", "light")]
-    [InlineData("member1@library.local", "dark")]
+    [InlineData("member10@library.local", "light")]
+    [InlineData("member10@library.local", "dark")]
     public async Task Key_pages_have_no_automated_WCAG_A_AA_violations(string email, string theme)
     {
         await Page.GotoAsync(BaseUrl + "/account/login");
@@ -25,8 +25,8 @@ public sealed class AccessibilityFlows : PageTest
         reports.Add(await Scan("login"));
         await SignIn(email);
         var routes = email.StartsWith("librarian", StringComparison.Ordinal)
-            ? new[] { "/", "/books", "/books/1", "/loans", "/members", "/reservations", "/overdue", "/notifications", "/account/password" }
-            : new[] { "/", "/books", "/books/1", "/loans", "/reservations", "/notifications", "/account/password" };
+            ? new[] { "/", "/books", "/books/1", "/loans", "/members", "/reservations", "/overdue", "/notifications", "/profile", "/account/password" }
+            : new[] { "/", "/books", "/books/1", "/loans", "/reservations", "/notifications", "/profile", "/account/password" };
         foreach (var route in routes)
         {
             await Page.GotoAsync(BaseUrl + route);
@@ -63,7 +63,7 @@ public sealed class AccessibilityFlows : PageTest
     {
         await Page.SetViewportSizeAsync(390, 844);
         await Page.GotoAsync(BaseUrl + "/account/login");
-        await SignIn("member1@library.local");
+        await SignIn("member10@library.local");
         await CheckMobileNavigation();
         // Account forms use static rendering and must not depend on Blazor event handlers.
         await Page.GotoAsync(BaseUrl + "/account/password");

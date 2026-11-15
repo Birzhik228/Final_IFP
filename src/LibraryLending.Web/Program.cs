@@ -61,6 +61,7 @@ builder.Services.AddScoped<IdentitySessionValidator>();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityStateProvider>();
 builder.Services.AddSingleton<LibraryWriteCoordinator>();
 builder.Services.AddScoped<ILibraryRepository, EfLibraryRepository>(); builder.Services.AddScoped<ILibraryService, LibraryService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IMemberAccountService, MemberAccountService>();
 builder.Services.AddSingleton<INotificationPublisher, SignalRNotificationPublisher>();
 builder.Services.AddScoped<AppState>(); builder.Services.AddScoped<CurrentActor>();

@@ -9,8 +9,16 @@ using Microsoft.EntityFrameworkCore;
 namespace LibraryLending.Infrastructure.Identity;
 
 /// <summary>Resolve in a fresh DI scope per operation so Identity and the member link share one context.</summary>
-public sealed class MemberAccountService(UserManager<IdentityUser> users, LibraryDbContext db) : IMemberAccountService
+public sealed class MemberAccountService(UserManager<IdentityUser> users, LibraryDbContext db, LibraryWriteCoordinator writes) : IMemberAccountService
 {
+    public async Task<Result<MemberAccountCapacity>> GetCapacityAsync(Actor actor, CancellationToken ct = default)
+    {
+        if (!actor.IsLibrarian)
+            return Result<MemberAccountCapacity>.Failure("Only librarians can view member account capacity.");
+        return Result<MemberAccountCapacity>.Success(new MemberAccountCapacity(
+            await CountMemberAccountsAsync(ct), MemberAccountPolicy.MaximumAccounts));
+    }
+
     public async Task<Result<AccountCredentials>> ProvisionAsync(Actor actor, int memberId, CancellationToken ct = default)
     {
         if (!actor.IsLibrarian)
@@ -18,9 +26,12 @@ public sealed class MemberAccountService(UserManager<IdentityUser> users, Librar
 
         try
         {
+            using var lease = await writes.AcquireAsync(ct);
             // SQLite's immediate write transaction protects the read/check/create sequence, including
-            // competing requests for the same member. Identity uses this same scoped DbContext.
-            await using var transaction = await db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable, ct);
+            // competing requests for the last account slot. Identity uses this same scoped DbContext.
+            await db.Database.OpenConnectionAsync(ct);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: false);
+            await db.Database.UseTransactionAsync(transaction, ct);
             var member = await db.Members.SingleOrDefaultAsync(x => x.Id == memberId, ct);
             if (member is null)
                 return Result<AccountCredentials>.Failure("Member was not found.");
@@ -28,6 +39,8 @@ public sealed class MemberAccountService(UserManager<IdentityUser> users, Librar
                 return Result<AccountCredentials>.Failure("Only active members can receive a login account.");
             if (!string.IsNullOrEmpty(member.IdentityUserId))
                 return Result<AccountCredentials>.Failure("This member already has a login account.");
+            if (await CountMemberAccountsAsync(ct) >= MemberAccountPolicy.MaximumAccounts)
+                return Result<AccountCredentials>.Failure($"The library allows a maximum of {MemberAccountPolicy.MaximumAccounts} member login accounts. No account was created.");
 
             var email = member.Email.Trim().ToLowerInvariant();
             if (await users.FindByEmailAsync(email) is not null || await users.FindByNameAsync(email) is not null)
@@ -75,5 +88,16 @@ public sealed class MemberAccountService(UserManager<IdentityUser> users, Librar
             db.ChangeTracker.Clear();
             return Result<AccountCredentials>.Failure("The library is busy. Please try account creation again shortly.");
         }
+        catch (DbUpdateException exception) when (exception.InnerException is SqliteException { SqliteErrorCode: 5 or 6 })
+        {
+            db.ChangeTracker.Clear();
+            return Result<AccountCredentials>.Failure("The library is busy. Please try account creation again shortly.");
+        }
     }
+
+    // Count role membership rather than member links so an unlinked login still uses a slot.
+    // The librarian role does not consume a member account slot.
+    private Task<int> CountMemberAccountsAsync(CancellationToken ct) => db.UserRoles
+        .Where(link => db.Roles.Any(role => role.Id == link.RoleId && role.NormalizedName == "MEMBER"))
+        .Select(link => link.UserId).Distinct().CountAsync(ct);
 }

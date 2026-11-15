@@ -204,6 +204,9 @@ namespace LibraryLending.Infrastructure.Persistence.Migrations
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("JoinedAtUtc")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");

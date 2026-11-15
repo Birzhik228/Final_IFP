@@ -2,6 +2,12 @@
 
 Use a librarian account to operate the circulation desk. Use a member account to browse and manage that member's own requests. The development credentials are listed in the README.
 
+## Your profile
+
+Both members and librarians can open **My profile**. Each signed-in person sees only their own profile. Members see their full name, email, phone, membership ID and status, joining date, borrowing limit, active loan count, and how many more books they can borrow. A remaining allowance does not override an overdue-loan or inactive-membership restriction.
+
+Joining dates are recorded when new membership records are created. Older records without a known date show **Not recorded**; the application does not invent a past joining date. Librarians see their account name, email, and role without member-only lending details. Use **Change password** to update your own password; ask the librarian to correct membership/contact details.
+
 ## Librarian
 
 ### Catalogue and copies
@@ -14,7 +20,11 @@ Use the book form to create or edit a title. Supply its authors, ISBN, category,
 
 Open Members to review contact information, membership status, and borrowing limits. Create or edit a member using the form. A membership record and a login account have different purposes: membership controls lending eligibility; the account controls sign-in.
 
-For a member without an account, select **Create sign-in account** in that row. The application shows the account email and a generated temporary password in a dismissible panel. Share those credentials privately with the member; **Copy credentials** can copy them when browser clipboard permission is available. Ask the member to change the password after signing in. The password is not shown again after the panel is dismissed.
+The library allows a maximum of **three member sign-in accounts**, excluding the librarian account. The Members page shows how many slots are used. This is separate from each member's borrowing limit, which defaults to five open loans. Member records and their loan history may exist without a sign-in account.
+
+For a member without an account, select **Create sign-in account** in that row. If all three slots are used, the application explains the limit and creates no account. Otherwise it shows the account email and a generated temporary password in a dismissible panel. Share those credentials privately with the member; **Copy credentials** can copy them when browser clipboard permission is available. Ask the member to change the password after signing in. The password is not shown again after the panel is dismissed.
+
+The seeded demo's three member logins belong to Jamie Chen (`member2@library.local`), Robin Ellis (`member7@library.local`), and Riley James (`member10@library.local`). The other seeded members remain circulation records for the library's history.
 
 ### Borrowing
 

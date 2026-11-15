@@ -6,6 +6,10 @@
 @inject IJSRuntime JS
 <PageTitle>Members · BookBridge</PageTitle>
 <div class="page-heading"><div><span class="eyebrow">THE PEOPLE BEHIND THE PAGES</span><h1>Library members.</h1><p>Manage memberships and help readers find their next story.</p></div><button class="button primary" @onclick="NewMember">+ Add member</button></div>
+@if (capacity is not null)
+{
+    <p class="page-note" role="status"><strong>@capacity.Used of @capacity.Maximum member sign-in accounts.</strong> Up to three members can have login accounts. Member records are kept separately for loans and returns.</p>
+}
 @if (credentials is not null)
 {
     <section class="panel credentials-panel" role="status"><div class="section-heading"><h2>Member sign-in account created</h2><button class="icon-button" aria-label="Dismiss account credentials" @onclick="() => credentials = null">×</button></div><p>Share these credentials privately with the member. The temporary password is only shown here; ask them to change it after signing in.</p><div class="form-grid"><div class="field"><label for="account-email">Account email</label><input id="account-email" readonly value="@credentials.Email" /></div><div class="field"><label for="account-password">Temporary password</label><input id="account-password" readonly value="@credentials.TemporaryPassword" autocomplete="off" /></div></div><div class="button-row"><button class="button secondary" @onclick="CopyCredentials">Copy credentials</button><button class="button primary" @onclick="() => credentials = null">Done</button></div></section>
@@ -28,8 +32,15 @@ else
     private int? editId;
     private MemberForm model = new();
     private AccountCredentials? credentials;
+    private MemberAccountCapacity? capacity;
     private List<MemberDto> VisibleMembers => members.Where(m => string.IsNullOrWhiteSpace(search) || m.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || m.Email.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
-    protected override async Task LoadAsync() => members = await Library.GetMembersAsync(User);
+    protected override async Task LoadAsync()
+    {
+        members = await Library.GetMembersAsync(User);
+        await using var scope = ScopeFactory.CreateAsyncScope();
+        var result = await scope.ServiceProvider.GetRequiredService<IMemberAccountService>().GetCapacityAsync(User);
+        capacity = result.IsSuccess ? result.Value : null;
+    }
     private void NewMember() { editId = null; model = new(); showEditor = true; }
     private void Edit(MemberDto member) { editId = member.Id; model = new() { Name = member.Name, Email = member.Email, Phone = member.Phone, Status = member.Status, BorrowingLimit = member.BorrowingLimit }; showEditor = true; }
     private async Task Save() { if (await RunCommand(() => Library.SaveMemberAsync(User, editId, new MemberInput(model.Name, model.Email, model.Phone, model.Status, model.BorrowingLimit)), "Member details saved.")) showEditor = false; }

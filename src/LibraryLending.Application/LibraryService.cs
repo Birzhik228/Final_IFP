@@ -76,7 +76,7 @@ public sealed class LibraryService(ILibraryRepository repository, TimeProvider c
         return await repository.ExecuteAsync<int>(async s =>
         {
             var email = input.Email.Trim().ToLowerInvariant(); if (await s.EmailExistsAsync(email, id, ct)) return Fail("A member already uses this email.");
-            var member = id.HasValue ? await s.MemberAsync(id.Value, ct) : new Member(); if (member is null) return Fail("Member was not found.");
+            var member = id.HasValue ? await s.MemberAsync(id.Value, ct) : new Member { JoinedAtUtc = Now }; if (member is null) return Fail("Member was not found.");
             member.Name = input.Name.Trim(); member.Email = email; member.Phone = input.Phone.Trim(); member.Status = input.Status; member.BorrowingLimit = input.BorrowingLimit; member.Version = Guid.NewGuid().ToString();
             if (!id.HasValue) s.Add(member); await s.SaveAsync(ct);
             if (member.Status != MembershipStatus.Active) foreach (var r in (await s.ActiveReservationsAsync(null, ct)).Where(r => r.MemberId == member.Id)) { r.Status = ReservationStatus.Cancelled; r.ClosureReason = "Membership is inactive."; await s.SaveAsync(ct); if (r.AssignedCopyId is int cid) { var copy = await s.CopyAsync(cid, ct); if (copy is not null) { copy.Status = CopyStatus.Available; await AllocateAsync(s, copy, ct); } } }

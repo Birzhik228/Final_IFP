@@ -7,6 +7,7 @@ public sealed class Member
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
+    public DateTime? JoinedAtUtc { get; set; }
     public MembershipStatus Status { get; set; } = MembershipStatus.Active;
     public int BorrowingLimit { get; set; } = 5;
     public string Version { get; set; } = Guid.NewGuid().ToString("N");

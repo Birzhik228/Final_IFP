@@ -56,7 +56,7 @@ Do this before starting the presentation timer.
 
 1. Start the isolated public demo server and its temporary tunnel. Keep the host computer awake, powered, and connected. Retrieve the current public URL from the private access file. Separately start and check `http://localhost:5180`, using its own credentials and database as the standby. Do not use the production origin on port 5190 as a browser fallback.
 2. Use a fresh demo initialized from the standard seed. Verify the preconditions below. Do not reset or overwrite a database while an application is using it. After a full rehearsal, prepare a fresh isolated demo and use its newly generated credentials for the defense.
-3. Use **two separate browser profiles or different browsers**, not two ordinary tabs sharing the same sign-in cookies. Sign in to the same demo URL as librarian in profile A and Jamie in profile B. Keep the credential record off the shared screen.
+3. Use **two separate browser profiles or different browsers**, not two ordinary tabs sharing the same sign-in cookies. Sign in to the same demo URL as librarian in profile A and Jamie in profile B. Open **My profile** briefly to verify Jamie's own name, contact information, joining date when recorded, and loan allowance. Keep the credential record off the shared screen.
 4. In A, prepare tabs for Catalogue, Loans, Reservations, and Overdue. In B, open Reservations and keep the Clean Code row visible. Arrange the two windows side by side for the live transition.
 5. Open the architecture/sequence diagrams and one concurrency test in the editor. Keep the latest local test report and the GitHub Actions result for the presented commit ready. Local tests and remote CI are separate evidence.
 6. Test the presentation display, browser zoom, keyboard switching, and CSV download location. Capture a few fallback screenshots from the isolated demo before resetting it; label them with their date and source version.
@@ -69,14 +69,16 @@ These are fictional seeded library records, not presenter identities. Use the ge
 | --- | --- | --- |
 | Librarian, browser A | `librarian@library.local` | Can access Members, circulation actions, and Overdue |
 | Jamie Chen, browser B | `member2@library.local` | Active, no overdue loans, first Waiting reservation for Clean Code |
-| Morgan Reed | `member8@library.local` | Active, no overdue loans, below the borrowing limit |
-| Avery Park | `member9@library.local` | No active reservation for Clean Code |
+| Morgan Reed | Member record without a sign-in account | Active, no overdue loans, below the borrowing limit |
+| Avery Park | Member record without a sign-in account | No active reservation for Clean Code |
 | Pride and Prejudice | `LIB-002-01` | Available; borrow this exact copy |
 | Clean Code | `LIB-001-01` | Borrowed by Alex Morgan and overdue |
 | Clean Code | `LIB-001-02` | Borrowed by Sam Rivera and overdue |
 | Clean Code queue | Jamie Chen, then Robin Ellis | Both Waiting, ordered first and second |
 
 Look up titles and barcodes in the UI; do not depend on database row IDs. If preconditions differ, prepare a fresh isolated demo before presenting rather than improvising against an already changed queue.
+
+The three member sign-in accounts are Jamie (`member2`), Robin (`member7`), and Riley (`member10`), all at `library.local`; the librarian account does not use a member slot. Other member records remain for circulation history and can still be selected by the librarian. Explain that this account cap is separate from the five-book default borrowing limit. Older profiles can legitimately show **Not recorded** for a joining date that was not previously stored.
 
 ## Four-minute live script
 

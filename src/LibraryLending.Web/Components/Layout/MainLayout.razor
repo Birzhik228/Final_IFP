@@ -23,6 +23,7 @@
                     <NavLink href="/overdue"><span aria-hidden="true">!</span> Overdue loans</NavLink>
                 }
                 <NavLink href="/notifications"><span aria-hidden="true">◇</span> Notifications @if (State.Notifications.Any(n => !n.IsRead)) { <span class="nav-count">@State.Notifications.Count(n => !n.IsRead)</span> }</NavLink>
+                <NavLink href="/profile"><span aria-hidden="true">◎</span> My profile</NavLink>
             </nav>
             <div class="sidebar-bottom"><p>A good book deserves<br />another reader.</p><span>Thoughtfully organised. Always in reach.</span></div>
         </aside>
@@ -35,7 +36,7 @@
                     @if (!string.IsNullOrEmpty(actor?.UserId))
                     {
                         <span class="live-status @(State.LiveConnected ? "online" : "offline")" role="status" title="@(State.LiveConnected ? "Reservation notifications arrive automatically." : "Live notifications are reconnecting. Saved notifications remain available on the Notifications page.")"><i aria-hidden="true"></i>@(State.LiveConnected ? "Live" : "Reconnecting")</span>
-                        <span class="account-role"><span class="avatar">@(actor.IsLibrarian ? "L" : "M")</span>@(actor.IsLibrarian ? "Librarian" : "Member")</span>
+                        <a class="account-role" href="/profile" aria-label="Open my profile"><span class="avatar" aria-hidden="true">@(actor.IsLibrarian ? "L" : "M")</span>@(actor.IsLibrarian ? "Librarian" : "Member")</a>
                         <a class="text-button account-password-link" href="/account/password" data-enhance-nav="false">Change password</a>
                         <form method="post" action="/account/logout"><AntiforgeryToken /><button type="submit" class="text-button">Sign out</button></form>
                     }

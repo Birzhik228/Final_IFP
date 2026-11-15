@@ -76,7 +76,7 @@ static async Task InitializeAsync(string databaseArgument, string credentialsArg
     await using var transaction = await db.Database.BeginTransactionAsync();
     await DemoSeeder.SeedAsync(db, users, roles, TimeProvider.System, new LibraryOptions());
     var expectedAccounts = new[] { (Email: "librarian@library.local", Role: "Librarian") }
-        .Concat(Enumerable.Range(1, 10).Select(number => (Email: $"member{number}@library.local", Role: "Member")))
+        .Concat(DemoSeeder.LoginMemberNumbers.Select(number => (Email: $"member{number}@library.local", Role: "Member")))
         .ToArray();
     if (await db.Users.CountAsync() != expectedAccounts.Length)
         throw new InvalidOperationException("Unexpected seeded account count.");
@@ -110,7 +110,7 @@ static async Task InitializeAsync(string databaseArgument, string credentialsArg
     var counts = new DemoCounts(await db.Users.CountAsync(), await db.Members.CountAsync(),
         await db.Books.CountAsync(), await db.Copies.CountAsync(), await db.Loans.CountAsync(),
         await db.Reservations.CountAsync());
-    if (counts != new DemoCounts(11, 10, 30, 60, 17, 2))
+    if (counts != new DemoCounts(4, 10, 30, 60, 17, 2))
         throw new InvalidOperationException("The seeded sample data did not match the expected counts.");
 
     await JsonSerializer.SerializeAsync(credentialsFile,
@@ -121,7 +121,7 @@ static async Task InitializeAsync(string databaseArgument, string credentialsArg
 
     Console.WriteLine("Initialized isolated BookBridge demo database.");
     Console.WriteLine($"Verified {counts.Users} accounts, {counts.Members} members, {counts.Books} books, {counts.Copies} copies, {counts.Loans} loans, {counts.Reservations} reservations.");
-    Console.WriteLine("Verified all 11 private passwords; the development password is rejected for every account.");
+    Console.WriteLine($"Verified all {counts.Users} private passwords; the development password is rejected for every account.");
     Console.WriteLine("Credentials were saved to the requested local JSON file. Keep it private and outside Git.");
 }
 

@@ -12,7 +12,7 @@ dotnet run --project tools/LibraryLending.DemoTool -c Release -- initialize "$de
 if ($LASTEXITCODE -ne 0) { throw 'Demo initialization failed.' }
 ```
 
-The tool applies the existing migrations and seeds 30 books, 60 copies, 10 members, 17 loans, and two reservations. It assigns independent cryptographically random passwords to the librarian and all 10 members, then verifies every new password and confirms the documented development password is rejected. Seeding and password rotation are one transaction. This does not enable the web application's Development-only seeder in Production.
+The tool applies the existing migrations and seeds 30 books, 60 copies, 10 member records, 17 loans, and two reservations. Exactly three members have login accounts: Jamie Chen (`member2@library.local`), Robin Ellis (`member7@library.local`), and Riley James (`member10@library.local`). Other member records preserve the circulation examples and history. It assigns independent cryptographically random passwords to the librarian and those three members, then verifies all four passwords and confirms the documented development password is rejected. Seeding and password rotation are one transaction. This does not enable the web application's Development-only seeder in Production.
 
 `credentials.json` contains an `accounts` array with `email`, `role`, and `password`. Open that local file privately to sign in; do not commit it, publish it, or copy it into logs. No passwords are printed by the initializer. Restrict access to this directory to the account running the demo.
 
@@ -60,6 +60,8 @@ The 15 November 2026 public browser run passed all 13 checks, including the seco
 
 - Open `/health` and `/health/ready` through the public HTTPS address.
 - Sign in as the librarian and a member using the private credentials file. Confirm the old development password fails.
+- Open **My profile** in both sessions. Check that members see only their own details, joining date when recorded, status, and borrowing allowance.
+- On Members, confirm three of three member sign-in slots are used and a fourth account cannot be created. The per-member borrowing limit is unchanged.
 - Borrow an available copy, return it, and confirm its availability updates.
 - Place a reservation on a title without available copies. Return one of its copies as librarian and confirm the queued reservation becomes ready.
 - Keep a second authenticated browser session open to confirm live availability and reservation notifications arrive without refreshing.
